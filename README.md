@@ -54,6 +54,9 @@ From project root directory run:
 $ mvn test
 ```
 
+## Documentation
+JavaDoc Documentation will be generated in the /target/site/apidocs/com/jarlath/assignment folder once the project has been installed.
+
 ## History
 
 Created on March 29th 2016
