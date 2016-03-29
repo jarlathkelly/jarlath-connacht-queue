@@ -79,6 +79,8 @@ public class WorkOrderControllerTest {
 
   @Test
   public void test_dequeueWorkOrder_200() throws Exception {
+    mockMvc.perform(post("/workorders?id=156&createdTs=20032016234509")
+        .contentType(contentType));
     mockMvc.perform(delete("/workorders")
         .contentType(contentType))
         .andExpect(status().is2xxSuccessful());
@@ -86,6 +88,8 @@ public class WorkOrderControllerTest {
 
   @Test
   public void test_retrieveAllWorkOrderIds_200() throws Exception {
+    mockMvc.perform(post("/workorders?id=157&createdTs=20032016234509")
+        .contentType(contentType));
     mockMvc.perform(get("/workorders/ids")
         .contentType(contentType))
         .andExpect(status().is2xxSuccessful());
@@ -93,7 +97,9 @@ public class WorkOrderControllerTest {
 
   @Test
   public void test_dequeueWorkOrderId_200() throws Exception {
-    mockMvc.perform(delete("/workorders/ids?id=1")
+    mockMvc.perform(post("/workorders?id=155&createdTs=20032016234509")
+        .contentType(contentType));
+    mockMvc.perform(delete("/workorders/ids?id=155")
         .contentType(contentType))
         .andExpect(status().is2xxSuccessful());
   }
@@ -101,6 +107,13 @@ public class WorkOrderControllerTest {
   @Test
   public void test_dequeueWorkOrderId_400_NoId() throws Exception {
     mockMvc.perform(delete("/workorders/ids")
+        .contentType(contentType))
+        .andExpect(status().isBadRequest());
+  }
+
+  @Test
+  public void test_dequeueWorkOrderId_400_IDNotOnQueue() throws Exception {
+    mockMvc.perform(delete("/workorders/ids?id=133333333")
         .contentType(contentType))
         .andExpect(status().isBadRequest());
   }
@@ -150,7 +163,18 @@ public class WorkOrderControllerTest {
   }
 
   @Test
+  public void test_getWorkOrderQueuePosition() throws Exception {
+    mockMvc.perform(post("/workorders?id=159&createdTs=20032016234509")
+        .contentType(contentType));
+    mockMvc.perform(get("/workorders/ids/positions?id=159")
+        .contentType(contentType))
+        .andExpect(status().is2xxSuccessful());
+  }
+
+  @Test
   public void test_retrieveMeanWaitTime_200() throws Exception {
+    mockMvc.perform(post("/workorders?id=160&createdTs=20032016234509")
+        .contentType(contentType));
     mockMvc.perform(get("/workorders/waittimes?createdTs=20032016234509")
         .contentType(contentType))
         .andExpect(status().is2xxSuccessful());
