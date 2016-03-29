@@ -21,5 +21,44 @@ public class ErrorPayload {
       this.trace = (String) errorAttributes.get("trace");
     }
 
+  public String getTrace() {
+    return trace;
   }
+
+  public void setTrace(String trace) {
+    this.trace = trace;
+  }
+
+  public Integer getStatus() {
+    return status;
+  }
+
+  public void setStatus(Integer status) {
+    this.status = status;
+  }
+
+  public String getError() {
+    return error;
+  }
+
+  public void setError(String error) {
+    this.error = error;
+  }
+
+  public String getMessage() {
+    return message;
+  }
+
+  public void setMessage(String message) {
+    this.message = message;
+  }
+
+  public String getTimeStamp() {
+    return timeStamp;
+  }
+
+  public void setTimeStamp(String timeStamp) {
+    this.timeStamp = timeStamp;
+  }
+}
 
