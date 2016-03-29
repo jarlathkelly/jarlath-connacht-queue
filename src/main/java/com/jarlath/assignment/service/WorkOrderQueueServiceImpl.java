@@ -11,7 +11,11 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Created by jarlath.kelly on 28/03/2016.
+ * The {@link WorkOrderQueueServiceImpl} is the concrete implementation for the WorkOrderQueueService
+ * Interface. Provides WorkOrderQueue related services for use within the Work Order application.
+ *
+ * @author  Jarlath Kelly
+ * @see WorkOrderQueueService
  */
 @Service
 public class WorkOrderQueueServiceImpl implements WorkOrderQueueService {
@@ -26,6 +30,16 @@ public class WorkOrderQueueServiceImpl implements WorkOrderQueueService {
 
   }
 
+  /**
+   * Queues a Work Order Request object onto the Singleton WorkOrderQueue.
+   * Performs basic validation on the supplied WorkOrder and also
+   * ensures the queue does not already exist on the queue before enqueueing the
+   * Work Order Object.
+   *
+   *
+   * @param workOrder to be enqueued
+   * @return WorkOrder just enqueued
+   */
   public WorkOrder enqueueWorkOrder(WorkOrder workOrder) throws WorkOrderExistsInQueueException,InvalidIdParameterException,InvalidTimestampParameterException  {
     if(null == workOrder.getId()){
       throw new InvalidIdParameterException();
@@ -43,11 +57,27 @@ public class WorkOrderQueueServiceImpl implements WorkOrderQueueService {
     return workOrder;
   }
 
+  /**
+   * Enqueues the Work Order Request object
+   * from the Singleton WorkOrderQueue in a synchronised manner.
+   *
+   * @param workOrder WorkOrder to be enqueued
+   */
   protected synchronized void  addToWorkOrderQueue(WorkOrder workOrder){
     List<WorkOrder> queue = WorkOrderQueue.getInstance();
     queue.add(workOrder);
   }
 
+  /**
+   * Dequeues a Work Order Request object from the Singleton WorkOrderQueue.
+   * Performs basic validation on the supplied WorkOrder and also
+   * ensures the workOrder does exist on the queue before dequeueing the
+   * Work Order Object.
+   *
+   *
+   * @param id of the WorkOrder to be dequeued
+   * @return WorkOrder just dequeued
+   */
   public WorkOrder removeIdFromWorkOrderQueue(Long id) throws WorkOrderIdNotOnQueueException, InvalidIdParameterException {
     if(null == id){
       throw new InvalidIdParameterException();
@@ -68,6 +98,12 @@ public class WorkOrderQueueServiceImpl implements WorkOrderQueueService {
 
   }
 
+  /**
+   * Dequeues the top ranked Work Order Request object
+   * from the Singleton WorkOrderQueue.
+   *
+   * @return WorkOrder just dequeued
+   */
   public WorkOrder removeTopFromWorkOrderQueue(){
     List<WorkOrder> queue = retrieveWorkOrderQueue();
     WorkOrder workOrder = new WorkOrder();
@@ -80,11 +116,23 @@ public class WorkOrderQueueServiceImpl implements WorkOrderQueueService {
   }
 
 
+  /**
+   * Dequeues the Work Order Request object
+   * from the Singleton WorkOrderQueue in a synchronised manner.
+   *
+   * @param workorder WorkOrder to be dequeued
+   */
   protected synchronized void removeFromQueue(WorkOrder workorder){
     List<WorkOrder> queue = retrieveWorkOrderQueue();
     queue.remove(workorder);
   }
 
+  /**
+   * Retrieves a prioritised List of Work Order Request objects
+   * in decreasing order of Rank.
+   *
+   * @return List of WorkOrder Id's sorted by Rank highest to lowest.
+   */
   public List<Long> retrieveWorkOrderedIdList(){
     List<Long> result = new ArrayList<Long>();
     List<WorkOrder> queue = retrieveWorkOrderQueue();
@@ -95,6 +143,14 @@ public class WorkOrderQueueServiceImpl implements WorkOrderQueueService {
     return result;
   }
 
+  /**
+   * Retrieves the index position of a Work Order Request currently on the queue.
+   * Performs basic validation on the supplied Id and also ensures the Id is actually
+   * present on the queue.
+   *
+   * @param id identifier Work Order Request
+   * @return int index of supplied Work Order Id on the Queue.
+   */
   public int retrieveIndexOfWorkOrderId(Long id) throws WorkOrderIdNotOnQueueException, InvalidIdParameterException {
     if(null == id){
       throw new InvalidIdParameterException();
@@ -116,17 +172,21 @@ public class WorkOrderQueueServiceImpl implements WorkOrderQueueService {
     return index;
   }
 
+  /**
+   * Retrieves the average waittime of the Work Orders on the Queue
+   *
+   * @param currentTs String Date time representation of format DDMMYYYYHHMMSS
+   * @return Long average waittime in seconds of all Work Orders on queue.
+   */
   public Long retrieveAverageWaitTime(String currentTs) throws TimeStampParsingException, InvalidTimestampParameterException {
     if(null == currentTs){
       throw new InvalidTimestampParameterException();
     }
     Long totalTime = 0L;
     Long meanTime = 0L;
-    int count = 0;
 
-    //deal with negatives
     List<WorkOrder> queue = retrieveWorkOrderQueue();
-    count = queue.size();
+    int count = queue.size();
     for (WorkOrder item : queue) {
       try {
         totalTime = totalTime + dateService.getSecondsOnQueueUntilSpecifiedTime(item.getCreatedTS(), currentTs);

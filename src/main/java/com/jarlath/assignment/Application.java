@@ -5,6 +5,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * The {@link Application} is the entry point for this Work Order Queue application.
+ *
+ * @author  Jarlath Kelly
+ */
 @SpringBootApplication
 @Configuration
 @ComponentScan(basePackages="com.jarlath")

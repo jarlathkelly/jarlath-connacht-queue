@@ -5,7 +5,11 @@ import com.jarlath.assignment.exception.InvalidTimestampParameterException;
 import java.text.ParseException;
 
 /**
- * Created by jarlath.kelly on 29/03/2016.
+ * The {@link DateService} class defines the Interface for the DateService
+ * implementations
+ *
+ * @author  Jarlath Kelly
+ * @see DateServiceImpl
  */
 public interface DateService {
 

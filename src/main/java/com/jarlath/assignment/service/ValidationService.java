@@ -4,7 +4,11 @@ import com.jarlath.assignment.exception.InvalidIdParameterException;
 import com.jarlath.assignment.exception.InvalidTimestampParameterException;
 
 /**
- * Created by jarlath.kelly on 29/03/2016.
+ * The {@link ValidationService} class defines the Interface for the ValidationService
+ * implementations
+ *
+ * @author  Jarlath Kelly
+ * @see ValidationServiceImpl
  */
 public interface ValidationService {
 

@@ -6,7 +6,11 @@ import com.jarlath.assignment.exception.*;
 import java.util.List;
 
 /**
- * Created by jarlath.kelly on 29/03/2016.
+ * The {@link WorkOrderQueueService} class defines the Interface for the WorkOrderQueueService
+ * implementations
+ *
+ * @author  Jarlath Kelly
+ * @see WorkOrderQueueServiceImpl
  */
 public interface WorkOrderQueueService {
 

@@ -5,7 +5,11 @@ import com.jarlath.assignment.dto.WorkOrder;
 import java.text.ParseException;
 
 /**
- * Created by jarlath.kelly on 29/03/2016.
+ * The {@link WorkOrderService} class defines the Interface for the WorkOrderService
+ * implementations
+ *
+ * @author  Jarlath Kelly
+ * @see WorkOrderServiceImpl
  */
 public interface WorkOrderService {
 
