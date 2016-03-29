@@ -8,13 +8,11 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  * This exception will be thrown when a Work Order createdTs
  * encounters an issue during parsing.
  *
- * @author  Jarlath Kelly
+ * @author Jarlath Kelly
  */
 @ResponseStatus(value = HttpStatus.BAD_REQUEST, reason = "There was an error parsing the Timestamp Parameter")
 
-public class TimeStampParsingException extends RuntimeException{
-  public TimeStampParsingException() {
-  }
+public class TimeStampParsingException extends RuntimeException {
 
   public TimeStampParsingException(String s) {
     super("There was an error parsing the Timestamp Parameter: " + s);

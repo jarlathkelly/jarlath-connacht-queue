@@ -1,7 +1,10 @@
 package com.jarlath.assignment.util;
 
 /**
- * Created by jarlath.kelly on 26/03/2016.
+ * The {@link Statics} is a utility class to store commonly
+ * used values within the application context.
+ *
+ * @author Jarlath Kelly
  */
 public class Statics {
   public final static String MGMT_OVERRIDE = "MGMT_OVERRIDE";

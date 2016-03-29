@@ -10,13 +10,13 @@ import java.util.List;
  * The {@link WorkOrderQueue} represents a Singleton Queue Object to queue
  * {@link WorkOrder} objects.
  *
- * @author  Jarlath Kelly
+ * @author Jarlath Kelly
  * @see WorkOrder
  */
 @Repository
 public class WorkOrderQueue {
 
-  private static final List<WorkOrder> instance = new ArrayList<WorkOrder>();
+  private static final List<WorkOrder> instance = new ArrayList<>();
 
   protected WorkOrderQueue() {
   }

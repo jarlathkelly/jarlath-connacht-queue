@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
  * The {@link ValidationServiceImpl} is the concrete implementation for the ValidationService
  * Interface. Provides Validation related services for use within the Work Order application.
  *
- * @author  Jarlath Kelly
+ * @author Jarlath Kelly
  * @see ValidationService
  */
 @Service
@@ -29,7 +29,7 @@ public class ValidationServiceImpl implements ValidationService {
    * @return boolean is Id valid
    */
   public boolean isIdValid(Long id) throws InvalidIdParameterException {
-    if(null == id || id == 0L){
+    if (null == id || id == 0L) {
       throw new InvalidIdParameterException();
     }
     Pattern regexId = Pattern.compile(Statics.VALIDATE_ID);
@@ -48,7 +48,7 @@ public class ValidationServiceImpl implements ValidationService {
    * @return boolean is createdTs valid
    */
   public boolean isCreatedTsValid(String createdTs) throws InvalidTimestampParameterException {
-    if(null == createdTs){
+    if (null == createdTs) {
       throw new InvalidTimestampParameterException();
     }
     Pattern regexTs = Pattern.compile(Statics.VALIDATE_TS);

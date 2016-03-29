@@ -11,13 +11,13 @@ import java.util.Date;
  * The {@link DateServiceImpl} is the concrete implementation for the DateService
  * Interface. Provides date related services for use within the Work Order application.
  *
- * @author  Jarlath Kelly
+ * @author Jarlath Kelly
  * @see DateService
  */
 @Service
 public class DateServiceImpl implements DateService {
 
-  public DateServiceImpl(){
+  public DateServiceImpl() {
 
   }
 
@@ -26,11 +26,11 @@ public class DateServiceImpl implements DateService {
    * Date object
    *
    * @param dateIn String representation of a date
-   * @throws ParseException when supplied Timestamp has issues parsing
    * @return Date
+   * @throws ParseException when supplied Timestamp has issues parsing
    */
   protected Date convertStringToDate(String dateIn) throws ParseException, InvalidTimestampParameterException {
-    if(null == dateIn){
+    if (null == dateIn) {
       throw new InvalidTimestampParameterException();
     }
     SimpleDateFormat format = new SimpleDateFormat("ddMMyyyyHHmmss");
@@ -43,11 +43,11 @@ public class DateServiceImpl implements DateService {
    * Order has spent on the queue
    *
    * @param date String representation of a date
-   * @throws ParseException when supplied Timestamp has issues parsing
    * @return Long no of Seconds on the queue
+   * @throws ParseException when supplied Timestamp has issues parsing
    */
   public Long getSecondsOnQueue(String date) throws ParseException, InvalidTimestampParameterException {
-    if(null == date){
+    if (null == date) {
       throw new InvalidTimestampParameterException();
     }
     Date incoming = convertStringToDate(date);
@@ -60,16 +60,16 @@ public class DateServiceImpl implements DateService {
    * Used to calculate the number of seconds a Work Order has spent on the queue
    *
    * @param date String representation of a date
-   * @throws ParseException when supplied Timestamp has issues parsing
    * @return Long no of Seconds on the queue
+   * @throws ParseException when supplied Timestamp has issues parsing
    */
   public Long getSecondsOnQueueUntilSpecifiedTime(String date, String currentTime) throws ParseException, InvalidTimestampParameterException {
-    if(null == date || null == currentTime){
+    if (null == date || null == currentTime) {
       throw new InvalidTimestampParameterException();
     }
-      Date incoming = convertStringToDate(date);
-      Date current = convertStringToDate(currentTime);
-      return (current.getTime() - incoming.getTime()) / 1000;
+    Date incoming = convertStringToDate(date);
+    Date current = convertStringToDate(currentTime);
+    return (current.getTime() - incoming.getTime()) / 1000;
 
   }
 }

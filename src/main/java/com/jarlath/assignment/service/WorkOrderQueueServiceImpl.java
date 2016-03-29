@@ -14,18 +14,18 @@ import java.util.List;
  * The {@link WorkOrderQueueServiceImpl} is the concrete implementation for the WorkOrderQueueService
  * Interface. Provides WorkOrderQueue related services for use within the Work Order application.
  *
- * @author  Jarlath Kelly
+ * @author Jarlath Kelly
  * @see WorkOrderQueueService
  */
 @Service
 public class WorkOrderQueueServiceImpl implements WorkOrderQueueService {
   DateServiceImpl dateService = new DateServiceImpl();
 
-  public WorkOrderQueueServiceImpl(){
+  public WorkOrderQueueServiceImpl() {
 
   }
 
-  public List<WorkOrder> retrieveWorkOrderQueue(){
+  public List<WorkOrder> retrieveWorkOrderQueue() {
     return WorkOrderQueue.getInstance();
 
   }
@@ -36,15 +36,14 @@ public class WorkOrderQueueServiceImpl implements WorkOrderQueueService {
    * ensures the queue does not already exist on the queue before enqueueing the
    * Work Order Object.
    *
-   *
    * @param workOrder to be enqueued
    * @return WorkOrder just enqueued
    */
-  public WorkOrder enqueueWorkOrder(WorkOrder workOrder) throws WorkOrderExistsInQueueException,InvalidIdParameterException,InvalidTimestampParameterException  {
-    if(null == workOrder.getId()){
+  public WorkOrder enqueueWorkOrder(WorkOrder workOrder) throws WorkOrderExistsInQueueException, InvalidIdParameterException, InvalidTimestampParameterException {
+    if (null == workOrder.getId()) {
       throw new InvalidIdParameterException();
     }
-    if(null == workOrder.getCreatedTS()){
+    if (null == workOrder.getCreatedTS()) {
       throw new InvalidTimestampParameterException();
     }
     List<WorkOrder> queue = retrieveWorkOrderQueue();
@@ -63,7 +62,7 @@ public class WorkOrderQueueServiceImpl implements WorkOrderQueueService {
    *
    * @param workOrder WorkOrder to be enqueued
    */
-  protected synchronized void  addToWorkOrderQueue(WorkOrder workOrder){
+  protected synchronized void addToWorkOrderQueue(WorkOrder workOrder) {
     List<WorkOrder> queue = WorkOrderQueue.getInstance();
     queue.add(workOrder);
   }
@@ -74,12 +73,11 @@ public class WorkOrderQueueServiceImpl implements WorkOrderQueueService {
    * ensures the workOrder does exist on the queue before dequeueing the
    * Work Order Object.
    *
-   *
    * @param id of the WorkOrder to be dequeued
    * @return WorkOrder just dequeued
    */
   public WorkOrder removeIdFromWorkOrderQueue(Long id) throws WorkOrderIdNotOnQueueException, InvalidIdParameterException {
-    if(null == id){
+    if (null == id) {
       throw new InvalidIdParameterException();
     }
     List<WorkOrder> queue = retrieveWorkOrderQueue();
@@ -90,7 +88,7 @@ public class WorkOrderQueueServiceImpl implements WorkOrderQueueService {
         break;
       }
     }
-    if (null == workOrder.getId() ) {
+    if (null == workOrder.getId()) {
       throw new WorkOrderIdNotOnQueueException(id);
     }
     removeFromQueue(workOrder);
@@ -104,7 +102,7 @@ public class WorkOrderQueueServiceImpl implements WorkOrderQueueService {
    *
    * @return WorkOrder just dequeued
    */
-  public WorkOrder removeTopFromWorkOrderQueue(){
+  public WorkOrder removeTopFromWorkOrderQueue() {
     List<WorkOrder> queue = retrieveWorkOrderQueue();
     WorkOrder workOrder = new WorkOrder();
     if (queue.size() > 0) {
@@ -122,7 +120,7 @@ public class WorkOrderQueueServiceImpl implements WorkOrderQueueService {
    *
    * @param workorder WorkOrder to be dequeued
    */
-  protected synchronized void removeFromQueue(WorkOrder workorder){
+  protected synchronized void removeFromQueue(WorkOrder workorder) {
     List<WorkOrder> queue = retrieveWorkOrderQueue();
     queue.remove(workorder);
   }
@@ -133,8 +131,8 @@ public class WorkOrderQueueServiceImpl implements WorkOrderQueueService {
    *
    * @return List of WorkOrder Id's sorted by Rank highest to lowest.
    */
-  public List<Long> retrieveWorkOrderedIdList(){
-    List<Long> result = new ArrayList<Long>();
+  public List<Long> retrieveWorkOrderedIdList() {
+    List<Long> result = new ArrayList<>();
     List<WorkOrder> queue = retrieveWorkOrderQueue();
     Collections.sort(queue, new WorkOrder());
     for (WorkOrder item : queue) {
@@ -152,7 +150,7 @@ public class WorkOrderQueueServiceImpl implements WorkOrderQueueService {
    * @return int index of supplied Work Order Id on the Queue.
    */
   public int retrieveIndexOfWorkOrderId(Long id) throws WorkOrderIdNotOnQueueException, InvalidIdParameterException {
-    if(null == id){
+    if (null == id) {
       throw new InvalidIdParameterException();
     }
     List<WorkOrder> queue = retrieveWorkOrderQueue();
@@ -179,7 +177,7 @@ public class WorkOrderQueueServiceImpl implements WorkOrderQueueService {
    * @return Long average waittime in seconds of all Work Orders on queue.
    */
   public Long retrieveAverageWaitTime(String currentTs) throws TimeStampParsingException, InvalidTimestampParameterException {
-    if(null == currentTs){
+    if (null == currentTs) {
       throw new InvalidTimestampParameterException();
     }
     Long totalTime = 0L;

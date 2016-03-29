@@ -10,13 +10,13 @@ import java.text.ParseException;
  * The {@link WorkOrderServiceImpl} is the concrete implementation for the WorkOrderService
  * Interface. Provides Work Order related services for use within the Work Order application.
  *
- * @author  Jarlath Kelly
+ * @author Jarlath Kelly
  * @see WorkOrderService
  */
 @Service
-public class WorkOrderServiceImpl implements WorkOrderService{
+public class WorkOrderServiceImpl implements WorkOrderService {
 
-  public WorkOrderServiceImpl(){
+  public WorkOrderServiceImpl() {
 
   }
 
@@ -25,7 +25,6 @@ public class WorkOrderServiceImpl implements WorkOrderService{
    * returns -1 if supplied value is a positive value.
    * returns 1 if supplied value is a negative value.
    * returns 0 if supplied value is zero.
-   *
    *
    * @param value supplied for analysis
    * @return int
@@ -45,22 +44,19 @@ public class WorkOrderServiceImpl implements WorkOrderService{
    * getNormalRank() class methods to calculate this rank. The method used
    * for the calculation is dictated by the workOrderType supplied.
    *
-   *
    * @param workOrderType Type of Work Order Request
-   * @param workOrder instance of WorkOrder
+   * @param workOrder     instance of WorkOrder
    * @return Long rank of Work Order
    */
   public Long getWorkOrderRank(String workOrderType, WorkOrder workOrder) throws ParseException {
-    Long rank = 0L;
 
-    if (workOrderType.equals(Statics.VIP)) {
-      return getVipRank(workOrder.getCreatedTS());
-    } else if (workOrderType.equals(Statics.PRIORITY)) {
-      return getPriorityRank(workOrder.getCreatedTS());
-    } else {
-
-      return getNormalRank(workOrder.getCreatedTS());
-
+    switch (workOrderType) {
+      case Statics.VIP:
+        return getVipRank(workOrder.getCreatedTS());
+      case Statics.PRIORITY:
+        return getPriorityRank(workOrder.getCreatedTS());
+      default:
+        return getNormalRank(workOrder.getCreatedTS());
     }
   }
 

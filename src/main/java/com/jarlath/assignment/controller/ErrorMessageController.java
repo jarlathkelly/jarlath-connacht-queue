@@ -18,10 +18,9 @@ import javax.servlet.http.HttpServletResponse;
  * as defined by {@link ErrorPayload}. This configuration overrides the whitelabel
  * error page provided by Spring Boot.
  *
- * @author  Jarlath Kelly
+ * @author Jarlath Kelly
  * @see ErrorAttributes
  * @see ErrorPayload
- *
  */
 @RestController
 public class ErrorMessageController implements ErrorController {
@@ -34,7 +33,7 @@ public class ErrorMessageController implements ErrorController {
   /**
    * Provide access to the error attributes.
    *
-   * @param request HttpServletRequest
+   * @param request  HttpServletRequest
    * @param response HttpServletResponse
    * @return ErrorPayload
    */
@@ -46,7 +45,7 @@ public class ErrorMessageController implements ErrorController {
   /**
    * Provide access to the error attributes.
    *
-   * @param request HttpServletRequest
+   * @param request           HttpServletRequest
    * @param includeStackTrace flag to indicate inclusion of stack trace
    * @return the error attributes
    */
