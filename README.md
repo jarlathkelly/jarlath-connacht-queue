@@ -24,6 +24,7 @@ For Linux/MacOs systems run:
 $ sh ./install.sh
 ```
 Rest service resources will then be available at http://localhost:8080/
+
 Use a rest Client to Test the endpoints. I use Postman.
 
 ##  Endpoints & Usage
