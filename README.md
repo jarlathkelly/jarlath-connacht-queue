@@ -43,7 +43,7 @@ Use a rest Client to Test the endpoints. I use Postman.
 
 
 
- 7. Some management services have also been provided with the Spring Boot actuator module. /health,/audits,/beans,/errors are also available on http://localhost:8080/.
+7. Some management services have also been provided with the Spring Boot actuator module. /health,/audits,/beans,/errors are also available on http://localhost:8080/.
 
 
 ## Tests
