@@ -15,7 +15,7 @@ public class ValidationServiceTest {
 
   @Test
   public void test_isIdValid1() {
-    Long id = 0L;
+    Long id = 10L;
     assertTrue(validationService.isIdValid(id));
   }
 
@@ -26,8 +26,12 @@ public class ValidationServiceTest {
   }
 
   @Test(expected = InvalidIdParameterException.class)
-  public void test_isIdValid_InvalidIdParameterException() {
+  public void test_isIdValid_InvalidIdParameterException1() {
     validationService.isIdValid(null);
+  }
+  @Test(expected = InvalidIdParameterException.class)
+  public void test_isIdValid_InvalidIdParameterException2() {
+    validationService.isIdValid(0L);
   }
 
   @Test

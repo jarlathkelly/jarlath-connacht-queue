@@ -18,7 +18,7 @@ public class ValidationServiceImpl implements ValidationService {
   }
 
   public boolean isIdValid(Long id) throws InvalidIdParameterException {
-    if(null == id){
+    if(null == id || id == 0L){
       throw new InvalidIdParameterException();
     }
     Pattern regexId = Pattern.compile(Statics.VALIDATE_ID);

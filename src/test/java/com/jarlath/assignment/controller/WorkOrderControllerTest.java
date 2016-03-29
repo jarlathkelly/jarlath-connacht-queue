@@ -43,70 +43,70 @@ public class WorkOrderControllerTest {
   }
 
   @Test
-  public void enqueueWorkOrder_200() throws Exception {
+  public void test_enqueueWorkOrder_200() throws Exception {
     mockMvc.perform(post("/workorders?id=1&createdTs=20032016234509")
         .contentType(contentType))
         .andExpect(status().is2xxSuccessful());
   }
 
   @Test
-  public void enqueueWorkOrder_400_noID() throws Exception {
+  public void test_enqueueWorkOrder_400_noID() throws Exception {
     mockMvc.perform(post("/workorders?createdTs=20032016234509")
         .contentType(contentType))
         .andExpect(status().isBadRequest());
   }
 
   @Test
-  public void enqueueWorkOrder_400_NoCreatedTs() throws Exception {
+  public void test_enqueueWorkOrder_400_NoCreatedTs() throws Exception {
     mockMvc.perform(post("/workorders?id=1")
         .contentType(contentType))
         .andExpect(status().isBadRequest());
   }
 
   @Test
-  public void enqueueWorkOrder_405_Put() throws Exception {
+  public void test_enqueueWorkOrder_405_Put() throws Exception {
     mockMvc.perform(put("/workorders?id=1&createdTs=20032016234509")
         .contentType(contentType))
         .andExpect(status().is4xxClientError());
   }
 
   @Test
-  public void enqueueWorkOrder_405_Get() throws Exception {
+  public void test_enqueueWorkOrder_405_Get() throws Exception {
     mockMvc.perform(get("/workorders?id=1&createdTs=20032016234509")
         .contentType(contentType))
         .andExpect(status().is4xxClientError());
   }
 
   @Test
-  public void dequeueWorkOrder_200() throws Exception {
+  public void test_dequeueWorkOrder_200() throws Exception {
     mockMvc.perform(delete("/workorders")
         .contentType(contentType))
         .andExpect(status().is2xxSuccessful());
   }
 
   @Test
-  public void retrieveAllWorkOrderIds_200() throws Exception {
+  public void test_retrieveAllWorkOrderIds_200() throws Exception {
     mockMvc.perform(get("/workorders/ids")
         .contentType(contentType))
         .andExpect(status().is2xxSuccessful());
   }
 
   @Test
-  public void dequeueWorkOrderId_200() throws Exception {
+  public void test_dequeueWorkOrderId_200() throws Exception {
     mockMvc.perform(delete("/workorders/ids?id=1")
         .contentType(contentType))
         .andExpect(status().is2xxSuccessful());
   }
 
   @Test
-  public void dequeueWorkOrderId_400_NoId() throws Exception {
+  public void test_dequeueWorkOrderId_400_NoId() throws Exception {
     mockMvc.perform(delete("/workorders/ids")
         .contentType(contentType))
         .andExpect(status().isBadRequest());
   }
 
   @Test
-  public void dequeueWorkOrderId_405_Get() throws Exception {
+  public void test_dequeueWorkOrderId_405_Get() throws Exception {
     mockMvc.perform(put("/workorders/ids")
         .contentType(contentType))
         .andExpect(status().is4xxClientError()
@@ -114,7 +114,7 @@ public class WorkOrderControllerTest {
   }
 
   @Test
-  public void dequeueWorkOrderId_405_Post() throws Exception {
+  public void test_dequeueWorkOrderId_405_Post() throws Exception {
     mockMvc.perform(post("/workorders/ids")
         .contentType(contentType))
         .andExpect(status().is4xxClientError()
@@ -122,49 +122,49 @@ public class WorkOrderControllerTest {
   }
 
   @Test
-  public void getWorkOrderQueuePosition_405() throws Exception {
+  public void test_getWorkOrderQueuePosition_405() throws Exception {
     mockMvc.perform(delete("/workorders/ids/positions?id=1")
         .contentType(contentType))
         .andExpect(status().is4xxClientError());
   }
 
   @Test
-  public void getWorkOrderQueuePosition_400_NoId() throws Exception {
+  public void test_getWorkOrderQueuePosition_400_NoId() throws Exception {
     mockMvc.perform(get("/workorders/ids/positions")
         .contentType(contentType))
         .andExpect(status().isBadRequest());
   }
 
   @Test
-  public void getWorkOrderQueuePosition_405_Post() throws Exception {
+  public void test_getWorkOrderQueuePosition_405_Post() throws Exception {
     mockMvc.perform(post("/workorders/ids/positions?id=1")
         .contentType(contentType))
         .andExpect(status().is4xxClientError());
   }
 
   @Test
-  public void getWorkOrderQueuePosition_405_Put() throws Exception {
+  public void test_getWorkOrderQueuePosition_405_Put() throws Exception {
     mockMvc.perform(put("/workorders/ids/positions?id=1")
         .contentType(contentType))
         .andExpect(status().is4xxClientError());
   }
 
   @Test
-  public void retrieveMeanWaitTime_200() throws Exception {
+  public void test_retrieveMeanWaitTime_200() throws Exception {
     mockMvc.perform(get("/workorders/waittimes?createdTs=20032016234509")
         .contentType(contentType))
         .andExpect(status().is2xxSuccessful());
   }
 
   @Test
-  public void retrieveMeanWaitTime_400_NoCreatedTs() throws Exception {
+  public void test_retrieveMeanWaitTime_400_NoCreatedTs() throws Exception {
     mockMvc.perform(get("/workorders/waittimes")
         .contentType(contentType))
         .andExpect(status().isBadRequest());
   }
 
   @Test
-  public void retrieveMeanWaitTime_405_put() throws Exception {
+  public void test_retrieveMeanWaitTime_405_put() throws Exception {
     mockMvc.perform(put("/workorders/waittimes")
         .contentType(contentType))
         .andExpect(status().is4xxClientError());
@@ -172,14 +172,14 @@ public class WorkOrderControllerTest {
   }
 
   @Test
-  public void retrieveMeanWaitTime_405_post() throws Exception {
+  public void test_retrieveMeanWaitTime_405_post() throws Exception {
     mockMvc.perform(post("/workorders/waittimes")
         .contentType(contentType))
         .andExpect(status().is4xxClientError());
   }
 
   @Test
-  public void retrieveMeanWaitTime_405_delete() throws Exception {
+  public void test_retrieveMeanWaitTime_405_delete() throws Exception {
     mockMvc.perform(delete("/workorders/waittimes")
         .contentType(contentType))
         .andExpect(status().is4xxClientError());
