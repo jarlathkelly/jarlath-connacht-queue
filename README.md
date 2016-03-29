@@ -1,6 +1,6 @@
 # jarlath-connacht-queue
 
-This is a queue based assignment for Jarlath.
+This is a queue based assignment for Jarlath Kelly.
 
 ## Installation
 From root directory:
