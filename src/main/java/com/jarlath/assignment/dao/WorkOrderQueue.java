@@ -7,7 +7,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by jarlath.kelly on 28/03/2016.
+ * The {@link WorkOrderQueue} represents a Singleton Queue Object to queue
+ * {@link WorkOrder} objects.
+ *
+ * @author  Jarlath Kelly
+ * @see WorkOrder
  */
 @Repository
 public class WorkOrderQueue {
@@ -17,7 +21,12 @@ public class WorkOrderQueue {
   protected WorkOrderQueue() {
   }
 
-  // Runtime initialisation By defualt ThreadSafe
+  /**
+   * Provide runtime initilisation of the singleton Queue.
+   * This type of instantiation is threadsafe by default.
+   *
+   * @return List of WorkOrders
+   */
   public static List<WorkOrder> getInstance() {
     return instance;
   }

@@ -4,7 +4,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
- * Created by jarlath.kelly on 27/03/2016.
+ * The {@link WorkOrderIdNotOnQueueException} extends RuntimeException.
+ * This exception will be thrown when Work Order ID does not exist in the Queue.
+ *
+ * @author  Jarlath Kelly
  */
 @ResponseStatus(value = HttpStatus.BAD_REQUEST, reason = "WorkOrder ID not Found on Queue")
 public class WorkOrderIdNotOnQueueException extends RuntimeException {

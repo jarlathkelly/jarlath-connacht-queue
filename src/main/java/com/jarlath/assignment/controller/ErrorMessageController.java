@@ -15,7 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * The {@link ErrorMessageController} handles basic error rendering of {@link ErrorAttributes}
- * as defined by {@link ErrorPayload}.
+ * as defined by {@link ErrorPayload}. This configuration overrides the whitelabel
+ * error page provided by Spring Boot.
  *
  * @author  Jarlath Kelly
  * @see ErrorAttributes

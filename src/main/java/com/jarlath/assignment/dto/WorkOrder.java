@@ -1,14 +1,30 @@
 package com.jarlath.assignment.dto;
 
+import com.jarlath.assignment.controller.ErrorMessageController;
 import com.jarlath.assignment.exception.InvalidIdParameterException;
 import com.jarlath.assignment.exception.InvalidTimestampParameterException;
 import com.jarlath.assignment.service.ValidationServiceImpl;
 import com.jarlath.assignment.service.WorkOrderServiceImpl;
 import com.jarlath.assignment.util.Statics;
+import org.springframework.boot.autoconfigure.web.ErrorAttributes;
+
 import java.text.ParseException;
 import java.util.Comparator;
 
-
+/**
+ * The {@link WorkOrder} represents the Work Order Request object. The object
+ * contains 2 members. The class implements Comparator and Comparable in order to
+ * override both the compareTo() and compare() methods. This class is designed to
+ * populate a prioirtised queue. In order to be sortable each element of the
+ * queue will be comparable to any othe elemnt on the queue.
+ *
+ * Id is the unique identifer of the Work Order.
+ * CreatedTs is the timestamp this Work Order was placed on the queue
+ *
+ * @author  Jarlath Kelly
+ * @see com.jarlath.assignment.dao.WorkOrderQueue
+ * @see WorkOrderServiceImpl
+ */
 public class WorkOrder implements Comparator<WorkOrder>, Comparable<WorkOrder> {
   private Long id;
   private String createdTs;
@@ -30,20 +46,57 @@ public class WorkOrder implements Comparator<WorkOrder>, Comparable<WorkOrder> {
     return createdTs;
   }
 
+
+  /**
+   * Overrides the compare() method of the Comparable Interface.
+   * This method facilitates the natural ordering by Id of
+   * Work Order Objects.
+   *
+   *  This method returns 0 if Work Order Ids are equal.
+   *  1 if this Work Order Id is greater than that of the Work Order being compared to
+   *  -1 if this Work Order Id is less than that of the Work Order being compared to
+   * @return int
+   */
   @Override
   public int compareTo(WorkOrder anotherWorkOrder) {
     if (!(anotherWorkOrder instanceof WorkOrder))
       throw new ClassCastException("A WorkOrder object expected.");
-    Long anotherWorkOrderId = ((WorkOrder) anotherWorkOrder).getId();
+    Long anotherWorkOrderId =  anotherWorkOrder.getId();
     return (this.id).compareTo(anotherWorkOrderId);
   }
 
-
+  /**
+   * Provides basic validation of a WorkOrder
+   * The method calls the Validation Service to validate
+   * both the WorkOrder Id and createdTs members.
+   * Id must be a valid number between 1 and 9223372036854775807
+   * createdTs must be a valid Timestamp with the format: DDMMYYYYHHMMSS
+   * @param order WorkOrder
+   * @return boolean
+   */
   public boolean isValid(WorkOrder order) throws InvalidIdParameterException, InvalidTimestampParameterException {
     ValidationServiceImpl validationService = new ValidationServiceImpl();
     return (validationService.isCreatedTsValid(order.getCreatedTS()) && validationService.isIdValid(order.getId()));
   }
 
+  /**
+   * Overrides the compare() method of the Comparator Interface.
+   * This method facilitates the custome ordering by rank of
+   * Work Order Objects.
+   *
+   * The custom ranking of the Work Order Requests is governed by the following
+   * four rules;
+   *   (1) Normal IDs rank = to the no of seconds on queue.
+   *   (2) Priority IDs rank = max(3, n log n) where n is no of seconds on queue
+   *   (3) VIP IDs rank = max(4, 2n log n) where n is no of seconds on queue
+   *   (4) Management Override IDs are ranked ahead other ID
+   *    and are ranked among themselves according to the no of seconds on queue
+   *
+   *  This method returns 0 if Work Order Ids are equal.
+   *  1 if this Work Order Id is greater than that of the Work Order being compared to
+   *  -1 if this Work Order Id is less than that of the Work Order being compared to
+   * @return int
+   */
   public int compare(WorkOrder workOrder1, WorkOrder workOrder2) {
     WorkOrderServiceImpl workOrderService = new WorkOrderServiceImpl();
     try {
@@ -75,67 +128,5 @@ public class WorkOrder implements Comparator<WorkOrder>, Comparable<WorkOrder> {
     return 0;
 
   }
-
-//  protected static int getComparisonReturnValue(Long value) {
-//    if (value > 0) {
-//      return -1;
-//    } else if (value < 0) {
-//      return 1;
-//    } else {
-//      return 0;
-//    }
-//  }
-//
-//  protected static Long getWorkOrderRank(String workOrderType, WorkOrder workOrder) throws ParseException {
-//    Long rank = 0L;
-//
-//    if (workOrderType.equals(Statics.VIP)) {
-//      return getVipRank(workOrder.getCreatedTS());
-//    } else if (workOrderType.equals(Statics.PRIORITY)) {
-//      return getPriorityRank(workOrder.getCreatedTS());
-//    } else {
-//
-//      return getNormalRank(workOrder.getCreatedTS());
-//
-//    }
-//  }
-//
-//  protected static String getWorkOrderType(Long id) {
-//    if (id % 3 == 0) {
-//      if (id % 5 == 0) {
-//        return Statics.MGMT_OVERRIDE;
-//      }
-//      return Statics.PRIORITY;
-//    } else if (id % 5 == 0) {
-//      return Statics.VIP;
-//    } else {
-//      return Statics.NORMAL;
-//    }
-//  }
-//
-//  protected static Long getMgmtOverrideRank(String date) throws ParseException {
-//    DateService dateService = new DateService();
-//    return dateService.getSecondsOnQueue(date);
-//  }
-//
-//  protected static Long getVipRank(String date) throws ParseException {
-//    DateService dateService = new DateService();
-//    Long secondsOnQueue = dateService.getSecondsOnQueue(date);
-//    double rank = Math.max(4, (Math.log(secondsOnQueue) / Math.log(2)) * secondsOnQueue);
-//    return (long) rank;
-//  }
-//
-//  protected static long getPriorityRank(String date) throws ParseException {
-//    DateService dateService = new DateService();
-//    Long secondsOnQueue = dateService.getSecondsOnQueue(date);
-//    double rank = Math.max(3, (int) (Math.log(secondsOnQueue) / Math.log(2)) * secondsOnQueue);
-//    return (long) rank;
-//  }
-//
-//  protected static Long getNormalRank(String date) throws ParseException {
-//    DateService dateService = new DateService();
-//    return dateService.getSecondsOnQueue(date);
-//  }
-
 
 }

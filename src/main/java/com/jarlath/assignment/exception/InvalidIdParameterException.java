@@ -4,9 +4,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
- * Created by jarlath.kelly on 26/03/2016.
+ * The {@link InvalidIdParameterException} extends RuntimeException.
+ * This exception will be thrown when an Invalid Work Order Id is encountered.
+ *
+ * @author  Jarlath Kelly
  */
-
 @ResponseStatus(value = HttpStatus.BAD_REQUEST, reason = "ID Parameter Value is Invalid")
 public class InvalidIdParameterException extends RuntimeException {
 

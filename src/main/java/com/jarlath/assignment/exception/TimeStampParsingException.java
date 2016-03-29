@@ -4,7 +4,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
- * Created by jarlath.kelly on 28/03/2016.
+ * The {@link TimeStampParsingException} extends RuntimeException.
+ * This exception will be thrown when a Work Order createdTs
+ * encounters an issue during parsing.
+ *
+ * @author  Jarlath Kelly
  */
 @ResponseStatus(value = HttpStatus.BAD_REQUEST, reason = "There was an error parsing the Timestamp Parameter")
 
