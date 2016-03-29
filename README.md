@@ -1,15 +1,15 @@
 # jarlath-connacht-queue
 
-This is a queue based assignment for Jarlath.
+Jarlath's Rest based assignment for Aaron &  Andreas.
 
 ## Installation
-The install scripts provided will perform the following tasks:
-- Maven Clean and Install of the codebase
+The install scripts (install.sh/install.bat) provided will perform the following tasks:
+- Maven Clean and Install of the codebase (this step will also run a full suite of unit tests)
 - Generate JavaDocs for the codebase
 - Start up Spring Boot
 
 #### Prerequisites:
-1. Maven 3.2.1
+1. Maven 3.2.1 +
 2. Java 8 (jdk1.8.0_25 used to develop)
 
 From project root directory:
