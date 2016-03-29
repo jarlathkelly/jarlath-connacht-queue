@@ -25,7 +25,7 @@ $ sh ./install.sh
 ```
 Rest service resources will then be available at http://localhost:8080/
 
-Use a rest Client to Test the endpoints. I use Postman.
+Use a rest Client to Test the endpoints. I use Postman. See https://www.getpostman.com/
 
 ##  Endpoints & Usage
 1. An endpoint for adding a Work Order to the queue (enqueue). This endpoint accepts two parameters, the ID to enqueue and the time at which the ID was added to the queue.
