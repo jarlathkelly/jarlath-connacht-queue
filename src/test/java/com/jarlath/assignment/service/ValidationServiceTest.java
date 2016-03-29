@@ -2,13 +2,7 @@ package com.jarlath.assignment.service;
 
 import com.jarlath.assignment.exception.InvalidIdParameterException;
 import com.jarlath.assignment.exception.InvalidTimestampParameterException;
-import com.jarlath.assignment.util.Statics;
 import org.junit.Test;
-
-import java.text.ParseException;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import static org.junit.Assert.assertTrue;
 
@@ -17,7 +11,7 @@ import static org.junit.Assert.assertTrue;
  */
 public class ValidationServiceTest {
 
-  ValidationService validationService = new ValidationService();
+  ValidationServiceImpl validationService = new ValidationServiceImpl();
 
   @Test
   public void test_isIdValid1() {

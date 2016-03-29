@@ -2,8 +2,8 @@ package com.jarlath.assignment.dto;
 
 import com.jarlath.assignment.exception.InvalidIdParameterException;
 import com.jarlath.assignment.exception.InvalidTimestampParameterException;
-import com.jarlath.assignment.service.ValidationService;
-import com.jarlath.assignment.service.WorkOrderService;
+import com.jarlath.assignment.service.ValidationServiceImpl;
+import com.jarlath.assignment.service.WorkOrderServiceImpl;
 import com.jarlath.assignment.util.Statics;
 import java.text.ParseException;
 import java.util.Comparator;
@@ -40,12 +40,12 @@ public class WorkOrder implements Comparator<WorkOrder>, Comparable<WorkOrder> {
 
 
   public boolean isValid(WorkOrder order) throws InvalidIdParameterException, InvalidTimestampParameterException {
-    ValidationService validationService = new ValidationService();
+    ValidationServiceImpl validationService = new ValidationServiceImpl();
     return (validationService.isCreatedTsValid(order.getCreatedTS()) && validationService.isIdValid(order.getId()));
   }
 
   public int compare(WorkOrder workOrder1, WorkOrder workOrder2) {
-    WorkOrderService workOrderService = new WorkOrderService();
+    WorkOrderServiceImpl workOrderService = new WorkOrderServiceImpl();
     try {
       if (!(workOrder1 instanceof WorkOrder) || !(workOrder2 instanceof WorkOrder)) {
         throw new ClassCastException("WorkOrder objects are expected.");

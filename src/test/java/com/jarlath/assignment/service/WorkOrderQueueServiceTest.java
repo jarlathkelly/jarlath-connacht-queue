@@ -1,13 +1,10 @@
 package com.jarlath.assignment.service;
 
-import com.jarlath.assignment.dao.WorkOrderQueue;
 import com.jarlath.assignment.dto.WorkOrder;
 import com.jarlath.assignment.exception.*;
 import org.junit.Test;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -19,7 +16,7 @@ import static org.junit.Assert.assertTrue;
  */
 public class WorkOrderQueueServiceTest {
 
-  WorkOrderQueueService workOrderQueueService = new WorkOrderQueueService();
+  WorkOrderQueueServiceImpl workOrderQueueService = new WorkOrderQueueServiceImpl();
   public final static Long ONE_HOUR = 3599L;
   public final static String BAD_DATE = "160419xxxx82183020";
 

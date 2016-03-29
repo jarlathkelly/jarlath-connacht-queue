@@ -1,11 +1,10 @@
 package com.jarlath.assignment.controller;
 
-import java.text.ParseException;
 import java.util.List;
-import com.jarlath.assignment.exception.TimeStampParsingException;
+
 import com.jarlath.assignment.dto.WorkOrder;
-import com.jarlath.assignment.service.ValidationService;
-import com.jarlath.assignment.service.WorkOrderQueueService;
+import com.jarlath.assignment.service.ValidationServiceImpl;
+import com.jarlath.assignment.service.WorkOrderQueueServiceImpl;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,8 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class WorkOrderController {
 
-  ValidationService validationService = new ValidationService();
-  WorkOrderQueueService workOrderQueueService = new WorkOrderQueueService();
+  ValidationServiceImpl validationService = new ValidationServiceImpl();
+  WorkOrderQueueServiceImpl workOrderQueueService = new WorkOrderQueueServiceImpl();
 
   /**
    * An endpoint for adding a ID to queue (enqueue). This endpoint should

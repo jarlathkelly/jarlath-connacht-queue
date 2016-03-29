@@ -15,7 +15,7 @@ import static org.junit.Assert.assertTrue;
  */
 public class DateServiceTest {
 
-  DateService dateService = new DateService();
+  DateServiceImpl dateService = new DateServiceImpl();
   public final static String BAD_DATE = "160419xxxx82183020";
   public final static Long ONE_HOUR = 3599L;
 

@@ -15,7 +15,7 @@ import static org.junit.Assert.assertTrue;
  * Created by jarlath.kelly on 28/03/2016.
  */
 public class WorkOrderServiceTest {
-  WorkOrderService WorkOrderService = new WorkOrderService();
+  WorkOrderServiceImpl WorkOrderService = new WorkOrderServiceImpl();
 
   public final static String BAD_DATE = "160419xxxx82183020";
   public final static Long ONE_HOUR = 3599L;
