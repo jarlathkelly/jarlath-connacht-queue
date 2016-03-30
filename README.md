@@ -167,7 +167,7 @@ http://localhost:8080/workorders/waittimes?createdTs=30032016165012
 
 ## ErrorHandling
 
-#### InvalidTimestampParameterException
+#### InvalidIdParameterException
 ```
 http://localhost:8080/workorders/waittimes?createdTs=300320161612
 {
