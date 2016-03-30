@@ -2,12 +2,17 @@ package com.jarlath.assignment.dto;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.jarlath.assignment.dao.WorkOrderQueue;
 import org.springframework.hateoas.ResourceSupport;
 
 import java.util.List;
 
 /**
- * Created by jarlath.kelly on 30/03/2016.
+ * The {@link WorkOrderIdList} represents a transfer object for a List of Id's
+ *
+ * @author Jarlath Kelly
+ * @see WorkOrder
+ * @see WorkOrderQueue
  */
 public class WorkOrderIdList  extends ResourceSupport {
   private List<Long> workOrderIdList;

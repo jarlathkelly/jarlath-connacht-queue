@@ -1,6 +1,5 @@
 package com.jarlath.assignment.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jarlath.assignment.exception.InvalidIdParameterException;
 import com.jarlath.assignment.exception.InvalidTimestampParameterException;
 import com.jarlath.assignment.service.ValidationServiceImpl;

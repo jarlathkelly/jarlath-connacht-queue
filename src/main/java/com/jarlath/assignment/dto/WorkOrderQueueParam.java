@@ -2,10 +2,16 @@ package com.jarlath.assignment.dto;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.jarlath.assignment.dao.WorkOrderQueue;
 import org.springframework.hateoas.ResourceSupport;
 
 /**
- * Created by jarlath.kelly on 30/03/2016.
+ * The {@link WorkOrderQueueParam} is a transfer object
+ * to store characteristics of the Work Order Queue
+ *
+ * @author Jarlath Kelly
+ * @see WorkOrder
+ * @see WorkOrderQueue
  */
 public class WorkOrderQueueParam   extends ResourceSupport {
   private Long waitTime;
