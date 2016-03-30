@@ -11,7 +11,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * Created by jarlath.kelly on 28/03/2016.
  */
-public class WorkOrderQueueServiceTest {
+public class WorkOrderQueueServiceImplTest {
 
   WorkOrderQueueServiceImpl workOrderQueueService = new WorkOrderQueueServiceImpl();
   public final static Long ONE_HOUR = 3599L;
@@ -189,6 +189,15 @@ public class WorkOrderQueueServiceTest {
   public void test_retrieveAverageWaitTime_InvalidTimestampParameterException() {
     clearQueue();
     workOrderQueueService.retrieveAverageWaitTime(null);
+    clearQueue();
+  }
+
+  @Test(expected = NegativeDurationWaitTimeException.class)
+  public void test_retrieveAverageWaitTime_NegativeDurationWaitTimeException() {
+    clearQueue();
+    List<WorkOrder> queue = workOrderQueueService.retrieveWorkOrderQueue();
+    workOrderQueueService.enqueueWorkOrder(new WorkOrder(333L, testUtil.getADateString(2)));
+    workOrderQueueService.retrieveAverageWaitTime(testUtil.getADateString(6));
     clearQueue();
   }
 

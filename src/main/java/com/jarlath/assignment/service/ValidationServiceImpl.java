@@ -1,5 +1,6 @@
 package com.jarlath.assignment.service;
 
+import com.jarlath.assignment.exception.IdOutOfRangeException;
 import com.jarlath.assignment.exception.InvalidIdParameterException;
 import com.jarlath.assignment.exception.InvalidTimestampParameterException;
 import com.jarlath.assignment.util.Statics;
@@ -57,5 +58,15 @@ public class ValidationServiceImpl implements ValidationService {
       throw new InvalidTimestampParameterException(createdTs);
     }
     return true;
+  }
+
+  public Long isIdValidRange(final String id) throws IdOutOfRangeException {
+    Long result=0L;
+    try {
+      Long l = Long.parseLong(id);
+    } catch (NumberFormatException nfe) {
+      throw new IdOutOfRangeException(id);
+    }
+    return result;
   }
 }

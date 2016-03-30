@@ -9,7 +9,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * Created by jarlath.kelly on 27/03/2016.
  */
-public class ValidationServiceTest {
+public class ValidationServiceImplTest {
 
   ValidationServiceImpl validationService = new ValidationServiceImpl();
 

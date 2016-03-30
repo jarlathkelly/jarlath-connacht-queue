@@ -27,7 +27,7 @@ Rest service resources will then be available at http://localhost:8080/
 
 Use a rest Client to Test the endpoints. I use Postman. See https://www.getpostman.com/
 
-##  Rest Endpoints provided & Usage
+##  Rest Endpoints provided
 1. An endpoint for adding a Work Order to the queue (enqueue). This endpoint accepts two parameters, the ID to enqueue and the time at which the ID was added to the queue.
  - POST http://localhost:8080/workorders?id=1234&createdTs=28032016193012
 2. An endpoint for getting the top ranked ID from the queue and removing it (dequeue). This endpoint returns the highest ranked ID and the time it was entered into the queue.
@@ -46,6 +46,16 @@ Use a rest Client to Test the endpoints. I use Postman. See https://www.getpostm
 7. Some management services have also been provided with the Spring Boot actuator module. /health,/audits,/beans,/errors are also available on http://localhost:8080/.
 
 ##  Usage & Example Responses
+The id parameter supplied to the REST calls must be a valid number between 1 and 9223372036854775807.
+The createdTs supplied to the REST calls must be a valid 14 digit number that represents Date in
+to the following format: ddMMyyyyHHmmss
+- dd represents day (valid range 1-31
+- MM represents month (valid range 1-12
+- yyyy represents year (valid range 2010-2199
+- HH represents hour (valid range 00-24
+- mm represents year (valid range 00-59
+- ss represents year (valid range 00-59
+
 #### Enqueue Work Order: POST
 ```
 http://localhost:8080/workorders?id=1&createdTs=30032016093023

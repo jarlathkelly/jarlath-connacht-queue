@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  *
  * @author Jarlath Kelly
  */
-@ResponseStatus(value = HttpStatus.BAD_REQUEST, reason = "WorkOrder ID not Found on Queue")
+@ResponseStatus(value = HttpStatus.FORBIDDEN, reason = "WorkOrder ID not Found on Queue")
 public class WorkOrderIdNotOnQueueException extends RuntimeException {
 
   public WorkOrderIdNotOnQueueException() {

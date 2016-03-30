@@ -1,6 +1,5 @@
 package com.jarlath.assignment.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.jarlath.assignment.dto.WorkOrder;
@@ -125,7 +124,6 @@ public class WorkOrderController {
     return new ResponseEntity<WorkOrder>(workOrder, HttpStatus.OK);
 
   }
-
 
   /**
    * This endpoint retrieves the average wait time on the queue.

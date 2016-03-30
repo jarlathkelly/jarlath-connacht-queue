@@ -115,7 +115,7 @@ public class WorkOrderControllerTest {
   public void test_dequeueWorkOrderId_400_IDNotOnQueue() throws Exception {
     mockMvc.perform(delete("/workorders/ids?id=133333333")
         .contentType(contentType))
-        .andExpect(status().isBadRequest());
+        .andExpect(status().is4xxClientError());
   }
 
   @Test

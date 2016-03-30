@@ -178,7 +178,7 @@ public class WorkOrderQueueServiceImpl implements WorkOrderQueueService {
    * @param currentTs String Date time representation of format DDMMYYYYHHMMSS
    * @return Long average waittime in seconds of all Work Orders on queue.
    */
-  public Long retrieveAverageWaitTime(final String currentTs) throws TimeStampParsingException, InvalidTimestampParameterException {
+  public Long retrieveAverageWaitTime(final String currentTs) throws TimeStampParsingException, InvalidTimestampParameterException, NegativeDurationWaitTimeException {
     if (null == currentTs) {
       throw new InvalidTimestampParameterException();
     }
@@ -192,6 +192,9 @@ public class WorkOrderQueueServiceImpl implements WorkOrderQueueService {
         totalTime = totalTime + dateService.getSecondsOnQueueUntilSpecifiedTime(item.getCreatedTS(), currentTs);
         if (count != 0 && totalTime != 0) {
           meanTime = totalTime / count;
+        }
+        if(meanTime < 0){
+          throw new NegativeDurationWaitTimeException();
         }
       } catch (ParseException pe) {
         throw new TimeStampParsingException(currentTs);

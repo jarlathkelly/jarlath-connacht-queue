@@ -11,7 +11,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * Created by jarlath.kelly on 27/03/2016.
  */
-public class DateServiceTest {
+public class DateServiceImplTest {
 
   DateServiceImpl dateService = new DateServiceImpl();
   public final static String BAD_DATE = "160419xxxx82183020";
