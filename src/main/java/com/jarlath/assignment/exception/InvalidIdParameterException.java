@@ -16,6 +16,7 @@ public class InvalidIdParameterException extends RuntimeException {
   }
 
   public InvalidIdParameterException(final String s) {
-    super("ID Parameter Value is Invalid: " + s);
+    super("ID Parameter Value "+s+ " is Invalid. Id must be a valid number with a range " +
+        "of 1 to 9223372036854775807. " + s);
   }
 }
