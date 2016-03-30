@@ -46,6 +46,8 @@ Use a rest Client to Test the endpoints. I use Postman. See https://www.getpostm
 7. Some management services have also been provided with the Spring Boot actuator module. /health and /beans are available on http://localhost:8080/.
 
 ##  Usage & Example Responses
+
+#### Notes
 The id parameter supplied to the REST calls must be a valid number between 1 and 9223372036854775807.
 The createdTs supplied to the REST calls must be a valid 14 digit number that represents Date in
 to the following format: ddMMyyyyHHmmss
@@ -55,6 +57,11 @@ to the following format: ddMMyyyyHHmmss
 - HH represents hour (valid range 00-24
 - mm represents year (valid range 00-59
 - ss represents year (valid range 00-59
+
+The 'position' member of returned Json string is for convenience. This will only ever be populated
+when making a call to return the position for a specific ID on the queue.
+
+A Rudimentary HATEOAS design has been incorporated into the returned Json.
 
 #### Enqueue Work Order: POST
 ```
