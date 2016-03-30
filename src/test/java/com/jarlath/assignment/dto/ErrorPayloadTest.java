@@ -10,6 +10,8 @@ import static junit.framework.TestCase.assertTrue;
 
 /**
  * Created by jarlath.kelly on 29/03/2016.
+ *
+ * Unit tests for the ErrorPayload class
  */
 public class ErrorPayloadTest {
 

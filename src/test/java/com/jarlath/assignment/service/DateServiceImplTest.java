@@ -9,7 +9,9 @@ import java.text.ParseException;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Created by jarlath.kelly on 27/03/2016.
+ * Created by jarlath.kelly on 29/03/2016.
+ *
+ * Unit tests for the DateServiceImpl class
  */
 public class DateServiceImplTest {
 

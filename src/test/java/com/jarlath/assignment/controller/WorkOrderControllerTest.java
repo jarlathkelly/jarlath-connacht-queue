@@ -1,7 +1,9 @@
 package com.jarlath.assignment.controller;
 
 /**
- * Created by jarlath.kelly on 28/03/2016.
+ * Created by jarlath.kelly on 29/03/2016.
+ *
+ * Unit tests for the WorkOrderController class
  */
 
 import com.jarlath.assignment.Application;
@@ -21,7 +23,6 @@ import java.nio.charset.Charset;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
-
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)

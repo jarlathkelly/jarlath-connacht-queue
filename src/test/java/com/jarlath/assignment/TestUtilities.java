@@ -5,7 +5,9 @@ import java.util.Calendar;
 import java.util.Date;
 
 /**
- * Created by jarlath.kelly on 30/03/2016.
+ * Created by jarlath.kelly on 29/03/2016.
+ *
+ * Utility Class to facilitate Unit testing
  */
 public class TestUtilities {
 

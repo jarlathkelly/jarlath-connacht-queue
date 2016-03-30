@@ -9,7 +9,9 @@ import java.text.ParseException;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Created by jarlath.kelly on 28/03/2016.
+ * Created by jarlath.kelly on 29/03/2016.
+ *
+ * Unit tests for the WorkOrderServiceImpl class
  */
 public class WorkOrderServiceImplTest {
   WorkOrderServiceImpl WorkOrderService = new WorkOrderServiceImpl();

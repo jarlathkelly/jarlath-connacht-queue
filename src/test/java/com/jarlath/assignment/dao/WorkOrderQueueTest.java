@@ -8,7 +8,9 @@ import java.util.List;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Created by jarlath.kelly on 28/03/2016.
+ * Created by jarlath.kelly on 29/03/2016.
+ *
+ * Unit tests for the WorkOrderQueue class
  */
 public class WorkOrderQueueTest {
 

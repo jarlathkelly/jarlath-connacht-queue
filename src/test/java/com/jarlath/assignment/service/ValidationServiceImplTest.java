@@ -7,7 +7,9 @@ import org.junit.Test;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Created by jarlath.kelly on 27/03/2016.
+ * Created by jarlath.kelly on 29/03/2016.
+ *
+ * Unit tests for the ValidationServiceImpl class
  */
 public class ValidationServiceImplTest {
 

@@ -10,6 +10,11 @@ import java.util.List;
  * The {@link WorkOrderQueue} represents a Singleton Queue Object to queue
  * {@link WorkOrder} objects.
  *
+ * This class repository was created in the absence of a 'real' back end
+ * for this application. Of course it is possible to plug in any number
+ * of backend technologies here be it memcache,redis,Sprin data etc etc
+ * This implementation is a template queue and not a Production grade solution.
+ *
  * @author Jarlath Kelly
  * @see WorkOrder
  */

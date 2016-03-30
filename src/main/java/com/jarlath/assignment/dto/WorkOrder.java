@@ -61,9 +61,6 @@ public class WorkOrder extends ResourceSupport implements Comparator<WorkOrder>,
     return position;
   }
 
-
-
-
   /**
    * Overrides the compare() method of the Comparable Interface.
    * This method facilitates the natural ordering by Id of

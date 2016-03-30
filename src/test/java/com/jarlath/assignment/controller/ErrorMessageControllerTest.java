@@ -20,6 +20,8 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
 
 /**
  * Created by jarlath.kelly on 29/03/2016.
+ *
+ * Unit tests for the ErrorMessageController class
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
