@@ -29,7 +29,7 @@ public class DateServiceImpl implements DateService {
    * @return Date
    * @throws ParseException when supplied Timestamp has issues parsing
    */
-  protected Date convertStringToDate(String dateIn) throws ParseException, InvalidTimestampParameterException {
+  protected Date convertStringToDate(final String dateIn) throws ParseException, InvalidTimestampParameterException {
     if (null == dateIn) {
       throw new InvalidTimestampParameterException();
     }
@@ -46,7 +46,7 @@ public class DateServiceImpl implements DateService {
    * @return Long no of Seconds on the queue
    * @throws ParseException when supplied Timestamp has issues parsing
    */
-  public Long getSecondsOnQueue(String date) throws ParseException, InvalidTimestampParameterException {
+  public Long getSecondsOnQueue(final String date) throws ParseException, InvalidTimestampParameterException {
     if (null == date) {
       throw new InvalidTimestampParameterException();
     }
@@ -63,7 +63,7 @@ public class DateServiceImpl implements DateService {
    * @return Long no of Seconds on the queue
    * @throws ParseException when supplied Timestamp has issues parsing
    */
-  public Long getSecondsOnQueueUntilSpecifiedTime(String date, String currentTime) throws ParseException, InvalidTimestampParameterException {
+  public Long getSecondsOnQueueUntilSpecifiedTime(final String date, final String currentTime) throws ParseException, InvalidTimestampParameterException {
     if (null == date || null == currentTime) {
       throw new InvalidTimestampParameterException();
     }

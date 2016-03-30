@@ -29,7 +29,7 @@ public class WorkOrderServiceImpl implements WorkOrderService {
    * @param value supplied for analysis
    * @return int
    */
-  public int getComparisonReturnValue(Long value) {
+  public int getComparisonReturnValue(final Long value) {
     if (value > 0) {
       return -1;
     } else if (value < 0) {
@@ -48,7 +48,7 @@ public class WorkOrderServiceImpl implements WorkOrderService {
    * @param workOrder     instance of WorkOrder
    * @return Long rank of Work Order
    */
-  public Long getWorkOrderRank(String workOrderType, WorkOrder workOrder) throws ParseException {
+  public Long getWorkOrderRank(final String workOrderType,final  WorkOrder workOrder) throws ParseException {
 
     switch (workOrderType) {
       case Statics.VIP:
@@ -71,7 +71,7 @@ public class WorkOrderServiceImpl implements WorkOrderService {
    * @param id identifier of Work Order
    * @return String Work Order Type
    */
-  public String getWorkOrderType(Long id) {
+  public String getWorkOrderType(final Long id) {
     if (id % 3 == 0) {
       if (id % 5 == 0) {
         return Statics.MGMT_OVERRIDE;
@@ -91,7 +91,7 @@ public class WorkOrderServiceImpl implements WorkOrderService {
    * @param date date Work Order was queued
    * @return Long Rank of Work Order
    */
-  public Long getMgmtOverrideRank(String date) throws ParseException {
+  public Long getMgmtOverrideRank(final String date) throws ParseException {
     DateServiceImpl dateService = new DateServiceImpl();
     return dateService.getSecondsOnQueue(date);
   }
@@ -103,7 +103,7 @@ public class WorkOrderServiceImpl implements WorkOrderService {
    * @param date date Work Order was queued
    * @return Long Rank of Work Order
    */
-  public Long getVipRank(String date) throws ParseException {
+  public Long getVipRank(final String date) throws ParseException {
     DateServiceImpl dateService = new DateServiceImpl();
     Long secondsOnQueue = dateService.getSecondsOnQueue(date);
     double rank = Math.max(4, (Math.log(secondsOnQueue) / Math.log(2)) * secondsOnQueue);
@@ -117,7 +117,7 @@ public class WorkOrderServiceImpl implements WorkOrderService {
    * @param date date Work Order was queued
    * @return Long Rank of Work Order
    */
-  public long getPriorityRank(String date) throws ParseException {
+  public long getPriorityRank(final String date) throws ParseException {
     DateServiceImpl dateService = new DateServiceImpl();
     Long secondsOnQueue = dateService.getSecondsOnQueue(date);
     double rank = Math.max(3, (int) (Math.log(secondsOnQueue) / Math.log(2)) * secondsOnQueue);
@@ -131,7 +131,7 @@ public class WorkOrderServiceImpl implements WorkOrderService {
    * @param date date Work Order was queued
    * @return Long Rank of Work Order
    */
-  public Long getNormalRank(String date) throws ParseException {
+  public Long getNormalRank(final String date) throws ParseException {
     DateServiceImpl dateService = new DateServiceImpl();
     return dateService.getSecondsOnQueue(date);
   }

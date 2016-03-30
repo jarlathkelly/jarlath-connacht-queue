@@ -15,7 +15,7 @@ public class InvalidIdParameterException extends RuntimeException {
   public InvalidIdParameterException() {
   }
 
-  public InvalidIdParameterException(String s) {
+  public InvalidIdParameterException(final String s) {
     super("ID Parameter Value is Invalid: " + s);
   }
 }

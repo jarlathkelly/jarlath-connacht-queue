@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.jarlath.assignment.dao.WorkOrderQueue;
 import org.springframework.hateoas.ResourceSupport;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -15,6 +16,7 @@ import java.util.List;
  * @see WorkOrderQueue
  */
 public class WorkOrderIdList  extends ResourceSupport {
+  @NotNull
   private List<Long> workOrderIdList;
 
   public WorkOrderIdList() {
@@ -29,7 +31,7 @@ public class WorkOrderIdList  extends ResourceSupport {
     return workOrderIdList;
   }
 
-  public void setWorkOrderIdList(List<Long> workOrderIdList) {
+  public void setWorkOrderIdList(final List<Long> workOrderIdList) {
     this.workOrderIdList = workOrderIdList;
   }
 }

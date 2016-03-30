@@ -9,7 +9,7 @@ import org.springframework.hateoas.ResourceSupport;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
+import javax.validation.constraints.NotNull;
 import java.text.ParseException;
 import java.util.Comparator;
 
@@ -28,7 +28,9 @@ import java.util.Comparator;
  * @see WorkOrderServiceImpl
  */
 public class WorkOrder extends ResourceSupport implements Comparator<WorkOrder>, Comparable<WorkOrder> {
+  @NotNull
   private Long workOrderId;
+  @NotNull
   private String createdTs;
   private Integer position = null;
 

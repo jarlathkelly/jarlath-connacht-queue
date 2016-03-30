@@ -15,7 +15,7 @@ public class InvalidTimestampParameterException extends RuntimeException {
   public InvalidTimestampParameterException() {
   }
 
-  public InvalidTimestampParameterException(String s) {
+  public InvalidTimestampParameterException(final String s) {
     super("CreatedTs Parameter Value is Invalid: " + s);
   }
 }

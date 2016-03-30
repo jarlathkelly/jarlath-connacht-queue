@@ -13,18 +13,18 @@ import java.text.ParseException;
  */
 public interface WorkOrderService {
 
-  int getComparisonReturnValue(Long value);
+  int getComparisonReturnValue(final Long value);
 
-  Long getWorkOrderRank(String workOrderType, WorkOrder workOrder) throws ParseException;
+  Long getWorkOrderRank(final String workOrderType,final  WorkOrder workOrder) throws ParseException;
 
-  String getWorkOrderType(Long id);
+  String getWorkOrderType(final Long id);
 
-  Long getMgmtOverrideRank(String date) throws ParseException;
+  Long getMgmtOverrideRank(final String date) throws ParseException;
 
-  Long getVipRank(String date) throws ParseException;
+  Long getVipRank(final String date) throws ParseException;
 
-  long getPriorityRank(String date) throws ParseException;
+  long getPriorityRank(final String date) throws ParseException;
 
-  Long getNormalRank(String date) throws ParseException;
+  Long getNormalRank(final String date) throws ParseException;
 
 }

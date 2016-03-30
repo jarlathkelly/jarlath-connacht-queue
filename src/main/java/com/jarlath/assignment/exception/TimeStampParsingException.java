@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 public class TimeStampParsingException extends RuntimeException {
 
-  public TimeStampParsingException(String s) {
+  public TimeStampParsingException(final String s) {
     super("There was an error parsing the Timestamp Parameter: " + s);
   }
 }

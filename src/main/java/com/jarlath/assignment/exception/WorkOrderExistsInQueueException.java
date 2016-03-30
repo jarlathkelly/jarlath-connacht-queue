@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 public class WorkOrderExistsInQueueException extends RuntimeException {
 
-  public WorkOrderExistsInQueueException(Long i) {
+  public WorkOrderExistsInQueueException(final Long i) {
     super("WorkOrder ID already on Queue: " + i);
   }
 }

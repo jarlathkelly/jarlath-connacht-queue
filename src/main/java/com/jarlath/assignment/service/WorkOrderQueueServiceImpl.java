@@ -39,7 +39,7 @@ public class WorkOrderQueueServiceImpl implements WorkOrderQueueService {
    * @param workOrder to be enqueued
    * @return WorkOrder just enqueued
    */
-  public WorkOrder enqueueWorkOrder(WorkOrder workOrder) throws WorkOrderExistsInQueueException, InvalidIdParameterException, InvalidTimestampParameterException {
+  public WorkOrder enqueueWorkOrder(final WorkOrder workOrder) throws WorkOrderExistsInQueueException, InvalidIdParameterException, InvalidTimestampParameterException {
     if (null == workOrder.getWorkOrderId()) {
       throw new InvalidIdParameterException();
     }
@@ -62,7 +62,7 @@ public class WorkOrderQueueServiceImpl implements WorkOrderQueueService {
    *
    * @param workOrder WorkOrder to be enqueued
    */
-  protected synchronized void addToWorkOrderQueue(WorkOrder workOrder) {
+  protected synchronized void addToWorkOrderQueue(final WorkOrder workOrder) {
     List<WorkOrder> queue = WorkOrderQueue.getInstance();
     queue.add(workOrder);
   }
@@ -76,7 +76,7 @@ public class WorkOrderQueueServiceImpl implements WorkOrderQueueService {
    * @param id of the WorkOrder to be dequeued
    * @return WorkOrder just dequeued
    */
-  public WorkOrder removeIdFromWorkOrderQueue(Long id) throws WorkOrderIdNotOnQueueException, InvalidIdParameterException {
+  public WorkOrder removeIdFromWorkOrderQueue(final Long id) throws WorkOrderIdNotOnQueueException, InvalidIdParameterException {
     if (null == id) {
       throw new InvalidIdParameterException();
     }
@@ -120,7 +120,7 @@ public class WorkOrderQueueServiceImpl implements WorkOrderQueueService {
    *
    * @param workorder WorkOrder to be dequeued
    */
-  protected synchronized void removeFromQueue(WorkOrder workorder) {
+  protected synchronized void removeFromQueue(final WorkOrder workorder) {
     List<WorkOrder> queue = retrieveWorkOrderQueue();
     queue.remove(workorder);
   }
@@ -149,7 +149,7 @@ public class WorkOrderQueueServiceImpl implements WorkOrderQueueService {
    * @param id identifier Work Order Request
    * @return int index of supplied Work Order Id on the Queue.
    */
-  public WorkOrder retrieveIndexOfWorkOrderId(Long id) throws WorkOrderIdNotOnQueueException, InvalidIdParameterException {
+  public WorkOrder retrieveIndexOfWorkOrderId(final Long id) throws WorkOrderIdNotOnQueueException, InvalidIdParameterException {
     if (null == id) {
       throw new InvalidIdParameterException();
     }
@@ -178,7 +178,7 @@ public class WorkOrderQueueServiceImpl implements WorkOrderQueueService {
    * @param currentTs String Date time representation of format DDMMYYYYHHMMSS
    * @return Long average waittime in seconds of all Work Orders on queue.
    */
-  public Long retrieveAverageWaitTime(String currentTs) throws TimeStampParsingException, InvalidTimestampParameterException {
+  public Long retrieveAverageWaitTime(final String currentTs) throws TimeStampParsingException, InvalidTimestampParameterException {
     if (null == currentTs) {
       throw new InvalidTimestampParameterException();
     }

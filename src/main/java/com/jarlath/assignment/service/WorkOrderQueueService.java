@@ -16,15 +16,15 @@ public interface WorkOrderQueueService {
 
   List<WorkOrder> retrieveWorkOrderQueue();
 
-  WorkOrder enqueueWorkOrder(WorkOrder workOrder) throws WorkOrderExistsInQueueException, InvalidIdParameterException, InvalidTimestampParameterException;
+  WorkOrder enqueueWorkOrder(final WorkOrder workOrder) throws WorkOrderExistsInQueueException, InvalidIdParameterException, InvalidTimestampParameterException;
 
-  WorkOrder removeIdFromWorkOrderQueue(Long id) throws WorkOrderIdNotOnQueueException, InvalidIdParameterException;
+  WorkOrder removeIdFromWorkOrderQueue(final Long id) throws WorkOrderIdNotOnQueueException, InvalidIdParameterException;
 
   WorkOrder removeTopFromWorkOrderQueue();
 
   List<Long> retrieveWorkOrderedIdList();
 
-  WorkOrder retrieveIndexOfWorkOrderId(Long id) throws WorkOrderIdNotOnQueueException, InvalidIdParameterException;
+  WorkOrder retrieveIndexOfWorkOrderId(final Long id) throws WorkOrderIdNotOnQueueException, InvalidIdParameterException;
 
-  Long retrieveAverageWaitTime(String currentTs) throws TimeStampParsingException, InvalidTimestampParameterException;
+  Long retrieveAverageWaitTime(final String currentTs) throws TimeStampParsingException, InvalidTimestampParameterException;
 }

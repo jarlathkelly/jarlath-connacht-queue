@@ -13,7 +13,7 @@ import java.text.ParseException;
  */
 public interface DateService {
 
-  Long getSecondsOnQueue(String date) throws ParseException, InvalidTimestampParameterException;
+  Long getSecondsOnQueue(final String date) throws ParseException, InvalidTimestampParameterException;
 
-  Long getSecondsOnQueueUntilSpecifiedTime(String date, String currentTime) throws ParseException, InvalidTimestampParameterException;
+  Long getSecondsOnQueueUntilSpecifiedTime(final String date, final String currentTime) throws ParseException, InvalidTimestampParameterException;
 }

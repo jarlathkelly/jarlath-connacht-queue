@@ -28,7 +28,7 @@ public class ValidationServiceImpl implements ValidationService {
    * @param id unique identifier of a Work order
    * @return boolean is Id valid
    */
-  public boolean isIdValid(Long id) throws InvalidIdParameterException {
+  public boolean isIdValid(final Long id) throws InvalidIdParameterException {
     if (null == id || id == 0L) {
       throw new InvalidIdParameterException();
     }
@@ -47,7 +47,7 @@ public class ValidationServiceImpl implements ValidationService {
    * @param createdTs String date representation with the format ddMMyyyyHHmmss
    * @return boolean is createdTs valid
    */
-  public boolean isCreatedTsValid(String createdTs) throws InvalidTimestampParameterException {
+  public boolean isCreatedTsValid(final String createdTs) throws InvalidTimestampParameterException {
     if (null == createdTs) {
       throw new InvalidTimestampParameterException();
     }
