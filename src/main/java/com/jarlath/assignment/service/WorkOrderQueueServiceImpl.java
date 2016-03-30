@@ -40,7 +40,7 @@ public class WorkOrderQueueServiceImpl implements WorkOrderQueueService {
    * @return WorkOrder just enqueued
    */
   public WorkOrder enqueueWorkOrder(WorkOrder workOrder) throws WorkOrderExistsInQueueException, InvalidIdParameterException, InvalidTimestampParameterException {
-    if (null == workOrder.getId()) {
+    if (null == workOrder.getWorkOrderId()) {
       throw new InvalidIdParameterException();
     }
     if (null == workOrder.getCreatedTS()) {
@@ -48,8 +48,8 @@ public class WorkOrderQueueServiceImpl implements WorkOrderQueueService {
     }
     List<WorkOrder> queue = retrieveWorkOrderQueue();
     for (WorkOrder order : queue) {
-      if (order.getId().equals(workOrder.getId())) {
-        throw new WorkOrderExistsInQueueException(workOrder.getId());
+      if (order.getWorkOrderId().equals(workOrder.getWorkOrderId())) {
+        throw new WorkOrderExistsInQueueException(workOrder.getWorkOrderId());
       }
     }
     addToWorkOrderQueue(workOrder);
@@ -83,12 +83,12 @@ public class WorkOrderQueueServiceImpl implements WorkOrderQueueService {
     List<WorkOrder> queue = retrieveWorkOrderQueue();
     WorkOrder workOrder = new WorkOrder();
     for (WorkOrder item : queue) {
-      if (item.getId().equals(id)) {
+      if (item.getWorkOrderId().equals(id)) {
         workOrder = item;
         break;
       }
     }
-    if (null == workOrder.getId()) {
+    if (null == workOrder.getWorkOrderId()) {
       throw new WorkOrderIdNotOnQueueException(id);
     }
     removeFromQueue(workOrder);
@@ -136,7 +136,7 @@ public class WorkOrderQueueServiceImpl implements WorkOrderQueueService {
     List<WorkOrder> queue = retrieveWorkOrderQueue();
     Collections.sort(queue, new WorkOrder());
     for (WorkOrder item : queue) {
-      result.add(item.getId());
+      result.add(item.getWorkOrderId());
     }
     return result;
   }
@@ -149,17 +149,19 @@ public class WorkOrderQueueServiceImpl implements WorkOrderQueueService {
    * @param id identifier Work Order Request
    * @return int index of supplied Work Order Id on the Queue.
    */
-  public int retrieveIndexOfWorkOrderId(Long id) throws WorkOrderIdNotOnQueueException, InvalidIdParameterException {
+  public WorkOrder retrieveIndexOfWorkOrderId(Long id) throws WorkOrderIdNotOnQueueException, InvalidIdParameterException {
     if (null == id) {
       throw new InvalidIdParameterException();
     }
     List<WorkOrder> queue = retrieveWorkOrderQueue();
     Collections.sort(queue, new WorkOrder());
     int index = 0;
+    WorkOrder workOrder = new WorkOrder();
     boolean workOrderFound = false;
     for (WorkOrder item : queue) {
-      if (item.getId().equals(id)) {
+      if (item.getWorkOrderId().equals(id)) {
         workOrderFound = true;
+        workOrder = new WorkOrder(item.getWorkOrderId(),item.getCreatedTS(),index);
         break;
       }
       index = index + 1;
@@ -167,7 +169,7 @@ public class WorkOrderQueueServiceImpl implements WorkOrderQueueService {
     if (!workOrderFound) {
       throw new WorkOrderIdNotOnQueueException();
     }
-    return index;
+    return workOrder;
   }
 
   /**

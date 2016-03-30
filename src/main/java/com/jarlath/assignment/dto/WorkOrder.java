@@ -1,10 +1,15 @@
 package com.jarlath.assignment.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jarlath.assignment.exception.InvalidIdParameterException;
 import com.jarlath.assignment.exception.InvalidTimestampParameterException;
 import com.jarlath.assignment.service.ValidationServiceImpl;
 import com.jarlath.assignment.service.WorkOrderServiceImpl;
 import com.jarlath.assignment.util.Statics;
+import org.springframework.hateoas.ResourceSupport;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.text.ParseException;
 import java.util.Comparator;
@@ -23,26 +28,39 @@ import java.util.Comparator;
  * @see com.jarlath.assignment.dao.WorkOrderQueue
  * @see WorkOrderServiceImpl
  */
-public class WorkOrder implements Comparator<WorkOrder>, Comparable<WorkOrder> {
-  private Long id;
+public class WorkOrder extends ResourceSupport implements Comparator<WorkOrder>, Comparable<WorkOrder> {
+  private Long workOrderId;
   private String createdTs;
+  private Integer position = null;
 
   public WorkOrder() {
   }
 
-
-  public WorkOrder(Long id, String createdTS) {
-    this.id = id;
+  @JsonCreator
+  public WorkOrder(@JsonProperty("id")Long id, @JsonProperty("createdTS")String createdTS) {
+    this.workOrderId = id;
     this.createdTs = createdTS;
   }
+  @JsonCreator
+  public WorkOrder(@JsonProperty("id")Long id, @JsonProperty("createdTS")String createdTS, @JsonProperty("position")Integer position) {
+    this.workOrderId = id;
+    this.createdTs = createdTS;
+    this.position = position;
+  }
 
-  public Long getId() {
-    return id;
+  public Long getWorkOrderId() {
+    return workOrderId;
   }
 
   public String getCreatedTS() {
     return createdTs;
   }
+
+  public Integer getPosition() {
+    return position;
+  }
+
+
 
 
   /**
@@ -61,8 +79,8 @@ public class WorkOrder implements Comparator<WorkOrder>, Comparable<WorkOrder> {
     if (anotherWorkOrder == null) {
       throw new ClassCastException("A WorkOrder object expected.");
     }
-    Long anotherWorkOrderId = anotherWorkOrder.getId();
-    return (this.id).compareTo(anotherWorkOrderId);
+    Long anotherWorkOrderId = anotherWorkOrder.getWorkOrderId();
+    return (this.workOrderId).compareTo(anotherWorkOrderId);
   }
 
   /**
@@ -77,7 +95,7 @@ public class WorkOrder implements Comparator<WorkOrder>, Comparable<WorkOrder> {
    */
   public boolean isValid(WorkOrder order) throws InvalidIdParameterException, InvalidTimestampParameterException {
     ValidationServiceImpl validationService = new ValidationServiceImpl();
-    return (validationService.isCreatedTsValid(order.getCreatedTS()) && validationService.isIdValid(order.getId()));
+    return (validationService.isCreatedTsValid(order.getCreatedTS()) && validationService.isIdValid(order.getWorkOrderId()));
   }
 
   /**
@@ -106,8 +124,8 @@ public class WorkOrder implements Comparator<WorkOrder>, Comparable<WorkOrder> {
         throw new ClassCastException("WorkOrder objects are expected.");
       }
 
-      String workOrderType1 = workOrderService.getWorkOrderType(workOrder1.getId());
-      String workOrderType2 = workOrderService.getWorkOrderType(workOrder2.getId());
+      String workOrderType1 = workOrderService.getWorkOrderType(workOrder1.getWorkOrderId());
+      String workOrderType2 = workOrderService.getWorkOrderType(workOrder2.getWorkOrderId());
 
       if (workOrderType1.equals(Statics.MGMT_OVERRIDE) && !workOrderType2.equals(Statics.MGMT_OVERRIDE)) {
         return -1;

@@ -147,7 +147,8 @@ public class WorkOrderQueueServiceTest {
     workOrderQueueService.enqueueWorkOrder(new WorkOrder(29L, "27032016183015"));
     workOrderQueueService.enqueueWorkOrder(new WorkOrder(150L, "27032016183015"));
     workOrderQueueService.enqueueWorkOrder(new WorkOrder(10L, "27032016183015"));
-    assertTrue(workOrderQueueService.retrieveIndexOfWorkOrderId(150L) == 0);
+    WorkOrder workOrder = workOrderQueueService.retrieveIndexOfWorkOrderId(150L);
+    assertTrue(workOrder.getPosition() == 0);
     clearQueue();
   }
 

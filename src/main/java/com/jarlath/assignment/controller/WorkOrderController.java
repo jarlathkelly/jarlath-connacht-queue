@@ -1,14 +1,23 @@
 package com.jarlath.assignment.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.jarlath.assignment.dto.WorkOrder;
+import com.jarlath.assignment.dto.WorkOrderIdList;
+import com.jarlath.assignment.dto.WorkOrderQueueParam;
 import com.jarlath.assignment.service.ValidationServiceImpl;
 import com.jarlath.assignment.service.WorkOrderQueueServiceImpl;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 /**
  * The {@link WorkOrderController} handles the HTTP requests for the WorkOrder Restful Interface.
@@ -41,12 +50,14 @@ public class WorkOrderController {
    * @return WorkOrder
    */
   @RequestMapping(value = "/workorders", method = RequestMethod.POST)
-  public WorkOrder enqueueWorkOrder(@RequestParam(value = "id") Long id,
-                                    @RequestParam(value = "createdTs") String createdTs) {
+  public HttpEntity enqueueWorkOrder(@RequestParam(value = "id", required = true) Long id,
+                                     @RequestParam(value = "createdTs", required = true) String createdTs) {
 
     WorkOrder workOrder = new WorkOrder(id, createdTs);
+    workOrder.add(linkTo(methodOn(WorkOrderController.class).enqueueWorkOrder(id,createdTs)).withSelfRel());
     workOrder.isValid(workOrder);
-    return workOrderQueueService.enqueueWorkOrder(workOrder);
+    workOrderQueueService.enqueueWorkOrder(workOrder);
+    return new ResponseEntity<WorkOrder>(workOrder, HttpStatus.OK);
   }
 
   /**
@@ -57,8 +68,10 @@ public class WorkOrderController {
    * @return {@link WorkOrder}
    */
   @RequestMapping(value = "/workorders", method = RequestMethod.DELETE)
-  public WorkOrder dequeueWorkOrder() {
-    return workOrderQueueService.removeTopFromWorkOrderQueue();
+  public HttpEntity dequeueWorkOrder() {
+    WorkOrder workOrder = workOrderQueueService.removeTopFromWorkOrderQueue();
+    workOrder.add(linkTo(methodOn(WorkOrderController.class).dequeueWorkOrder()).withSelfRel());
+    return new ResponseEntity<WorkOrder>(workOrder, HttpStatus.OK);
   }
 
   /**
@@ -70,8 +83,10 @@ public class WorkOrderController {
    * @return {@link List} of Long Id's
    */
   @RequestMapping(value = "/workorders/ids", method = RequestMethod.GET)
-  public List<Long> retrieveAllWorkOrderIds() {
-    return workOrderQueueService.retrieveWorkOrderedIdList();
+  public HttpEntity retrieveAllWorkOrderIds() {
+    WorkOrderIdList workOrderIdList = new WorkOrderIdList(workOrderQueueService.retrieveWorkOrderedIdList());
+    workOrderIdList.add(linkTo(methodOn(WorkOrderController.class).retrieveAllWorkOrderIds()).withSelfRel());
+    return new ResponseEntity<WorkOrderIdList>(workOrderIdList, HttpStatus.OK);
   }
 
 
@@ -85,10 +100,11 @@ public class WorkOrderController {
    * @return {@link WorkOrder}
    */
   @RequestMapping(value = "/workorders/ids", method = RequestMethod.DELETE)
-  public WorkOrder dequeueWorkOrderId(@RequestParam(value = "id") Long id) {
-
+  public HttpEntity dequeueWorkOrderId(@RequestParam(value = "id") Long id) {
     validationService.isIdValid(id);
-    return workOrderQueueService.removeIdFromWorkOrderQueue(id);
+    WorkOrder workOrder = workOrderQueueService.removeIdFromWorkOrderQueue(id);
+    workOrder.add(linkTo(methodOn(WorkOrderController.class).dequeueWorkOrderId(id)).withSelfRel());
+    return new ResponseEntity<WorkOrder>(workOrder, HttpStatus.OK);
   }
 
   /**
@@ -102,9 +118,12 @@ public class WorkOrderController {
    * @return int position in the queue
    */
   @RequestMapping(value = "/workorders/ids/positions", method = RequestMethod.GET)
-  public int getWorkOrderQueuePosition(@RequestParam(value = "id") Long id) {
+  public HttpEntity getWorkOrderQueuePosition(@RequestParam(value = "id") Long id) {
     validationService.isIdValid(id);
-    return workOrderQueueService.retrieveIndexOfWorkOrderId(id);
+    WorkOrder workOrder = workOrderQueueService.retrieveIndexOfWorkOrderId(id);
+    workOrder.add(linkTo(methodOn(WorkOrderController.class).getWorkOrderQueuePosition(id)).withSelfRel());
+    return new ResponseEntity<WorkOrder>(workOrder, HttpStatus.OK);
+
   }
 
 
@@ -115,13 +134,16 @@ public class WorkOrderController {
    * The method returns the average wait time on the queue.
    * Usage: (GET) /workorders/waittimes
    *
-   * @param currentTs Timestamp Work Order was created (Format DDMMYYYYHHMMSS)
+   * @param createdTs Timestamp Work Order was created (Format DDMMYYYYHHMMSS)
    * @return int position in the queue
    */
   @RequestMapping(value = "/workorders/waittimes", method = RequestMethod.GET)
-  public Long retrieveMeanWaitTime(@RequestParam(value = "createdTs") String currentTs) {
-    validationService.isCreatedTsValid(currentTs);
-    return workOrderQueueService.retrieveAverageWaitTime(currentTs);
+  public HttpEntity retrieveMeanWaitTime(@RequestParam(value = "createdTs") String createdTs) {
+    validationService.isCreatedTsValid(createdTs);
+
+    WorkOrderQueueParam workOrderQueueParam = new WorkOrderQueueParam(workOrderQueueService.retrieveAverageWaitTime(createdTs));
+    workOrderQueueParam.add(linkTo(methodOn(WorkOrderController.class).retrieveMeanWaitTime(createdTs)).withSelfRel());
+    return new ResponseEntity<WorkOrderQueueParam>(workOrderQueueParam, HttpStatus.OK);
 
   }
 }

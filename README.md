@@ -1,6 +1,6 @@
 # jarlath-connacht-queue
 
-Jarlath's Rest based assignment for Aaron &  Andreas.
+Jarlath's Rest/Queue based assignment for Aaron &  Andreas.
 
 ## Installation
 The install scripts (install.sh/install.bat) provided will perform the following tasks:
@@ -27,7 +27,7 @@ Rest service resources will then be available at http://localhost:8080/
 
 Use a rest Client to Test the endpoints. I use Postman. See https://www.getpostman.com/
 
-##  Endpoints & Usage
+##  Rest Endpoints provided & Usage
 1. An endpoint for adding a Work Order to the queue (enqueue). This endpoint accepts two parameters, the ID to enqueue and the time at which the ID was added to the queue.
  - POST http://localhost:8080/workorders?id=1234&createdTs=28032016193012
 2. An endpoint for getting the top ranked ID from the queue and removing it (dequeue). This endpoint returns the highest ranked ID and the time it was entered into the queue.
@@ -45,10 +45,175 @@ Use a rest Client to Test the endpoints. I use Postman. See https://www.getpostm
 
 7. Some management services have also been provided with the Spring Boot actuator module. /health,/audits,/beans,/errors are also available on http://localhost:8080/.
 
+##  Usage & Example Responses
+#### Enqueue Work Order: POST
+```
+http://localhost:8080/workorders?id=1&createdTs=30032016093023
+
+{
+  "createdTS": "30032016093023",
+  "position": null,
+  "workOrderId": 1,
+  "_links": {
+    "self": {
+      "href": "http://localhost:8080/workorders?id=1&createdTs=30032016093023"
+    }
+  }
+}
+```
+
+
+#### Dequeue Highest Ranked WorkOrder: DELETE
+```
+http://localhost:8080/workorders
+{
+  "createdTS": "30032016093023",
+  "position": null,
+  "workOrderId": 15,
+  "_links": {
+    "self": [
+      {
+        "href": "http://localhost:8080/workorders?id=15&createdTs=30032016093023"
+      },
+      {
+        "href": "http://localhost:8080/workorders"
+      }
+    ]
+  }
+}
+```
+
+
+#### Dequeue Highest Ranked WorkOrder: DELETE
+```
+http://localhost:8080/workorders/ids?id=40
+{
+  "createdTS": "30032016093023",
+  "position": null,
+  "workOrderId": 40,
+  "_links": {
+    "self": [
+      {
+        "href": "http://localhost:8080/workorders?id=40&createdTs=30032016093023"
+      },
+      {
+        "href": "http://localhost:8080/workorders/ids?id=40"
+      }
+    ]
+  }
+}
+```
+
+
+#### List of ID's: GET
+```
+http://localhost:8080/workorders/ids
+{
+  "workOrderIdList": [
+  15, 45, 3, 1, 2, 4
+  ],
+  "_links": {
+    "self": {
+      "href": "http://localhost:8080/workorders/ids"
+    }
+  }
+}
+```
+#### Get position on Queue of a Specific Work Order: GET
+```
+http://localhost:8080/workorders/ids/positions?id=35
+{
+  "createdTS": "30032016093023",
+  "position": 7,
+  "workOrderId": 35,
+  "_links": {
+    "self": {
+      "href": "http://localhost:8080/workorders/ids/positions?id=35"
+    }
+  }
+}
+```
+
+#### Get Average Wait time on the Queue: GET
+```
+http://localhost:8080/workorders/waittimes?createdTs=30032016165012
+{
+  "waitTime": 1059589,
+  "_links": {
+    "self": {
+      "href": "http://localhost:8080/workorders/waittimes?createdTs=28032016165012"
+    }
+  }
+}
+```
+
+
+## ErrorHandling
+
+#### InvalidTimestampParameterException
+```
+http://localhost:8080/workorders/waittimes?createdTs=300320161612
+{
+  "status": 400,
+  "error": "Bad Request",
+  "message": "ID Parameter Value is Invalid",
+  "timeStamp": "Wed Mar 30 12:17:23 IST 2016",
+  "trace": "com.jarlath.assignment.exception.InvalidIdParameterException\n\tat com.jarlath.assignment.service.ValidationServiceImpl.isIdValid(ValidationServiceImpl.java:33)"
+}
+```
+
+#### InvalidTimestampParameterException
+```
+http://localhost:8080/workorders?id=0&createdTs=16032016093023
+{
+  "status": 400,
+  "error": "Bad Request",
+  "message": "CreatedTs Parameter Value is Invalid",
+  "timeStamp": "Wed Mar 30 11:13:28 IST 2016",
+  "trace": "com.jarlath.assignment.exception.InvalidTimestampParameterException: CreatedTs Parameter Value is Invalid: 300320161612\n\tat com.jarlath.assignment.service.ValidationServiceImpl.isCreatedTsValid(ValidationServiceImpl"java:57)\n"
+}
+```
+
+#### WorkOrderIdNotOnQueueException
+```
+http://localhost:8080/workorders/ids/positions?id=33
+{
+  "status": 400,
+  "error": "Bad Request",
+  "message": "WorkOrder ID not Found on Queue",
+  "timeStamp": "Wed Mar 30 12:14:06 IST 2016",
+  "trace": "com.jarlath.assignment.exception.WorkOrderIdNotOnQueueException\n\tat com.jarlath.assignment.service.WorkOrderQueueServiceImpl.retrieveIndexOfWorkOrderId(WorkOrderQueueServiceImpl.java:170"
+}
+```
+
+#### WorkOrderExistsInQueueException
+```
+http://localhost:8080/workorders?id=1&createdTs=16032016093023
+{
+ "status": 400,
+  "error": "Bad Request",
+  "message": "WorkOrder ID already on Queue",
+  "timeStamp": "Wed Mar 30 12:15:39 IST 2016",
+  "trace": "com.jarlath.assignment.exception.WorkOrderExistsInQueueException: WorkOrder ID already on Queue: 1\n\tat com.jarlath.assignment.service.WorkOrderQueueServiceImpl.enqueueWorkOrder"
+}
+```
+
+#### HttpRequestMethodNotSupportedException
+```
+PUT http://localhost:8080/workorders/waittimes?createdTs=300320161612
+{
+  "status": 405,
+  "error": "Method Not Allowed",
+  "message": "Request method 'POST' not supported",
+  "timeStamp": "Wed Mar 30 11:14:59 IST 2016",
+  "trace": "org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'POST' not supported\n"
+}
+```
 
 ## Tests
-Unit tests have been provided with the codebase and will run during the install as detailed above. to run these tests on their own run the follwoing command:
+Unit tests have been provided with the codebase and will run during the install as detailed above. Test cover all controller,service, dao & dto classes.
 
+To run these tests on their own run the following command:
 From project root directory run:
 ```sh
 $ mvn test
