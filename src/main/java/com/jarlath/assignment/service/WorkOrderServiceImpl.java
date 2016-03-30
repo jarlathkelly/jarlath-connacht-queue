@@ -68,10 +68,11 @@ public class WorkOrderServiceImpl implements WorkOrderService {
    * (3) IDs divisible by both 3 and 5 are management override.
    * (4) IDs not divisible by 3 or 5 are normal.
    *
-   * @param id identifier of Work Order
+   * @param orderId identifier of Work Order
    * @return String Work Order Type
    */
-  public String getWorkOrderType(final Long id) {
+  public String getWorkOrderType(final String orderId) {
+    Long id = Long.parseLong(orderId);
     if (id % 3 == 0) {
       if (id % 5 == 0) {
         return Statics.MGMT_OVERRIDE;

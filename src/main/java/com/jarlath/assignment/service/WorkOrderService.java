@@ -17,7 +17,7 @@ public interface WorkOrderService {
 
   Long getWorkOrderRank(final String workOrderType,final  WorkOrder workOrder) throws ParseException;
 
-  String getWorkOrderType(final Long id);
+  String getWorkOrderType(final String id);
 
   Long getMgmtOverrideRank(final String date) throws ParseException;
 

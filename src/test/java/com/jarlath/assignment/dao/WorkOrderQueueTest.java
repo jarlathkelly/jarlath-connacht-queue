@@ -22,7 +22,7 @@ public class WorkOrderQueueTest {
 
   @Test
   public void test_removeElementFromQueue()  {
-    WorkOrder order = new WorkOrder(67L,"160419821830555");
+    WorkOrder order = new WorkOrder("67","160419821830555");
     List<WorkOrder> queue = WorkOrderQueue.getInstance();
     int size = queue.size();
     queue.add(order);
@@ -34,7 +34,7 @@ public class WorkOrderQueueTest {
   @Test
   public void test_add_RemoveElements()  {
     List queue = WorkOrderQueue.getInstance();
-    WorkOrder order = new WorkOrder(67L,"160419821830555");
+    WorkOrder order = new WorkOrder("77","160419821830555");
     int size = queue.size();
     queue.add(order);
     assertTrue(queue.size() == size+1);

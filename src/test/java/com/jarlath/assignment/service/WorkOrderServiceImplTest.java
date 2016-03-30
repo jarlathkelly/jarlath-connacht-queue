@@ -62,63 +62,59 @@ public class WorkOrderServiceImplTest {
 
   @Test
   public void test_getWorkOrderType_MgmtOverride() {
-    Long id = 15L;
-    String rank = WorkOrderService.getWorkOrderType(id);
+    String rank = WorkOrderService.getWorkOrderType("15");
     assertTrue(rank.equals(Statics.MGMT_OVERRIDE));
   }
 
   @Test
   public void test_getWorkOrderType_Vip() {
-    Long id = 5L;
-    String rank = WorkOrderService.getWorkOrderType(id);
+    String rank = WorkOrderService.getWorkOrderType("5");
     assertTrue(rank.equals(Statics.VIP));
   }
 
   @Test
   public void test_getWorkOrderType_Priority() {
-    Long id = 3L;
-    String rank = WorkOrderService.getWorkOrderType(id);
+    String rank = WorkOrderService.getWorkOrderType("3");
     assertTrue(rank.equals(Statics.PRIORITY));
   }
 
   @Test
   public void test_getWorkOrderType_Normal() {
-    Long id = 4L;
-    String rank = WorkOrderService.getWorkOrderType(id);
+    String rank = WorkOrderService.getWorkOrderType("4");
     assertTrue(rank.equals(Statics.NORMAL));
   }
 
   @Test
   public void test_getWorkOrderRank_MgmtOverride() throws ParseException {
-    WorkOrder workOrder = new WorkOrder(11111l, testUtil.getADateString(1));
+    WorkOrder workOrder = new WorkOrder("11111", testUtil.getADateString(1));
     Long rank = WorkOrderService.getWorkOrderRank(Statics.MGMT_OVERRIDE, workOrder);
     assertTrue(rank > ONE_HOUR);
   }
 
   @Test
   public void test_getWorkOrderRank_Vip() throws ParseException {
-    WorkOrder workOrder = new WorkOrder(11111l, testUtil.getADateString(1));
+    WorkOrder workOrder = new WorkOrder("11111", testUtil.getADateString(1));
     Long rank = WorkOrderService.getWorkOrderRank(Statics.VIP, workOrder);
     assertTrue(rank > 42528);
   }
 
   @Test
   public void test_getWorkOrderRank_Priority() throws ParseException {
-    WorkOrder workOrder = new WorkOrder(11111l, testUtil.getADateString(1));
+    WorkOrder workOrder = new WorkOrder("11111", testUtil.getADateString(1));
     Long rank = WorkOrderService.getWorkOrderRank(Statics.PRIORITY, workOrder);
     assertTrue(rank > 39599);
   }
 
   @Test
   public void test_getWorkOrderRank_Normal() throws ParseException {
-    WorkOrder workOrder = new WorkOrder(11111l, testUtil.getADateString(1));
+    WorkOrder workOrder = new WorkOrder("11111", testUtil.getADateString(1));
     Long rank = WorkOrderService.getWorkOrderRank(Statics.NORMAL, workOrder);
     assertTrue(rank > ONE_HOUR);
   }
 
   @Test(expected = ParseException.class)
   public void test_getWorkOrderRank_Normal_ParseException() throws ParseException {
-    WorkOrder workOrder = new WorkOrder(11111l, BAD_DATE);
+    WorkOrder workOrder = new WorkOrder("11111", BAD_DATE);
     WorkOrderService.getWorkOrderRank(Statics.NORMAL, workOrder);
   }
 

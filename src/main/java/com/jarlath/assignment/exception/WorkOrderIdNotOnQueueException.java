@@ -15,7 +15,7 @@ public class WorkOrderIdNotOnQueueException extends RuntimeException {
   public WorkOrderIdNotOnQueueException() {
   }
 
-  public WorkOrderIdNotOnQueueException(final Long i) {
+  public WorkOrderIdNotOnQueueException(final String i) {
     super("WorkOrder ID not Found on Queue: " + i);
   }
 }

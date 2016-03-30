@@ -29,7 +29,7 @@ import java.util.Comparator;
  */
 public class WorkOrder extends ResourceSupport implements Comparator<WorkOrder>, Comparable<WorkOrder> {
   @NotNull
-  private Long workOrderId;
+  private String workOrderId;
   @NotNull
   private String createdTs;
   private Integer position = null;
@@ -38,18 +38,18 @@ public class WorkOrder extends ResourceSupport implements Comparator<WorkOrder>,
   }
 
   @JsonCreator
-  public WorkOrder(@JsonProperty("id")Long id, @JsonProperty("createdTS")String createdTS) {
+  public WorkOrder(@JsonProperty("id")String id, @JsonProperty("createdTS")String createdTS) {
     this.workOrderId = id;
     this.createdTs = createdTS;
   }
   @JsonCreator
-  public WorkOrder(@JsonProperty("id")Long id, @JsonProperty("createdTS")String createdTS, @JsonProperty("position")Integer position) {
+  public WorkOrder(@JsonProperty("id")String id, @JsonProperty("createdTS")String createdTS, @JsonProperty("position")Integer position) {
     this.workOrderId = id;
     this.createdTs = createdTS;
     this.position = position;
   }
 
-  public Long getWorkOrderId() {
+  public String getWorkOrderId() {
     return workOrderId;
   }
 
@@ -77,7 +77,7 @@ public class WorkOrder extends ResourceSupport implements Comparator<WorkOrder>,
     if (anotherWorkOrder == null) {
       throw new ClassCastException("A WorkOrder object expected.");
     }
-    Long anotherWorkOrderId = anotherWorkOrder.getWorkOrderId();
+    String anotherWorkOrderId = anotherWorkOrder.getWorkOrderId();
     return (this.workOrderId).compareTo(anotherWorkOrderId);
   }
 

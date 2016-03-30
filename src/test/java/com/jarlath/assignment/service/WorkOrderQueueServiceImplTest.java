@@ -29,7 +29,7 @@ public class WorkOrderQueueServiceImplTest {
   @Test
   public void test_enqueueWorkOrder() {
     clearQueue();
-    WorkOrder workOrder = new WorkOrder(1234567L, "27032016183015");
+    WorkOrder workOrder = new WorkOrder("1234567", "27032016183015");
     List<WorkOrder> queue = workOrderQueueService.retrieveWorkOrderQueue();
     int size = queue.size();
     workOrderQueueService.enqueueWorkOrder(workOrder);
@@ -48,7 +48,7 @@ public class WorkOrderQueueServiceImplTest {
   @Test(expected = InvalidTimestampParameterException.class)
   public void test_enqueueWorkOrder_InvalidTimestampParameterException() {
     clearQueue();
-    WorkOrder workOrder = new WorkOrder(1234567L, null);
+    WorkOrder workOrder = new WorkOrder("1234567", null);
     workOrderQueueService.enqueueWorkOrder(workOrder);
     clearQueue();
   }
@@ -56,7 +56,7 @@ public class WorkOrderQueueServiceImplTest {
   @Test(expected = WorkOrderExistsInQueueException.class)
   public void test_enqueueWorkOrder_WorkOrderExistsInQueueException() {
     clearQueue();
-    WorkOrder workOrder = new WorkOrder(1L, "27032016183015");
+    WorkOrder workOrder = new WorkOrder("1", "27032016183015");
     workOrderQueueService.enqueueWorkOrder(workOrder);
     workOrderQueueService.enqueueWorkOrder(workOrder);
     clearQueue();
@@ -65,7 +65,7 @@ public class WorkOrderQueueServiceImplTest {
   @Test
   public void test_addToWorkOrderQueue() {
     clearQueue();
-    WorkOrder workOrder = new WorkOrder(1234567L, "27032016183015");
+    WorkOrder workOrder = new WorkOrder("1234567", "27032016183015");
     workOrderQueueService.addToWorkOrderQueue(workOrder);
     List<WorkOrder> queue = workOrderQueueService.retrieveWorkOrderQueue();
     assertTrue(queue.size() == 1);
@@ -77,9 +77,9 @@ public class WorkOrderQueueServiceImplTest {
     clearQueue();
     List<WorkOrder> queue = workOrderQueueService.retrieveWorkOrderQueue();
     int size = queue.size();
-    workOrderQueueService.enqueueWorkOrder(new WorkOrder(1234567L, "27032016183015"));
+    workOrderQueueService.enqueueWorkOrder(new WorkOrder("1234567", "27032016183015"));
     assertTrue(queue.size() == size + 1);
-    workOrderQueueService.removeIdFromWorkOrderQueue(1234567L);
+    workOrderQueueService.removeIdFromWorkOrderQueue("1234567");
     assertTrue(queue.size() == size);
     clearQueue();
   }
@@ -87,9 +87,9 @@ public class WorkOrderQueueServiceImplTest {
   @Test(expected = WorkOrderIdNotOnQueueException.class)
   public void test_removeIdFromWorkOrderQueue_WorkOrderIdNotOnQueueException() {
     clearQueue();
-    workOrderQueueService.enqueueWorkOrder(new WorkOrder(1234567L, "27032016183015"));
+    workOrderQueueService.enqueueWorkOrder(new WorkOrder("1234567", "27032016183015"));
     List<WorkOrder> queue = workOrderQueueService.retrieveWorkOrderQueue();
-    workOrderQueueService.removeIdFromWorkOrderQueue(123444L);
+    workOrderQueueService.removeIdFromWorkOrderQueue("123444");
     clearQueue();
   }
 
@@ -102,9 +102,9 @@ public class WorkOrderQueueServiceImplTest {
   @Test
   public void test_removeTopFromWorkOrderQueue() {
     clearQueue();
-    workOrderQueueService.enqueueWorkOrder(new WorkOrder(3L, "27032016183015"));
-    workOrderQueueService.enqueueWorkOrder(new WorkOrder(15L, "27032016183015"));
-    workOrderQueueService.enqueueWorkOrder(new WorkOrder(1L, "27032016183015"));
+    workOrderQueueService.enqueueWorkOrder(new WorkOrder("3", "27032016183015"));
+    workOrderQueueService.enqueueWorkOrder(new WorkOrder("5", "27032016183015"));
+    workOrderQueueService.enqueueWorkOrder(new WorkOrder("1", "27032016183015"));
     List<WorkOrder> queue = workOrderQueueService.retrieveWorkOrderQueue();
     assertTrue(queue.size() == 3);
     workOrderQueueService.removeTopFromWorkOrderQueue();
@@ -121,7 +121,7 @@ public class WorkOrderQueueServiceImplTest {
   @Test
   public void test_removeFromQueue() {
     clearQueue();
-    WorkOrder workOrder = new WorkOrder(1234567L, "27032016183015");
+    WorkOrder workOrder = new WorkOrder("1234567", "27032016183015");
     List<WorkOrder> queue = workOrderQueueService.retrieveWorkOrderQueue();
     int size = queue.size();
     workOrderQueueService.addToWorkOrderQueue(workOrder);
@@ -134,8 +134,8 @@ public class WorkOrderQueueServiceImplTest {
  @Test
   public void test_retrieveWorkOrderedIdList() {
     clearQueue();
-    workOrderQueueService.enqueueWorkOrder(new WorkOrder(15000L, "27032016183015"));
-    workOrderQueueService.enqueueWorkOrder(new WorkOrder(20000L, "27032016183015"));
+    workOrderQueueService.enqueueWorkOrder(new WorkOrder("15000", "27032016183015"));
+    workOrderQueueService.enqueueWorkOrder(new WorkOrder("20000", "27032016183015"));
     List<Long> orderedList = workOrderQueueService.retrieveWorkOrderedIdList();
     assertTrue(orderedList.get(0) == 15000L);
    clearQueue();
@@ -144,10 +144,10 @@ public class WorkOrderQueueServiceImplTest {
   @Test
   public void test_retrieveIndexOfWorkOrderId() throws WorkOrderIdNotOnQueueException {
     clearQueue();
-    workOrderQueueService.enqueueWorkOrder(new WorkOrder(29L, "27032016183015"));
-    workOrderQueueService.enqueueWorkOrder(new WorkOrder(150L, "27032016183015"));
-    workOrderQueueService.enqueueWorkOrder(new WorkOrder(10L, "27032016183015"));
-    WorkOrder workOrder = workOrderQueueService.retrieveIndexOfWorkOrderId(150L);
+    workOrderQueueService.enqueueWorkOrder(new WorkOrder("29", "27032016183015"));
+    workOrderQueueService.enqueueWorkOrder(new WorkOrder("150", "27032016183015"));
+    workOrderQueueService.enqueueWorkOrder(new WorkOrder("10", "27032016183015"));
+    WorkOrder workOrder = workOrderQueueService.retrieveIndexOfWorkOrderId("150");
     assertTrue(workOrder.getPosition() == 0);
     clearQueue();
   }
@@ -155,26 +155,26 @@ public class WorkOrderQueueServiceImplTest {
   @Test(expected = WorkOrderIdNotOnQueueException.class)
   public void test_retrieveIndexOfWorkOrderId_WorkOrderIdNotOnQueueException() {
     clearQueue();
-    workOrderQueueService.enqueueWorkOrder(new WorkOrder(113L, "27032016183015"));
-    workOrderQueueService.enqueueWorkOrder(new WorkOrder(1115L, "27032016183015"));
-    workOrderQueueService.enqueueWorkOrder(new WorkOrder(111L, "27032016183015"));
-    workOrderQueueService.retrieveIndexOfWorkOrderId(155L);
+    workOrderQueueService.enqueueWorkOrder(new WorkOrder("113", "27032016183015"));
+    workOrderQueueService.enqueueWorkOrder(new WorkOrder("1115", "27032016183015"));
+    workOrderQueueService.enqueueWorkOrder(new WorkOrder("111", "27032016183015"));
+    workOrderQueueService.retrieveIndexOfWorkOrderId("155");
     clearQueue();
   }
 
   @Test(expected = InvalidIdParameterException.class)
   public void test_retrieveIndexOfWorkOrderId_InvalidIdParameterException() {
     clearQueue();
-    workOrderQueueService.retrieveIndexOfWorkOrderId(null);
+    workOrderQueueService.retrieveIndexOfWorkOrderId("");
     clearQueue();
   }
 
   @Test
   public void test_retrieveAverageWaitTime() throws TimeStampParsingException {
     clearQueue();
-    workOrderQueueService.enqueueWorkOrder(new WorkOrder(77L, testUtil.getADateString(2)));
-    workOrderQueueService.enqueueWorkOrder(new WorkOrder(88L, testUtil.getADateString(2)));
-    workOrderQueueService.enqueueWorkOrder(new WorkOrder(99L, testUtil.getADateString(2)));
+    workOrderQueueService.enqueueWorkOrder(new WorkOrder("77", testUtil.getADateString(2)));
+    workOrderQueueService.enqueueWorkOrder(new WorkOrder("88", testUtil.getADateString(2)));
+    workOrderQueueService.enqueueWorkOrder(new WorkOrder("99", testUtil.getADateString(2)));
     assertTrue(workOrderQueueService.retrieveAverageWaitTime(testUtil.getADateString(1)) > ONE_HOUR);
     clearQueue();
   }
@@ -182,7 +182,7 @@ public class WorkOrderQueueServiceImplTest {
   @Test(expected = TimeStampParsingException.class)
   public void test_retrieveAverageWaitTime_TimeStampParsingException() {
     clearQueue();
-    workOrderQueueService.enqueueWorkOrder(new WorkOrder(333L, testUtil.getADateString(2)));
+    workOrderQueueService.enqueueWorkOrder(new WorkOrder("333", testUtil.getADateString(2)));
     workOrderQueueService.retrieveAverageWaitTime(BAD_DATE);
     clearQueue();
   }
@@ -198,7 +198,7 @@ public class WorkOrderQueueServiceImplTest {
   public void test_retrieveAverageWaitTime_NegativeDurationWaitTimeException() {
     clearQueue();
     List<WorkOrder> queue = workOrderQueueService.retrieveWorkOrderQueue();
-    workOrderQueueService.enqueueWorkOrder(new WorkOrder(333L, testUtil.getADateString(2)));
+    workOrderQueueService.enqueueWorkOrder(new WorkOrder("333", testUtil.getADateString(2)));
     workOrderQueueService.retrieveAverageWaitTime(testUtil.getADateString(6));
     clearQueue();
   }

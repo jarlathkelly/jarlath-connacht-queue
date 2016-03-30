@@ -32,14 +32,14 @@ public class ValidationServiceImpl implements ValidationService {
    * @param id unique identifier of a Work order
    * @return boolean is Id valid
    */
-  public boolean isIdValid(final Long id) throws InvalidIdParameterException {
-    if (null == id || id == 0L) {
+  public boolean isIdValid(final String id) throws InvalidIdParameterException {
+    if (null == id || id == "" || id == "0") {
       throw new InvalidIdParameterException();
     }
     Pattern regexId = Pattern.compile(Statics.VALIDATE_ID);
-    Matcher iDmatcher = regexId.matcher(id.toString());
+    Matcher iDmatcher = regexId.matcher(id);
     if (!iDmatcher.find()) {
-      throw new InvalidIdParameterException(id.toString());
+      throw new InvalidIdParameterException(id);
     }
     return true;
   }
@@ -71,13 +71,12 @@ public class ValidationServiceImpl implements ValidationService {
     return true;
   }
 
-  public Long isIdWithinRange(final String id) throws IdOutOfRangeException {
-    Long result=0L;
+  public boolean isIdWithinRange(final String id) throws IdOutOfRangeException {
     try {
       Long l = Long.parseLong(id);
     } catch (NumberFormatException nfe) {
       throw new IdOutOfRangeException(id);
     }
-    return result;
+    return true;
   }
 }

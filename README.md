@@ -195,7 +195,7 @@ http://localhost:8080/workorders?id=0&createdTs=16032016093023
 ```
 http://localhost:8080/workorders/ids/positions?id=33
 {
-  "status": 400,
+  "status": 403,
   "error": "Bad Request",
   "message": "WorkOrder ID not Found on Queue",
   "timeStamp": "Wed Mar 30 12:14:06 IST 2016",
@@ -207,12 +207,35 @@ http://localhost:8080/workorders/ids/positions?id=33
 ```
 http://localhost:8080/workorders?id=1&createdTs=16032016093023
 {
- "status": 400,
+ "status": 403,
   "error": "Bad Request",
   "message": "WorkOrder ID already on Queue",
   "timeStamp": "Wed Mar 30 12:15:39 IST 2016",
   "trace": "com.jarlath.assignment.exception.WorkOrderExistsInQueueException: WorkOrder ID already on Queue: 1\n\tat com.jarlath.assignment.service.WorkOrderQueueServiceImpl.enqueueWorkOrder"
 }
+```
+
+#### IdOutOfRangeException
+```
+http://localhost:8080/workorders?id=9223372036854775808&createdTs=28032016131357
+{
+  "status": 400,
+  "error": "Bad Request",
+  "message": "ID Parameter Value is not within Range",
+  "timeStamp": "Wed Mar 30 22:32:53 IST 2016",
+  "trace": "com.jarlath.assignment.exception.IdOutOfRangeException: WorkOrder ID supplied: 9223372036854775808 is not within the valid numeric range of 1-9223372036854775807."
+}
+```
+
+#### NegativeDurationWaitTimeException
+```
+http://localhost:8080/workorders/waittimes?createdTs=20032016120000
+{
+  "status": 400,
+  "error": "Bad Request",
+  "message": "Waittime Calculation reulted in Negative Duration",
+  "timeStamp": "Wed Mar 30 22:34:51 IST 2016",
+  "trace": "com.jarlath.assignment.exception.NegativeDurationWaitTimeException: Waittime Calculation reulted in Negative Duration. Please ensure the createdTs parameter supplied is of the current time and not a stale date\n\tat com.jarlath.assignment.service.WorkOrderQueueServiceImpl"
 ```
 
 #### HttpRequestMethodNotSupportedException

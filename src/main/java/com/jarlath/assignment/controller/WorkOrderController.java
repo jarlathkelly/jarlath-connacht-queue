@@ -49,9 +49,10 @@ public class WorkOrderController {
    * @return WorkOrder
    */
   @RequestMapping(value = "/workorders", method = RequestMethod.POST)
-  public HttpEntity enqueueWorkOrder(@RequestParam(value = "id", required = true) Long id,
+  public HttpEntity enqueueWorkOrder(@RequestParam(value = "id", required = true) String id,
                                      @RequestParam(value = "createdTs", required = true) String createdTs) {
 
+    validationService.isIdWithinRange(id);
     WorkOrder workOrder = new WorkOrder(id, createdTs);
     workOrder.add(linkTo(methodOn(WorkOrderController.class).enqueueWorkOrder(id,createdTs)).withSelfRel());
     workOrder.isValid(workOrder);
@@ -99,7 +100,7 @@ public class WorkOrderController {
    * @return {@link WorkOrder}
    */
   @RequestMapping(value = "/workorders/ids", method = RequestMethod.DELETE)
-  public HttpEntity dequeueWorkOrderId(@RequestParam(value = "id") Long id) {
+  public HttpEntity dequeueWorkOrderId(@RequestParam(value = "id") String id) {
     validationService.isIdValid(id);
     WorkOrder workOrder = workOrderQueueService.removeIdFromWorkOrderQueue(id);
     workOrder.add(linkTo(methodOn(WorkOrderController.class).dequeueWorkOrderId(id)).withSelfRel());
@@ -117,7 +118,7 @@ public class WorkOrderController {
    * @return int position in the queue
    */
   @RequestMapping(value = "/workorders/ids/positions", method = RequestMethod.GET)
-  public HttpEntity getWorkOrderQueuePosition(@RequestParam(value = "id") Long id) {
+  public HttpEntity getWorkOrderQueuePosition(@RequestParam(value = "id") String id) {
     validationService.isIdValid(id);
     WorkOrder workOrder = workOrderQueueService.retrieveIndexOfWorkOrderId(id);
     workOrder.add(linkTo(methodOn(WorkOrderController.class).getWorkOrderQueuePosition(id)).withSelfRel());

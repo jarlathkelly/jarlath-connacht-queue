@@ -12,7 +12,7 @@ import com.jarlath.assignment.exception.InvalidTimestampParameterException;
  */
 public interface ValidationService {
 
-  boolean isIdValid(final Long id) throws InvalidIdParameterException;
+  boolean isIdValid(final String id) throws InvalidIdParameterException;
 
   boolean isCreatedTsValid(final String createdTs) throws InvalidTimestampParameterException;
 }

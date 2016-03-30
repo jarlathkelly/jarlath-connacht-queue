@@ -18,13 +18,13 @@ public interface WorkOrderQueueService {
 
   WorkOrder enqueueWorkOrder(final WorkOrder workOrder) throws WorkOrderExistsInQueueException, InvalidIdParameterException, InvalidTimestampParameterException;
 
-  WorkOrder removeIdFromWorkOrderQueue(final Long id) throws WorkOrderIdNotOnQueueException, InvalidIdParameterException;
+  WorkOrder removeIdFromWorkOrderQueue(final String id) throws WorkOrderIdNotOnQueueException, InvalidIdParameterException;
 
   WorkOrder removeTopFromWorkOrderQueue();
 
   List<Long> retrieveWorkOrderedIdList();
 
-  WorkOrder retrieveIndexOfWorkOrderId(final Long id) throws WorkOrderIdNotOnQueueException, InvalidIdParameterException;
+  WorkOrder retrieveIndexOfWorkOrderId(final String id) throws WorkOrderIdNotOnQueueException, InvalidIdParameterException;
 
   Long retrieveAverageWaitTime(final String currentTs) throws TimeStampParsingException, InvalidTimestampParameterException;
 }

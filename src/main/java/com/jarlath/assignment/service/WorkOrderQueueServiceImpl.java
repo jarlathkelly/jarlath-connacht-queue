@@ -76,7 +76,7 @@ public class WorkOrderQueueServiceImpl implements WorkOrderQueueService {
    * @param id of the WorkOrder to be dequeued
    * @return WorkOrder just dequeued
    */
-  public WorkOrder removeIdFromWorkOrderQueue(final Long id) throws WorkOrderIdNotOnQueueException, InvalidIdParameterException {
+  public WorkOrder removeIdFromWorkOrderQueue(final String id) throws WorkOrderIdNotOnQueueException, InvalidIdParameterException {
     if (null == id) {
       throw new InvalidIdParameterException();
     }
@@ -136,7 +136,7 @@ public class WorkOrderQueueServiceImpl implements WorkOrderQueueService {
     List<WorkOrder> queue = retrieveWorkOrderQueue();
     Collections.sort(queue, new WorkOrder());
     for (WorkOrder item : queue) {
-      result.add(item.getWorkOrderId());
+      result.add(Long.parseLong(item.getWorkOrderId()));
     }
     return result;
   }
@@ -149,8 +149,8 @@ public class WorkOrderQueueServiceImpl implements WorkOrderQueueService {
    * @param id identifier Work Order Request
    * @return int index of supplied Work Order Id on the Queue.
    */
-  public WorkOrder retrieveIndexOfWorkOrderId(final Long id) throws WorkOrderIdNotOnQueueException, InvalidIdParameterException {
-    if (null == id) {
+  public WorkOrder retrieveIndexOfWorkOrderId(final String id) throws WorkOrderIdNotOnQueueException, InvalidIdParameterException {
+    if (null == id || id == "") {
       throw new InvalidIdParameterException();
     }
     List<WorkOrder> queue = retrieveWorkOrderQueue();
