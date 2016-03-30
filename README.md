@@ -181,7 +181,7 @@ http://localhost:8080/workorders/waittimes?createdTs=300320161612
 
 #### InvalidTimestampParameterException
 ```
-http://localhost:8080/workorders?id=0&createdTs=16032016093023
+http://localhost:8080/workorders?id=0&createdTs=1603
 {
   "status": 400,
   "error": "Bad Request",
@@ -229,7 +229,7 @@ http://localhost:8080/workorders?id=9223372036854775808&createdTs=28032016131357
 
 #### NegativeDurationWaitTimeException
 ```
-http://localhost:8080/workorders/waittimes?createdTs=20032016120000
+http://localhost:8080/workorders/waittimes?createdTs=20032010120000
 {
   "status": 400,
   "error": "Bad Request",
