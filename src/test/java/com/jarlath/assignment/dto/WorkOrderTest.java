@@ -1,7 +1,7 @@
 package com.jarlath.assignment.dto;
 
+import com.jarlath.assignment.TestUtilities;
 import org.junit.Test;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 import static org.junit.Assert.assertTrue;
@@ -10,27 +10,28 @@ import static org.junit.Assert.assertTrue;
  * Created by jarlath.kelly on 26/03/2016.
  */
 public class WorkOrderTest {
+  TestUtilities testUtil = new TestUtilities();
 
   @Test
   public void test_Natural_And_Ranked_Ordering() {
-    WorkOrder order1 = new WorkOrder(1l, getADateString(1));
-    WorkOrder order2 = new WorkOrder(2l, getADateString(1));
-    WorkOrder order3 = new WorkOrder(3l, getADateString(1));
-    WorkOrder order4 = new WorkOrder(4l, getADateString(1));
-    WorkOrder order5 = new WorkOrder(5l, getADateString(1));
-    WorkOrder order6 = new WorkOrder(6l, getADateString(1));
-    WorkOrder order7 = new WorkOrder(7l, getADateString(1));
-    WorkOrder order8 = new WorkOrder(8l, getADateString(1));
-    WorkOrder order9 = new WorkOrder(9l, getADateString(1));
-    WorkOrder order10 = new WorkOrder(10l, getADateString(1));
-    WorkOrder order12 = new WorkOrder(12l, getADateString(1));
-    WorkOrder order15 = new WorkOrder(15l, getADateString(1));
-    WorkOrder order20 = new WorkOrder(20l, getADateString(1));
-    WorkOrder order30 = new WorkOrder(30l, getADateString(1));
-    WorkOrder order40 = new WorkOrder(40l, getADateString(1));
-    WorkOrder order45 = new WorkOrder(45l, getADateString(1));
-    WorkOrder order50 = new WorkOrder(50l, getADateString(1));
-    WorkOrder order60 = new WorkOrder(60l, getADateString(1));
+    WorkOrder order1 = new WorkOrder(1l, testUtil.getADateString(1));
+    WorkOrder order2 = new WorkOrder(2l, testUtil.getADateString(1));
+    WorkOrder order3 = new WorkOrder(3l, testUtil.getADateString(1));
+    WorkOrder order4 = new WorkOrder(4l, testUtil.getADateString(1));
+    WorkOrder order5 = new WorkOrder(5l, testUtil.getADateString(1));
+    WorkOrder order6 = new WorkOrder(6l, testUtil.getADateString(1));
+    WorkOrder order7 = new WorkOrder(7l, testUtil.getADateString(1));
+    WorkOrder order8 = new WorkOrder(8l, testUtil.getADateString(1));
+    WorkOrder order9 = new WorkOrder(9l, testUtil.getADateString(1));
+    WorkOrder order10 = new WorkOrder(10l, testUtil.getADateString(1));
+    WorkOrder order12 = new WorkOrder(12l, testUtil.getADateString(1));
+    WorkOrder order15 = new WorkOrder(15l, testUtil.getADateString(1));
+    WorkOrder order20 = new WorkOrder(20l, testUtil.getADateString(1));
+    WorkOrder order30 = new WorkOrder(30l, testUtil.getADateString(1));
+    WorkOrder order40 = new WorkOrder(40l, testUtil.getADateString(1));
+    WorkOrder order45 = new WorkOrder(45l, testUtil.getADateString(1));
+    WorkOrder order50 = new WorkOrder(50l, testUtil.getADateString(1));
+    WorkOrder order60 = new WorkOrder(60l, testUtil.getADateString(1));
 
     List<WorkOrder> l = new ArrayList<WorkOrder>();
     l.add(order1);
@@ -92,18 +93,6 @@ public class WorkOrderTest {
     assertTrue(l.get(15).getWorkOrderId() == 4);
     assertTrue(l.get(16).getWorkOrderId() == 7);
     assertTrue(l.get(17).getWorkOrderId() == 8);
-  }
-
-
-  private String getADateString(int hour) {
-    SimpleDateFormat formatter = new SimpleDateFormat("ddMMyyyyHHmmss");
-    Date currentDate = new Date();
-    Calendar cal = Calendar.getInstance();
-    cal.setTime(currentDate);
-    cal.add(Calendar.HOUR, -hour);
-    Date yesterday = cal.getTime();
-    return formatter.format(yesterday);
-
   }
 
 

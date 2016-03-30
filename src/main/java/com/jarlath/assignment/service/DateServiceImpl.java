@@ -1,6 +1,7 @@
 package com.jarlath.assignment.service;
 
 import com.jarlath.assignment.exception.InvalidTimestampParameterException;
+import com.jarlath.assignment.util.Statics;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
@@ -33,7 +34,7 @@ public class DateServiceImpl implements DateService {
     if (null == dateIn) {
       throw new InvalidTimestampParameterException();
     }
-    SimpleDateFormat format = new SimpleDateFormat("ddMMyyyyHHmmss");
+    SimpleDateFormat format = new SimpleDateFormat(Statics.TIMESTAMP_FORMAT);
     return format.parse(dateIn);
   }
 

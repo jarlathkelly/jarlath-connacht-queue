@@ -1,12 +1,9 @@
 package com.jarlath.assignment.service;
 
+import com.jarlath.assignment.TestUtilities;
 import com.jarlath.assignment.dto.WorkOrder;
 import com.jarlath.assignment.exception.*;
 import org.junit.Test;
-
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import static org.junit.Assert.assertTrue;
@@ -19,6 +16,7 @@ public class WorkOrderQueueServiceTest {
   WorkOrderQueueServiceImpl workOrderQueueService = new WorkOrderQueueServiceImpl();
   public final static Long ONE_HOUR = 3599L;
   public final static String BAD_DATE = "160419xxxx82183020";
+  TestUtilities testUtil = new TestUtilities();
 
   @Test
   public void test_retrieveWorkOrderQueue() {
@@ -172,17 +170,17 @@ public class WorkOrderQueueServiceTest {
   @Test
   public void test_retrieveAverageWaitTime() throws TimeStampParsingException {
     clearQueue();
-    workOrderQueueService.enqueueWorkOrder(new WorkOrder(77L, getADateString(2)));
-    workOrderQueueService.enqueueWorkOrder(new WorkOrder(88L, getADateString(2)));
-    workOrderQueueService.enqueueWorkOrder(new WorkOrder(99L, getADateString(2)));
-    assertTrue(workOrderQueueService.retrieveAverageWaitTime(getADateString(1)) > ONE_HOUR);
+    workOrderQueueService.enqueueWorkOrder(new WorkOrder(77L, testUtil.getADateString(2)));
+    workOrderQueueService.enqueueWorkOrder(new WorkOrder(88L, testUtil.getADateString(2)));
+    workOrderQueueService.enqueueWorkOrder(new WorkOrder(99L, testUtil.getADateString(2)));
+    assertTrue(workOrderQueueService.retrieveAverageWaitTime(testUtil.getADateString(1)) > ONE_HOUR);
     clearQueue();
   }
 
   @Test(expected = TimeStampParsingException.class)
   public void test_retrieveAverageWaitTime_TimeStampParsingException() {
     clearQueue();
-    workOrderQueueService.enqueueWorkOrder(new WorkOrder(333L, getADateString(2)));
+    workOrderQueueService.enqueueWorkOrder(new WorkOrder(333L, testUtil.getADateString(2)));
     workOrderQueueService.retrieveAverageWaitTime(BAD_DATE);
     clearQueue();
   }
@@ -201,16 +199,6 @@ public class WorkOrderQueueServiceTest {
         workOrderQueueService.removeTopFromWorkOrderQueue();
       }
     }
-  }
-
-  private String getADateString(int hour) {
-    SimpleDateFormat formatter = new SimpleDateFormat("ddMMyyyyHHmmss");
-    Date currentDate = new Date();
-    Calendar cal = Calendar.getInstance();
-    cal.setTime(currentDate);
-    cal.add(Calendar.HOUR, -hour);
-    Date yesterday = cal.getTime();
-    return formatter.format(yesterday);
   }
 
 }
