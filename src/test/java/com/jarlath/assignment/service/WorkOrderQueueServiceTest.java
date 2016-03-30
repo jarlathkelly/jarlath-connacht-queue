@@ -138,7 +138,6 @@ public class WorkOrderQueueServiceTest {
     workOrderQueueService.enqueueWorkOrder(new WorkOrder(20000L, "27032016183015"));
     List<Long> orderedList = workOrderQueueService.retrieveWorkOrderedIdList();
     assertTrue(orderedList.get(0) == 15000L);
-    assertTrue(orderedList.get(1) == 20000L);
    clearQueue();
   }
 
