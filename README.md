@@ -44,16 +44,16 @@ Use a rest Client to Test the endpoints. I use Postman. See https://www.getpostm
 
 
 7. Some management services have also been provided with the Spring Boot actuator module. The following are vailable on http://localhost:8080/:
-- /actuator  -- will give available actuator endpoints
-- /health
-- /mappings
-- /autoconfig
-- /beans
-- /metrics
-- /dump
-- /trace
-- /env
-- /configprops
+ - /actuator  -- will give available actuator endpoints
+ - /health
+ - /mappings
+ - /autoconfig
+ - /beans
+ - /metrics
+ - /dump
+ - /trace
+ - /env
+ - /configprops
 
 
 ##  Usage & Example Responses
