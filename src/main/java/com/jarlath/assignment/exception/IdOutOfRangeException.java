@@ -12,6 +12,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseStatus(value = HttpStatus.BAD_REQUEST, reason = "ID Parameter Value is not within Range")
 public class IdOutOfRangeException extends RuntimeException {
   public IdOutOfRangeException(String s) {
-    super("WorkOrder ID supplied: " +s +" is not within the valid numeric range of 1-9223372036854775807. ");
+    super("WorkOrder ID supplied: " + s + " is not within the valid numeric range of 1-9223372036854775807. ");
   }
 }

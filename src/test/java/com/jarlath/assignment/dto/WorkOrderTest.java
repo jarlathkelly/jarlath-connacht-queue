@@ -2,13 +2,14 @@ package com.jarlath.assignment.dto;
 
 import com.jarlath.assignment.TestUtilities;
 import org.junit.Test;
+
 import java.util.*;
 
 import static org.junit.Assert.assertTrue;
 
 /**
  * Created by jarlath.kelly on 29/03/2016.
- *
+ * <p>
  * Unit tests for the WorkOrder class
  */
 public class WorkOrderTest {

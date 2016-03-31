@@ -7,7 +7,7 @@ package com.jarlath.assignment.util;
  * @author Jarlath Kelly
  */
 public class Statics {
-  public final static String TIMESTAMP_FORMAT= "ddMMyyyyHHmmss";
+  public final static String TIMESTAMP_FORMAT = "ddMMyyyyHHmmss";
   public final static String MGMT_OVERRIDE = "MGMT_OVERRIDE";
   public final static String VIP = "VIP";
   public final static String PRIORITY = "PRIORITY";

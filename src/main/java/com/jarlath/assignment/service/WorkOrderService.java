@@ -15,7 +15,7 @@ public interface WorkOrderService {
 
   int getComparisonReturnValue(final Long value);
 
-  Long getWorkOrderRank(final String workOrderType,final  WorkOrder workOrder) throws ParseException;
+  Long getWorkOrderRank(final String workOrderType, final WorkOrder workOrder) throws ParseException;
 
   String getWorkOrderType(final String id);
 

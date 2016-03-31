@@ -10,7 +10,7 @@ import static org.junit.Assert.assertTrue;
 
 /**
  * Created by jarlath.kelly on 29/03/2016.
- *
+ * <p>
  * Unit tests for the WorkOrderQueueServiceImpl class
  */
 public class WorkOrderQueueServiceImplTest {
@@ -131,19 +131,21 @@ public class WorkOrderQueueServiceImplTest {
     clearQueue();
   }
 
- @Test
+  @Test
   public void test_retrieveWorkOrderedIdList() {
     clearQueue();
     workOrderQueueService.enqueueWorkOrder(new WorkOrder("15000", "27032016183015"));
     workOrderQueueService.enqueueWorkOrder(new WorkOrder("20000", "27032016183015"));
     List<Long> orderedList = workOrderQueueService.retrieveWorkOrderedIdList();
     assertTrue(orderedList.get(0) == 15000L);
-   clearQueue();
+    clearQueue();
   }
 
   @Test
   public void test_retrieveIndexOfWorkOrderId() throws WorkOrderIdNotOnQueueException {
     clearQueue();
+    List<WorkOrder> queue = workOrderQueueService.retrieveWorkOrderQueue();
+
     workOrderQueueService.enqueueWorkOrder(new WorkOrder("29", "27032016183015"));
     workOrderQueueService.enqueueWorkOrder(new WorkOrder("150", "27032016183015"));
     workOrderQueueService.enqueueWorkOrder(new WorkOrder("10", "27032016183015"));

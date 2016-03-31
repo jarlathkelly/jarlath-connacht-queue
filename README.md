@@ -101,7 +101,7 @@ http://localhost:8080/workorders
 ```
 
 
-#### Dequeue Highest Ranked WorkOrder: DELETE
+#### Dequeue Specific WorkOrder by Id: DELETE
 ```
 http://localhost:8080/workorders/ids?id=40
 {

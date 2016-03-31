@@ -4,13 +4,14 @@ import com.jarlath.assignment.TestUtilities;
 import com.jarlath.assignment.dto.WorkOrder;
 import com.jarlath.assignment.util.Statics;
 import org.junit.Test;
+
 import java.text.ParseException;
 
 import static org.junit.Assert.assertTrue;
 
 /**
  * Created by jarlath.kelly on 29/03/2016.
- *
+ * <p>
  * Unit tests for the WorkOrderServiceImpl class
  */
 public class WorkOrderServiceImplTest {

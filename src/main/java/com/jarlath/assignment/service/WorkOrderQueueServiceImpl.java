@@ -47,12 +47,13 @@ public class WorkOrderQueueServiceImpl implements WorkOrderQueueService {
       throw new InvalidTimestampParameterException();
     }
     List<WorkOrder> queue = retrieveWorkOrderQueue();
-    for (WorkOrder order : queue) {
-      if (order.getWorkOrderId().equals(workOrder.getWorkOrderId())) {
-        throw new WorkOrderExistsInQueueException(workOrder.getWorkOrderId());
-      }
+
+    if (queue.contains(workOrder)) {
+      throw new WorkOrderExistsInQueueException(workOrder.getWorkOrderId());
+    } else {
+      addToWorkOrderQueue(workOrder);
     }
-    addToWorkOrderQueue(workOrder);
+
     return workOrder;
   }
 
@@ -82,16 +83,15 @@ public class WorkOrderQueueServiceImpl implements WorkOrderQueueService {
     }
     List<WorkOrder> queue = retrieveWorkOrderQueue();
     WorkOrder workOrder = new WorkOrder();
-    for (WorkOrder item : queue) {
-      if (item.getWorkOrderId().equals(id)) {
-        workOrder = item;
-        break;
-      }
-    }
-    if (null == workOrder.getWorkOrderId()) {
+    workOrder.setWorkOrderId(id);
+
+    if (!queue.contains(workOrder)) {
       throw new WorkOrderIdNotOnQueueException(id);
+    } else {
+      workOrder = queue.get(queue.indexOf(workOrder));
+      removeFromQueue(workOrder);
     }
-    removeFromQueue(workOrder);
+
     return workOrder;
 
   }
@@ -155,19 +155,15 @@ public class WorkOrderQueueServiceImpl implements WorkOrderQueueService {
     }
     List<WorkOrder> queue = retrieveWorkOrderQueue();
     Collections.sort(queue, new WorkOrder());
-    int index = 0;
     WorkOrder workOrder = new WorkOrder();
-    boolean workOrderFound = false;
-    for (WorkOrder item : queue) {
-      if (item.getWorkOrderId().equals(id)) {
-        workOrderFound = true;
-        workOrder = new WorkOrder(item.getWorkOrderId(),item.getCreatedTS(),index);
-        break;
-      }
-      index = index + 1;
-    }
-    if (!workOrderFound) {
+    workOrder.setWorkOrderId(id);
+
+    if (!queue.contains(workOrder)) {
       throw new WorkOrderIdNotOnQueueException();
+    } else {
+      int index = queue.indexOf(workOrder);
+      workOrder = queue.get(index);
+      workOrder.setPosition(index);
     }
     return workOrder;
   }
@@ -193,7 +189,7 @@ public class WorkOrderQueueServiceImpl implements WorkOrderQueueService {
         if (count != 0 && totalTime != 0) {
           meanTime = totalTime / count;
         }
-        if(meanTime < 0){
+        if (meanTime < 0) {
           throw new NegativeDurationWaitTimeException();
         }
       } catch (ParseException pe) {

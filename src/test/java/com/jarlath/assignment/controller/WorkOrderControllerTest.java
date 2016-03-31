@@ -2,7 +2,7 @@ package com.jarlath.assignment.controller;
 
 /**
  * Created by jarlath.kelly on 29/03/2016.
- *
+ * <p>
  * Unit tests for the WorkOrderController class
  */
 
@@ -193,7 +193,7 @@ public class WorkOrderControllerTest {
     mockMvc.perform(put("/workorders/waittimes")
         .contentType(contentType))
         .andExpect(status().is4xxClientError());
-    
+
   }
 
   @Test

@@ -6,7 +6,6 @@ import com.jarlath.assignment.service.ValidationServiceImpl;
 import com.jarlath.assignment.service.WorkOrderServiceImpl;
 import com.jarlath.assignment.util.Statics;
 import org.springframework.hateoas.ResourceSupport;
-
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.validation.constraints.NotNull;
@@ -38,12 +37,13 @@ public class WorkOrder extends ResourceSupport implements Comparator<WorkOrder>,
   }
 
   @JsonCreator
-  public WorkOrder(@JsonProperty("id")String id, @JsonProperty("createdTS")String createdTS) {
+  public WorkOrder(@JsonProperty("id") String id, @JsonProperty("createdTS") String createdTS) {
     this.workOrderId = id;
     this.createdTs = createdTS;
   }
+
   @JsonCreator
-  public WorkOrder(@JsonProperty("id")String id, @JsonProperty("createdTS")String createdTS, @JsonProperty("position")Integer position) {
+  public WorkOrder(@JsonProperty("id") String id, @JsonProperty("createdTS") String createdTS, @JsonProperty("position") Integer position) {
     this.workOrderId = id;
     this.createdTs = createdTS;
     this.position = position;
@@ -59,6 +59,14 @@ public class WorkOrder extends ResourceSupport implements Comparator<WorkOrder>,
 
   public Integer getPosition() {
     return position;
+  }
+
+  public void setWorkOrderId(final String workOrderId) {
+    this.workOrderId = workOrderId;
+  }
+
+  public void setPosition(final Integer position) {
+    this.position = position;
   }
 
   /**
@@ -143,6 +151,30 @@ public class WorkOrder extends ResourceSupport implements Comparator<WorkOrder>,
     }
     return 0;
 
+  }
+
+  /**
+   * Override the equals() method in order to allow the ArratList contains
+   * method to identify WorkOrder objects based on their Id. This
+   * enables the more efficient processing of the List via Random
+   * Access methods
+   *
+   * @param obj WorkOrder
+   * @return boolean
+   */
+  @Override
+  public boolean equals(Object obj) {
+    if (obj == null) {
+      return false;
+    }
+    if (!WorkOrder.class.isAssignableFrom(obj.getClass())) {
+      return false;
+    }
+    final WorkOrder other = (WorkOrder) obj;
+    if ((this.workOrderId == null) ? (other.workOrderId != null) : !this.workOrderId.equals(other.workOrderId)) {
+      return false;
+    }
+    return true;
   }
 
 }

@@ -48,7 +48,7 @@ public class WorkOrderServiceImpl implements WorkOrderService {
    * @param workOrder     instance of WorkOrder
    * @return Long rank of Work Order
    */
-  public Long getWorkOrderRank(final String workOrderType,final  WorkOrder workOrder) throws ParseException {
+  public Long getWorkOrderRank(final String workOrderType, final WorkOrder workOrder) throws ParseException {
 
     switch (workOrderType) {
       case Statics.VIP:

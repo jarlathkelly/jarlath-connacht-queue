@@ -8,7 +8,7 @@ import static org.junit.Assert.assertTrue;
 
 /**
  * Created by jarlath.kelly on 29/03/2016.
- *
+ * <p>
  * Unit tests for the ValidationServiceImpl class
  */
 public class ValidationServiceImplTest {
@@ -29,6 +29,7 @@ public class ValidationServiceImplTest {
   public void test_isIdValid_InvalidIdParameterException1() {
     validationService.isIdValid(null);
   }
+
   @Test(expected = InvalidIdParameterException.class)
   public void test_isIdValid_InvalidIdParameterException2() {
     validationService.isIdValid("0");

@@ -54,7 +54,7 @@ public class WorkOrderController {
 
     validationService.isIdWithinRange(id);
     WorkOrder workOrder = new WorkOrder(id, createdTs);
-    workOrder.add(linkTo(methodOn(WorkOrderController.class).enqueueWorkOrder(id,createdTs)).withSelfRel());
+    workOrder.add(linkTo(methodOn(WorkOrderController.class).enqueueWorkOrder(id, createdTs)).withSelfRel());
     workOrder.isValid(workOrder);
     workOrderQueueService.enqueueWorkOrder(workOrder);
     return new ResponseEntity<WorkOrder>(workOrder, HttpStatus.OK);

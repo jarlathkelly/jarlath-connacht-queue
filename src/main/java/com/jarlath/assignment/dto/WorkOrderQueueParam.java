@@ -15,7 +15,7 @@ import javax.validation.constraints.NotNull;
  * @see WorkOrder
  * @see WorkOrderQueue
  */
-public class WorkOrderQueueParam   extends ResourceSupport {
+public class WorkOrderQueueParam extends ResourceSupport {
   @NotNull
   private Long waitTime;
 
@@ -23,7 +23,7 @@ public class WorkOrderQueueParam   extends ResourceSupport {
   }
 
   @JsonCreator
-  public WorkOrderQueueParam(@JsonProperty("waitTime")Long waitTime) {
+  public WorkOrderQueueParam(@JsonProperty("waitTime") Long waitTime) {
     this.waitTime = waitTime;
   }
 
