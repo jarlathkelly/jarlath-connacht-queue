@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.web.ErrorAttributes;
 import java.util.Map;
 
 /**
- * The {@link ErrorPayload} represents the payload object
- * to be returned when the /error resource is reached.
+ * The {@link ErrorPayload} represents the format of the error payload
+ * object returned when various exceptions are met.
  *
  * @author Jarlath Kelly
  * @see ErrorMessageController

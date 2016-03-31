@@ -12,7 +12,7 @@ import java.util.List;
  * <p>
  * This class repository was created in the absence of a 'real' back end
  * for this application. Of course it is possible to plug in any number
- * of backend technologies here be it memcache,redis,Sprin data etc etc
+ * of backend technologies here be it memcache,redis,Spring data etc
  * This implementation is a template queue and not a Production grade solution.
  *
  * @author Jarlath Kelly

@@ -17,7 +17,7 @@ import java.util.Comparator;
  * contains 2 members. The class implements Comparator and Comparable in order to
  * override both the compareTo() and compare() methods. This class is designed to
  * populate a prioirtised queue. In order to be sortable each element of the
- * queue will be comparable to any othe elemnt on the queue.
+ * queue will be comparable to any othe element on the queue.
  * <p>
  * Id is the unique identifer of the Work Order.
  * CreatedTs is the timestamp this Work Order was placed on the queue
