@@ -1,0 +1,258 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: WorkOrder</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">com.jarlath.assignment.dto</a> ]
+</div>
+
+<h1>Coverage Summary for Class: WorkOrder (com.jarlath.assignment.dto)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">WorkOrder</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (12/ 12)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    95.9%
+  </span>
+  <span class="absValue">
+    (47/ 49)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package com.jarlath.assignment.dto;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import com.jarlath.assignment.exception.InvalidIdParameterException;
+<i>4</i>&nbsp;import com.jarlath.assignment.exception.InvalidTimestampParameterException;
+<i>5</i>&nbsp;import com.jarlath.assignment.service.ValidationServiceImpl;
+<i>6</i>&nbsp;import com.jarlath.assignment.service.WorkOrderServiceImpl;
+<i>7</i>&nbsp;import com.jarlath.assignment.util.Statics;
+<i>8</i>&nbsp;import org.springframework.hateoas.ResourceSupport;
+<i>9</i>&nbsp;import com.fasterxml.jackson.annotation.JsonCreator;
+<i>10</i>&nbsp;import com.fasterxml.jackson.annotation.JsonProperty;
+<i>11</i>&nbsp;
+<i>12</i>&nbsp;import javax.validation.constraints.NotNull;
+<i>13</i>&nbsp;import java.util.Comparator;
+<i>14</i>&nbsp;
+<i>15</i>&nbsp;/**
+<i>16</i>&nbsp; * The {@link WorkOrder} represents the Work Order Request object. The object
+<i>17</i>&nbsp; * contains 2 members. The class implements Comparator and Comparable in order to
+<i>18</i>&nbsp; * override both the compareTo() and compare() methods. This class is designed to
+<i>19</i>&nbsp; * populate a prioirtised queue. In order to be sortable each element of the
+<i>20</i>&nbsp; * queue will be comparable to any othe elemnt on the queue.
+<i>21</i>&nbsp; * &lt;p&gt;
+<i>22</i>&nbsp; * Id is the unique identifer of the Work Order.
+<i>23</i>&nbsp; * CreatedTs is the timestamp this Work Order was placed on the queue
+<i>24</i>&nbsp; *
+<i>25</i>&nbsp; * @author Jarlath Kelly
+<i>26</i>&nbsp; * @see com.jarlath.assignment.dao.WorkOrderQueue
+<i>27</i>&nbsp; * @see WorkOrderServiceImpl
+<i>28</i>&nbsp; */
+<i>29</i>&nbsp;public class WorkOrder extends ResourceSupport implements Comparator&lt;WorkOrder&gt;, Comparable&lt;WorkOrder&gt; {
+<i>30</i>&nbsp;  @NotNull
+<i>31</i>&nbsp;  private String workOrderId;
+<i>32</i>&nbsp;  @NotNull
+<i>33</i>&nbsp;  private String createdTs;
+<b class="fc"><i>34</i>&nbsp;  private Integer position = null;</b>
+<i>35</i>&nbsp;
+<b class="fc"><i>36</i>&nbsp;  public WorkOrder() {</b>
+<b class="fc"><i>37</i>&nbsp;  }</b>
+<i>38</i>&nbsp;
+<i>39</i>&nbsp;  @JsonCreator
+<b class="fc"><i>40</i>&nbsp;  public WorkOrder(@JsonProperty(&quot;id&quot;) String id, @JsonProperty(&quot;createdTS&quot;) String createdTS) {</b>
+<b class="fc"><i>41</i>&nbsp;    this.workOrderId = id;</b>
+<b class="fc"><i>42</i>&nbsp;    this.createdTs = createdTS;</b>
+<b class="fc"><i>43</i>&nbsp;  }</b>
+<i>44</i>&nbsp;
+<i>45</i>&nbsp;  @JsonCreator
+<b class="fc"><i>46</i>&nbsp;  public WorkOrder(@JsonProperty(&quot;id&quot;) String id, @JsonProperty(&quot;createdTS&quot;) String createdTS, @JsonProperty(&quot;position&quot;) Integer position) {</b>
+<b class="fc"><i>47</i>&nbsp;    this.workOrderId = id;</b>
+<b class="fc"><i>48</i>&nbsp;    this.createdTs = createdTS;</b>
+<b class="fc"><i>49</i>&nbsp;    this.position = position;</b>
+<b class="fc"><i>50</i>&nbsp;  }</b>
+<i>51</i>&nbsp;
+<i>52</i>&nbsp;  public String getWorkOrderId() {
+<b class="fc"><i>53</i>&nbsp;    return workOrderId;</b>
+<i>54</i>&nbsp;  }
+<i>55</i>&nbsp;
+<i>56</i>&nbsp;  public String getCreatedTS() {
+<b class="fc"><i>57</i>&nbsp;    return createdTs;</b>
+<i>58</i>&nbsp;  }
+<i>59</i>&nbsp;
+<i>60</i>&nbsp;  public Integer getPosition() {
+<b class="fc"><i>61</i>&nbsp;    return position;</b>
+<i>62</i>&nbsp;  }
+<i>63</i>&nbsp;
+<i>64</i>&nbsp;  public void setWorkOrderId(final String workOrderId) {
+<b class="fc"><i>65</i>&nbsp;    this.workOrderId = workOrderId;</b>
+<b class="fc"><i>66</i>&nbsp;  }</b>
+<i>67</i>&nbsp;
+<i>68</i>&nbsp;  public void setPosition(final Integer position) {
+<b class="fc"><i>69</i>&nbsp;    this.position = position;</b>
+<b class="fc"><i>70</i>&nbsp;  }</b>
+<i>71</i>&nbsp;
+<i>72</i>&nbsp;  /**
+<i>73</i>&nbsp;   * Overrides the compare() method of the Comparable Interface.
+<i>74</i>&nbsp;   * This method facilitates the natural ordering by Id of
+<i>75</i>&nbsp;   * Work Order Objects.
+<i>76</i>&nbsp;   * &lt;p&gt;
+<i>77</i>&nbsp;   * This method returns 0 if Work Order Ids are equal.
+<i>78</i>&nbsp;   * 1 if this Work Order Id is greater than that of the Work Order being compared to
+<i>79</i>&nbsp;   * -1 if this Work Order Id is less than that of the Work Order being compared to
+<i>80</i>&nbsp;   *
+<i>81</i>&nbsp;   * @return int
+<i>82</i>&nbsp;   */
+<i>83</i>&nbsp;  @Override
+<i>84</i>&nbsp;  public int compareTo(WorkOrder anotherWorkOrder) {
+<b class="fc"><i>85</i>&nbsp;    if (anotherWorkOrder == null) {</b>
+<b class="fc"><i>86</i>&nbsp;      throw new ClassCastException(&quot;A WorkOrder object expected.&quot;);</b>
+<i>87</i>&nbsp;    }
+<b class="fc"><i>88</i>&nbsp;    String anotherWorkOrderId = anotherWorkOrder.getWorkOrderId();</b>
+<b class="fc"><i>89</i>&nbsp;    return (this.workOrderId).compareTo(anotherWorkOrderId);</b>
+<i>90</i>&nbsp;  }
+<i>91</i>&nbsp;
+<i>92</i>&nbsp;  /**
+<i>93</i>&nbsp;   * Provides basic validation of a WorkOrder
+<i>94</i>&nbsp;   * The method calls the Validation Service to validate
+<i>95</i>&nbsp;   * both the WorkOrder Id and createdTs members.
+<i>96</i>&nbsp;   * Id must be a valid number between 1 and 9223372036854775807
+<i>97</i>&nbsp;   * createdTs must be a valid Timestamp with the format: DDMMYYYYHHMMSS
+<i>98</i>&nbsp;   *
+<i>99</i>&nbsp;   * @param order WorkOrder
+<i>100</i>&nbsp;   * @return boolean
+<i>101</i>&nbsp;   */
+<i>102</i>&nbsp;  public boolean isValid(WorkOrder order) throws InvalidIdParameterException, InvalidTimestampParameterException {
+<b class="fc"><i>103</i>&nbsp;    ValidationServiceImpl validationService = new ValidationServiceImpl();</b>
+<b class="fc"><i>104</i>&nbsp;    return (validationService.isCreatedTsValid(order.getCreatedTS()) &amp;&amp; validationService.isIdValid(order.getWorkOrderId()));</b>
+<i>105</i>&nbsp;  }
+<i>106</i>&nbsp;
+<i>107</i>&nbsp;  /**
+<i>108</i>&nbsp;   * Overrides the compare() method of the Comparator Interface.
+<i>109</i>&nbsp;   * This method facilitates the custome ordering by rank of
+<i>110</i>&nbsp;   * Work Order Objects.
+<i>111</i>&nbsp;   * &lt;p&gt;
+<i>112</i>&nbsp;   * The custom ranking of the Work Order Requests is governed by the following
+<i>113</i>&nbsp;   * four rules;
+<i>114</i>&nbsp;   * (1) Normal IDs rank = to the no of seconds on queue.
+<i>115</i>&nbsp;   * (2) Priority IDs rank = max(3, n log n) where n is no of seconds on queue
+<i>116</i>&nbsp;   * (3) VIP IDs rank = max(4, 2n log n) where n is no of seconds on queue
+<i>117</i>&nbsp;   * (4) Management Override IDs are ranked ahead other ID
+<i>118</i>&nbsp;   * and are ranked among themselves according to the no of seconds on queue
+<i>119</i>&nbsp;   * &lt;p&gt;
+<i>120</i>&nbsp;   * This method returns 0 if Work Order Ids are equal.
+<i>121</i>&nbsp;   * 1 if this Work Order Id is greater than that of the Work Order being compared to
+<i>122</i>&nbsp;   * -1 if this Work Order Id is less than that of the Work Order being compared to
+<i>123</i>&nbsp;   *
+<i>124</i>&nbsp;   * @return int
+<i>125</i>&nbsp;   */
+<i>126</i>&nbsp;  public int compare(WorkOrder workOrder1, WorkOrder workOrder2) {
+<b class="fc"><i>127</i>&nbsp;    WorkOrderServiceImpl workOrderService = new WorkOrderServiceImpl();</b>
+<i>128</i>&nbsp;
+<b class="fc"><i>129</i>&nbsp;    if (workOrder1 == null || workOrder2 == null) {</b>
+<b class="fc"><i>130</i>&nbsp;      throw new ClassCastException(&quot;WorkOrder objects are expected.&quot;);</b>
+<i>131</i>&nbsp;    }
+<i>132</i>&nbsp;
+<b class="fc"><i>133</i>&nbsp;    String workOrderType1 = workOrderService.getWorkOrderType(workOrder1.getWorkOrderId());</b>
+<b class="fc"><i>134</i>&nbsp;    String workOrderType2 = workOrderService.getWorkOrderType(workOrder2.getWorkOrderId());</b>
+<i>135</i>&nbsp;
+<b class="fc"><i>136</i>&nbsp;    if (workOrderType1.equals(Statics.MGMT_OVERRIDE) &amp;&amp; !workOrderType2.equals(Statics.MGMT_OVERRIDE)) {</b>
+<b class="fc"><i>137</i>&nbsp;      return -1;</b>
+<b class="fc"><i>138</i>&nbsp;    } else if (workOrderType2.equals(Statics.MGMT_OVERRIDE) &amp;&amp; !workOrderType1.equals(Statics.MGMT_OVERRIDE)) {</b>
+<b class="nc"><i>139</i>&nbsp;      return 1;</b>
+<b class="fc"><i>140</i>&nbsp;    } else if (workOrderType1.equals(Statics.MGMT_OVERRIDE) &amp;&amp; workOrderType2.equals(Statics.MGMT_OVERRIDE)) {</b>
+<b class="fc"><i>141</i>&nbsp;      Long comparison = workOrderService.getMgmtOverrideRank((workOrder1).getCreatedTS()) - workOrderService.getMgmtOverrideRank((workOrder2).getCreatedTS());</b>
+<b class="fc"><i>142</i>&nbsp;      return workOrderService.getComparisonReturnValue(comparison);</b>
+<i>143</i>&nbsp;    }
+<i>144</i>&nbsp;
+<b class="fc"><i>145</i>&nbsp;    Long rank1 = workOrderService.getWorkOrderRank(workOrderType1, workOrder1);</b>
+<b class="fc"><i>146</i>&nbsp;    Long rank2 = workOrderService.getWorkOrderRank(workOrderType2, workOrder2);</b>
+<b class="fc"><i>147</i>&nbsp;    Long compare = rank1 - rank2;</b>
+<b class="fc"><i>148</i>&nbsp;    return workOrderService.getComparisonReturnValue(compare);</b>
+<i>149</i>&nbsp;  }
+<i>150</i>&nbsp;
+<i>151</i>&nbsp;  /**
+<i>152</i>&nbsp;   * Override the equals() method in order to allow the ArratList contains
+<i>153</i>&nbsp;   * method to identify WorkOrder objects based on their Id. This
+<i>154</i>&nbsp;   * enables the more efficient processing of the List via Random
+<i>155</i>&nbsp;   * Access methods
+<i>156</i>&nbsp;   *
+<i>157</i>&nbsp;   * @param obj WorkOrder
+<i>158</i>&nbsp;   * @return boolean
+<i>159</i>&nbsp;   */
+<i>160</i>&nbsp;  @Override
+<i>161</i>&nbsp;  public boolean equals(Object obj) {
+<b class="fc"><i>162</i>&nbsp;    if (obj == null) {</b>
+<b class="fc"><i>163</i>&nbsp;      return false;</b>
+<i>164</i>&nbsp;    }
+<b class="fc"><i>165</i>&nbsp;    if (!WorkOrder.class.isAssignableFrom(obj.getClass())) {</b>
+<b class="nc"><i>166</i>&nbsp;      return false;</b>
+<i>167</i>&nbsp;    }
+<b class="fc"><i>168</i>&nbsp;    final WorkOrder other = (WorkOrder) obj;</b>
+<b class="fc"><i>169</i>&nbsp;    if ((this.workOrderId == null) ? (other.workOrderId != null) : !this.workOrderId.equals(other.workOrderId)) {</b>
+<b class="fc"><i>170</i>&nbsp;      return false;</b>
+<i>171</i>&nbsp;    }
+<b class="fc"><i>172</i>&nbsp;    return true;</b>
+<i>173</i>&nbsp;  }
+<i>174</i>&nbsp;
+<i>175</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2016-03-31 13:37</div>
+</div>
+</body>
+</html>

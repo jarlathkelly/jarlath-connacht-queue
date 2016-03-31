@@ -33,7 +33,7 @@ public class ValidationServiceImpl implements ValidationService {
    * @return boolean is Id valid
    */
   public boolean isIdValid(final String id) throws InvalidIdParameterException {
-    if (null == id || id == "" || id == "0") {
+    if (null == id || id.equals("") || id.equals("0")) {
       throw new InvalidIdParameterException();
     }
     Pattern regexId = Pattern.compile(Statics.VALIDATE_ID);
@@ -62,12 +62,11 @@ public class ValidationServiceImpl implements ValidationService {
       throw new InvalidTimestampParameterException();
     }
 
-
-    Pattern regexTs = Pattern.compile(Statics.VALIDATE_TS);
-    Matcher tSmatcher = regexTs.matcher(createdTs);
-    if (!tSmatcher.find()) {
-      throw new InvalidTimestampParameterException(createdTs);
-    }
+//    Pattern regexTs = Pattern.compile(Statics.VALIDATE_TS);
+//    Matcher tSmatcher = regexTs.matcher(createdTs);
+//    if (!tSmatcher.find()) {
+//      throw new InvalidTimestampParameterException(createdTs);
+//    }
     return true;
   }
 

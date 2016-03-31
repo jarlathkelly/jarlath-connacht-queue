@@ -1,6 +1,5 @@
 package com.jarlath.assignment.dto;
 
-import mockit.Mock;
 import org.junit.Test;
 
 import java.util.HashMap;

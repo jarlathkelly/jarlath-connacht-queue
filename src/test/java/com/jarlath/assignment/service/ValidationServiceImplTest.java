@@ -1,5 +1,6 @@
 package com.jarlath.assignment.service;
 
+import com.jarlath.assignment.exception.IdOutOfRangeException;
 import com.jarlath.assignment.exception.InvalidIdParameterException;
 import com.jarlath.assignment.exception.InvalidTimestampParameterException;
 import org.junit.Test;
@@ -56,6 +57,22 @@ public class ValidationServiceImplTest {
   @Test(expected = InvalidTimestampParameterException.class)
   public void test_isCreatedTsValid_InvalidTimestampParameterException3() {
     validationService.isCreatedTsValid(null);
+  }
+
+
+  @Test
+  public void test_isIdWithinRange() {
+    assertTrue(validationService.isIdWithinRange("1"));
+  }
+
+  @Test
+  public void test_isIdWithinRange2() {
+    assertTrue(validationService.isIdWithinRange("9223372036854775807"));
+  }
+
+  @Test(expected = IdOutOfRangeException.class)
+  public void test_isIdWithinRange2_IdOutOfRangeException() {
+    validationService.isIdWithinRange("9223372036854775808");
   }
 
 }

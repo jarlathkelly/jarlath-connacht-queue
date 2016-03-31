@@ -1,0 +1,281 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: WorkOrderQueueServiceImpl</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">com.jarlath.assignment.service</a> ]
+</div>
+
+<h1>Coverage Summary for Class: WorkOrderQueueServiceImpl (com.jarlath.assignment.service)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">WorkOrderQueueServiceImpl</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (10/ 10)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (69/ 69)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package com.jarlath.assignment.service;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import com.jarlath.assignment.dao.WorkOrderQueue;
+<i>4</i>&nbsp;import com.jarlath.assignment.dto.WorkOrder;
+<i>5</i>&nbsp;import com.jarlath.assignment.exception.*;
+<i>6</i>&nbsp;import org.springframework.stereotype.Service;
+<i>7</i>&nbsp;import java.util.ArrayList;
+<i>8</i>&nbsp;import java.util.Collections;
+<i>9</i>&nbsp;import java.util.List;
+<i>10</i>&nbsp;
+<i>11</i>&nbsp;/**
+<i>12</i>&nbsp; * The {@link WorkOrderQueueServiceImpl} is the concrete implementation for the WorkOrderQueueService
+<i>13</i>&nbsp; * Interface. Provides WorkOrderQueue related services for use within the Work Order application.
+<i>14</i>&nbsp; *
+<i>15</i>&nbsp; * @author Jarlath Kelly
+<i>16</i>&nbsp; * @see WorkOrderQueueService
+<i>17</i>&nbsp; */
+<i>18</i>&nbsp;@Service
+<i>19</i>&nbsp;public class WorkOrderQueueServiceImpl implements WorkOrderQueueService {
+<b class="fc"><i>20</i>&nbsp;  DateServiceImpl dateService = new DateServiceImpl();</b>
+<i>21</i>&nbsp;
+<b class="fc"><i>22</i>&nbsp;  public WorkOrderQueueServiceImpl() {</b>
+<i>23</i>&nbsp;
+<b class="fc"><i>24</i>&nbsp;  }</b>
+<i>25</i>&nbsp;
+<i>26</i>&nbsp;  public List&lt;WorkOrder&gt; retrieveWorkOrderQueue() {
+<b class="fc"><i>27</i>&nbsp;    return WorkOrderQueue.getInstance();</b>
+<i>28</i>&nbsp;
+<i>29</i>&nbsp;  }
+<i>30</i>&nbsp;
+<i>31</i>&nbsp;  /**
+<i>32</i>&nbsp;   * Queues a Work Order Request object onto the Singleton WorkOrderQueue.
+<i>33</i>&nbsp;   * Performs basic validation on the supplied WorkOrder and also
+<i>34</i>&nbsp;   * ensures the queue does not already exist on the queue before enqueueing the
+<i>35</i>&nbsp;   * Work Order Object.
+<i>36</i>&nbsp;   *
+<i>37</i>&nbsp;   * @param workOrder to be enqueued
+<i>38</i>&nbsp;   * @return WorkOrder just enqueued
+<i>39</i>&nbsp;   */
+<i>40</i>&nbsp;  public WorkOrder enqueueWorkOrder(final WorkOrder workOrder) throws WorkOrderExistsInQueueException, InvalidIdParameterException, InvalidTimestampParameterException {
+<b class="fc"><i>41</i>&nbsp;    if (null == workOrder.getWorkOrderId()) {</b>
+<b class="fc"><i>42</i>&nbsp;      throw new InvalidIdParameterException();</b>
+<i>43</i>&nbsp;    }
+<b class="fc"><i>44</i>&nbsp;    if (null == workOrder.getCreatedTS()) {</b>
+<b class="fc"><i>45</i>&nbsp;      throw new InvalidTimestampParameterException();</b>
+<i>46</i>&nbsp;    }
+<b class="fc"><i>47</i>&nbsp;    List&lt;WorkOrder&gt; queue = retrieveWorkOrderQueue();</b>
+<i>48</i>&nbsp;
+<b class="fc"><i>49</i>&nbsp;    if (queue.contains(workOrder)) {</b>
+<b class="fc"><i>50</i>&nbsp;      throw new WorkOrderExistsInQueueException(workOrder.getWorkOrderId());</b>
+<i>51</i>&nbsp;    } else {
+<b class="fc"><i>52</i>&nbsp;      addToWorkOrderQueue(workOrder);</b>
+<i>53</i>&nbsp;    }
+<i>54</i>&nbsp;
+<b class="fc"><i>55</i>&nbsp;    return workOrder;</b>
+<i>56</i>&nbsp;  }
+<i>57</i>&nbsp;
+<i>58</i>&nbsp;  /**
+<i>59</i>&nbsp;   * Enqueues the Work Order Request object
+<i>60</i>&nbsp;   * from the Singleton WorkOrderQueue in a synchronised manner.
+<i>61</i>&nbsp;   *
+<i>62</i>&nbsp;   * @param workOrder WorkOrder to be enqueued
+<i>63</i>&nbsp;   */
+<i>64</i>&nbsp;  protected synchronized void addToWorkOrderQueue(final WorkOrder workOrder) {
+<b class="fc"><i>65</i>&nbsp;    List&lt;WorkOrder&gt; queue = WorkOrderQueue.getInstance();</b>
+<b class="fc"><i>66</i>&nbsp;    queue.add(workOrder);</b>
+<b class="fc"><i>67</i>&nbsp;  }</b>
+<i>68</i>&nbsp;
+<i>69</i>&nbsp;  /**
+<i>70</i>&nbsp;   * Dequeues a Work Order Request object from the Singleton WorkOrderQueue.
+<i>71</i>&nbsp;   * Performs basic validation on the supplied WorkOrder and also
+<i>72</i>&nbsp;   * ensures the workOrder does exist on the queue before dequeueing the
+<i>73</i>&nbsp;   * Work Order Object.
+<i>74</i>&nbsp;   *
+<i>75</i>&nbsp;   * @param id of the WorkOrder to be dequeued
+<i>76</i>&nbsp;   * @return WorkOrder just dequeued
+<i>77</i>&nbsp;   */
+<i>78</i>&nbsp;  public WorkOrder removeIdFromWorkOrderQueue(final String id) throws WorkOrderIdNotOnQueueException, InvalidIdParameterException {
+<b class="fc"><i>79</i>&nbsp;    if (null == id) {</b>
+<b class="fc"><i>80</i>&nbsp;      throw new InvalidIdParameterException();</b>
+<i>81</i>&nbsp;    }
+<b class="fc"><i>82</i>&nbsp;    List&lt;WorkOrder&gt; queue = retrieveWorkOrderQueue();</b>
+<b class="fc"><i>83</i>&nbsp;    WorkOrder workOrder = new WorkOrder();</b>
+<b class="fc"><i>84</i>&nbsp;    workOrder.setWorkOrderId(id);</b>
+<i>85</i>&nbsp;
+<b class="fc"><i>86</i>&nbsp;    if (!queue.contains(workOrder)) {</b>
+<b class="fc"><i>87</i>&nbsp;      throw new WorkOrderIdNotOnQueueException(id);</b>
+<i>88</i>&nbsp;    } else {
+<b class="fc"><i>89</i>&nbsp;      workOrder = queue.get(queue.indexOf(workOrder));</b>
+<b class="fc"><i>90</i>&nbsp;      removeFromQueue(workOrder);</b>
+<i>91</i>&nbsp;    }
+<i>92</i>&nbsp;
+<b class="fc"><i>93</i>&nbsp;    return workOrder;</b>
+<i>94</i>&nbsp;
+<i>95</i>&nbsp;  }
+<i>96</i>&nbsp;
+<i>97</i>&nbsp;  /**
+<i>98</i>&nbsp;   * Dequeues the top ranked Work Order Request object
+<i>99</i>&nbsp;   * from the Singleton WorkOrderQueue.
+<i>100</i>&nbsp;   *
+<i>101</i>&nbsp;   * @return WorkOrder just dequeued
+<i>102</i>&nbsp;   */
+<i>103</i>&nbsp;  public WorkOrder removeTopFromWorkOrderQueue() {
+<b class="fc"><i>104</i>&nbsp;    List&lt;WorkOrder&gt; queue = retrieveWorkOrderQueue();</b>
+<b class="fc"><i>105</i>&nbsp;    WorkOrder workOrder = new WorkOrder();</b>
+<b class="fc"><i>106</i>&nbsp;    if (queue.size() &gt; 0) {</b>
+<b class="fc"><i>107</i>&nbsp;      Collections.sort(queue, new WorkOrder());</b>
+<b class="fc"><i>108</i>&nbsp;      workOrder = queue.get(0);</b>
+<b class="fc"><i>109</i>&nbsp;      removeFromQueue(queue.get(0));</b>
+<i>110</i>&nbsp;    }
+<b class="fc"><i>111</i>&nbsp;    return workOrder;</b>
+<i>112</i>&nbsp;  }
+<i>113</i>&nbsp;
+<i>114</i>&nbsp;
+<i>115</i>&nbsp;  /**
+<i>116</i>&nbsp;   * Dequeues the Work Order Request object
+<i>117</i>&nbsp;   * from the Singleton WorkOrderQueue in a synchronised manner.
+<i>118</i>&nbsp;   *
+<i>119</i>&nbsp;   * @param workorder WorkOrder to be dequeued
+<i>120</i>&nbsp;   */
+<i>121</i>&nbsp;  protected synchronized void removeFromQueue(final WorkOrder workorder) {
+<b class="fc"><i>122</i>&nbsp;    List&lt;WorkOrder&gt; queue = retrieveWorkOrderQueue();</b>
+<b class="fc"><i>123</i>&nbsp;    queue.remove(workorder);</b>
+<b class="fc"><i>124</i>&nbsp;  }</b>
+<i>125</i>&nbsp;
+<i>126</i>&nbsp;  /**
+<i>127</i>&nbsp;   * Retrieves a prioritised List of Work Order Request objects
+<i>128</i>&nbsp;   * in decreasing order of Rank.
+<i>129</i>&nbsp;   *
+<i>130</i>&nbsp;   * @return List of WorkOrder Id&#39;s sorted by Rank highest to lowest.
+<i>131</i>&nbsp;   */
+<i>132</i>&nbsp;  public List&lt;Long&gt; retrieveWorkOrderedIdList() {
+<b class="fc"><i>133</i>&nbsp;    List&lt;Long&gt; result = new ArrayList&lt;&gt;();</b>
+<b class="fc"><i>134</i>&nbsp;    List&lt;WorkOrder&gt; queue = retrieveWorkOrderQueue();</b>
+<b class="fc"><i>135</i>&nbsp;    Collections.sort(queue, new WorkOrder());</b>
+<b class="fc"><i>136</i>&nbsp;    for (WorkOrder item : queue) {</b>
+<b class="fc"><i>137</i>&nbsp;      result.add(Long.parseLong(item.getWorkOrderId()));</b>
+<b class="fc"><i>138</i>&nbsp;    }</b>
+<b class="fc"><i>139</i>&nbsp;    return result;</b>
+<i>140</i>&nbsp;  }
+<i>141</i>&nbsp;
+<i>142</i>&nbsp;  /**
+<i>143</i>&nbsp;   * Retrieves the index position of a Work Order Request currently on the queue.
+<i>144</i>&nbsp;   * Performs basic validation on the supplied Id and also ensures the Id is actually
+<i>145</i>&nbsp;   * present on the queue.
+<i>146</i>&nbsp;   *
+<i>147</i>&nbsp;   * @param id identifier Work Order Request
+<i>148</i>&nbsp;   * @return int index of supplied Work Order Id on the Queue.
+<i>149</i>&nbsp;   */
+<i>150</i>&nbsp;  public WorkOrder retrieveIndexOfWorkOrderId(final String id) throws WorkOrderIdNotOnQueueException, InvalidIdParameterException {
+<b class="fc"><i>151</i>&nbsp;    if (null == id || id == &quot;&quot;) {</b>
+<b class="fc"><i>152</i>&nbsp;      throw new InvalidIdParameterException();</b>
+<i>153</i>&nbsp;    }
+<b class="fc"><i>154</i>&nbsp;    List&lt;WorkOrder&gt; queue = retrieveWorkOrderQueue();</b>
+<b class="fc"><i>155</i>&nbsp;    Collections.sort(queue, new WorkOrder());</b>
+<b class="fc"><i>156</i>&nbsp;    WorkOrder workOrder = new WorkOrder();</b>
+<b class="fc"><i>157</i>&nbsp;    workOrder.setWorkOrderId(id);</b>
+<i>158</i>&nbsp;
+<b class="fc"><i>159</i>&nbsp;    if (!queue.contains(workOrder)) {</b>
+<b class="fc"><i>160</i>&nbsp;      throw new WorkOrderIdNotOnQueueException();</b>
+<i>161</i>&nbsp;    } else {
+<b class="fc"><i>162</i>&nbsp;      int index = queue.indexOf(workOrder);</b>
+<b class="fc"><i>163</i>&nbsp;      workOrder = queue.get(index);</b>
+<b class="fc"><i>164</i>&nbsp;      workOrder.setPosition(index);</b>
+<i>165</i>&nbsp;    }
+<b class="fc"><i>166</i>&nbsp;    return workOrder;</b>
+<i>167</i>&nbsp;  }
+<i>168</i>&nbsp;
+<i>169</i>&nbsp;  /**
+<i>170</i>&nbsp;   * Retrieves the average waittime of the Work Orders on the Queue
+<i>171</i>&nbsp;   *
+<i>172</i>&nbsp;   * @param currentTs String Date time representation of format DDMMYYYYHHMMSS
+<i>173</i>&nbsp;   * @return Long average waittime in seconds of all Work Orders on queue.
+<i>174</i>&nbsp;   */
+<i>175</i>&nbsp;  public Long retrieveAverageWaitTime(final String currentTs) throws TimeStampParsingException, InvalidTimestampParameterException, NegativeDurationWaitTimeException {
+<b class="fc"><i>176</i>&nbsp;    if (null == currentTs) {</b>
+<b class="fc"><i>177</i>&nbsp;      throw new InvalidTimestampParameterException();</b>
+<i>178</i>&nbsp;    }
+<b class="fc"><i>179</i>&nbsp;    Long totalTime = 0L;</b>
+<b class="fc"><i>180</i>&nbsp;    Long meanTime = 0L;</b>
+<i>181</i>&nbsp;
+<b class="fc"><i>182</i>&nbsp;    List&lt;WorkOrder&gt; queue = retrieveWorkOrderQueue();</b>
+<b class="fc"><i>183</i>&nbsp;    int count = queue.size();</b>
+<b class="fc"><i>184</i>&nbsp;    for (WorkOrder item : queue) {</b>
+<b class="fc"><i>185</i>&nbsp;      totalTime = totalTime + dateService.getSecondsOnQueueUntilSpecifiedTime(item.getCreatedTS(), currentTs);</b>
+<b class="fc"><i>186</i>&nbsp;      if (count != 0 &amp;&amp; totalTime != 0) {</b>
+<b class="fc"><i>187</i>&nbsp;        meanTime = totalTime / count;</b>
+<i>188</i>&nbsp;      }
+<b class="fc"><i>189</i>&nbsp;      if (meanTime &lt; 0) {</b>
+<b class="fc"><i>190</i>&nbsp;        throw new NegativeDurationWaitTimeException();</b>
+<i>191</i>&nbsp;      }
+<b class="fc"><i>192</i>&nbsp;    }</b>
+<i>193</i>&nbsp;
+<b class="fc"><i>194</i>&nbsp;    return meanTime;</b>
+<i>195</i>&nbsp;  }
+<i>196</i>&nbsp;
+<i>197</i>&nbsp;
+<i>198</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2016-03-31 13:37</div>
+</div>
+</body>
+</html>
