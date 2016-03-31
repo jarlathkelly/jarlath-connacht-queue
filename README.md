@@ -273,7 +273,7 @@ $ mvn test
 ```
 
 ## Documentation
-JavaDoc Documentation will be generated in the /target/site/apidocs/com/jarlath/assignment folder once the project has been installed.
+JavaDoc Documentation will be generated in the /target/site/apidocs/com/jarlath/assignment folder once the project has been installed.  Open the index.html file in a browser to navigate the JavaDocs.
 
 ## History
 
