@@ -107,7 +107,7 @@
 <i>33</i>&nbsp;   * @return boolean is Id valid
 <i>34</i>&nbsp;   */
 <i>35</i>&nbsp;  public boolean isIdValid(final String id) throws InvalidIdParameterException {
-<b class="fc"><i>36</i>&nbsp;    if (null == id || id == &quot;&quot; || id == &quot;0&quot;) {</b>
+<b class="fc"><i>36</i>&nbsp;    if (null == id || id.equals(&quot;&quot;) || id.equals(&quot;0&quot;)) {</b>
 <b class="fc"><i>37</i>&nbsp;      throw new InvalidIdParameterException();</b>
 <i>38</i>&nbsp;    }
 <b class="fc"><i>39</i>&nbsp;    Pattern regexId = Pattern.compile(Statics.VALIDATE_ID);</b>
@@ -158,7 +158,7 @@
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2016-03-31 13:37</div>
+    <div style="float:right;">generated on 2016-04-01 00:53</div>
 </div>
 </body>
 </html>

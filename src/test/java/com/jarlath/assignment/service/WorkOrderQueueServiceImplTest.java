@@ -64,16 +64,6 @@ public class WorkOrderQueueServiceImplTest {
   }
 
   @Test
-  public void test_addToWorkOrderQueue() {
-    clearQueue();
-    WorkOrder workOrder = new WorkOrder("1234567", "27032016183015");
-    workOrderQueueService.addToWorkOrderQueue(workOrder);
-    List<WorkOrder> queue = workOrderQueueService.retrieveWorkOrderQueue();
-    assertTrue(queue.size() == 1);
-    clearQueue();
-  }
-
-  @Test
   public void test_removeIdFromWorkOrderQueue() throws WorkOrderIdNotOnQueueException {
     clearQueue();
     List<WorkOrder> queue = workOrderQueueService.retrieveWorkOrderQueue();
@@ -116,19 +106,6 @@ public class WorkOrderQueueServiceImplTest {
     assertTrue(queue.size() == 1);
     idList = workOrderQueueService.retrieveWorkOrderedIdList();
     assertTrue(!idList.contains(3L));
-    clearQueue();
-  }
-
-  @Test
-  public void test_removeFromQueue() {
-    clearQueue();
-    WorkOrder workOrder = new WorkOrder("1234567", "27032016183015");
-    List<WorkOrder> queue = workOrderQueueService.retrieveWorkOrderQueue();
-    int size = queue.size();
-    workOrderQueueService.addToWorkOrderQueue(workOrder);
-    assertTrue(queue.size() == size + 1);
-    workOrderQueueService.removeFromQueue(workOrder);
-    assertTrue(queue.size() == size);
     clearQueue();
   }
 

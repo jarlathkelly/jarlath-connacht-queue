@@ -45,25 +45,15 @@ public class WorkOrderQueueServiceImpl implements WorkOrderQueueService {
       throw new InvalidTimestampParameterException();
     }
     List<WorkOrder> queue = retrieveWorkOrderQueue();
-
-    if (queue.contains(workOrder)) {
-      throw new WorkOrderExistsInQueueException(workOrder.getWorkOrderId());
-    } else {
-      addToWorkOrderQueue(workOrder);
+    synchronized (queue) {
+      if (queue.contains(workOrder)) {
+        throw new WorkOrderExistsInQueueException(workOrder.getWorkOrderId());
+      } else {
+        queue.add(workOrder);
+      }
     }
 
     return workOrder;
-  }
-
-  /**
-   * Enqueues the Work Order Request object
-   * from the Singleton WorkOrderQueue in a synchronised manner.
-   *
-   * @param workOrder WorkOrder to be enqueued
-   */
-  protected synchronized void addToWorkOrderQueue(final WorkOrder workOrder) {
-    List<WorkOrder> queue = WorkOrderQueue.getInstance();
-    queue.add(workOrder);
   }
 
   /**
@@ -82,12 +72,13 @@ public class WorkOrderQueueServiceImpl implements WorkOrderQueueService {
     List<WorkOrder> queue = retrieveWorkOrderQueue();
     WorkOrder workOrder = new WorkOrder();
     workOrder.setWorkOrderId(id);
-
-    if (!queue.contains(workOrder)) {
-      throw new WorkOrderIdNotOnQueueException(id);
-    } else {
-      workOrder = queue.get(queue.indexOf(workOrder));
-      removeFromQueue(workOrder);
+    synchronized (queue) {
+      if (!queue.contains(workOrder)) {
+        throw new WorkOrderIdNotOnQueueException(id);
+      } else {
+        workOrder = queue.get(queue.indexOf(workOrder));
+        queue.remove(workOrder);
+      }
     }
 
     return workOrder;
@@ -104,23 +95,13 @@ public class WorkOrderQueueServiceImpl implements WorkOrderQueueService {
     List<WorkOrder> queue = retrieveWorkOrderQueue();
     WorkOrder workOrder = new WorkOrder();
     if (queue.size() > 0) {
-      Collections.sort(queue, new WorkOrder());
-      workOrder = queue.get(0);
-      removeFromQueue(queue.get(0));
+      synchronized (queue) {
+        Collections.sort(queue, new WorkOrder());
+        workOrder = queue.get(0);
+        queue.remove(workOrder);
+      }
     }
     return workOrder;
-  }
-
-
-  /**
-   * Dequeues the Work Order Request object
-   * from the Singleton WorkOrderQueue in a synchronised manner.
-   *
-   * @param workorder WorkOrder to be dequeued
-   */
-  protected synchronized void removeFromQueue(final WorkOrder workorder) {
-    List<WorkOrder> queue = retrieveWorkOrderQueue();
-    queue.remove(workorder);
   }
 
   /**
@@ -132,11 +113,13 @@ public class WorkOrderQueueServiceImpl implements WorkOrderQueueService {
   public List<Long> retrieveWorkOrderedIdList() {
     List<Long> result = new ArrayList<>();
     List<WorkOrder> queue = retrieveWorkOrderQueue();
-    Collections.sort(queue, new WorkOrder());
-    for (WorkOrder item : queue) {
-      result.add(Long.parseLong(item.getWorkOrderId()));
+    synchronized (queue) {
+      Collections.sort(queue, new WorkOrder());
+      for (WorkOrder item : queue) {
+        result.add(Long.parseLong(item.getWorkOrderId()));
+      }
+      return result;
     }
-    return result;
   }
 
   /**
@@ -155,15 +138,16 @@ public class WorkOrderQueueServiceImpl implements WorkOrderQueueService {
     Collections.sort(queue, new WorkOrder());
     WorkOrder workOrder = new WorkOrder();
     workOrder.setWorkOrderId(id);
-
-    if (!queue.contains(workOrder)) {
-      throw new WorkOrderIdNotOnQueueException();
-    } else {
-      int index = queue.indexOf(workOrder);
-      workOrder = queue.get(index);
-      workOrder.setPosition(index);
+    synchronized (queue) {
+      if (!queue.contains(workOrder)) {
+        throw new WorkOrderIdNotOnQueueException();
+      } else {
+        int index = queue.indexOf(workOrder);
+        workOrder = queue.get(index);
+        workOrder.setPosition(index);
+      }
+      return workOrder;
     }
-    return workOrder;
   }
 
   /**
@@ -181,13 +165,15 @@ public class WorkOrderQueueServiceImpl implements WorkOrderQueueService {
 
     List<WorkOrder> queue = retrieveWorkOrderQueue();
     int count = queue.size();
-    for (WorkOrder item : queue) {
-      totalTime = totalTime + dateService.getSecondsOnQueueUntilSpecifiedTime(item.getCreatedTS(), currentTs);
-      if (count != 0 && totalTime != 0) {
-        meanTime = totalTime / count;
-      }
-      if (meanTime < 0) {
-        throw new NegativeDurationWaitTimeException();
+    synchronized (queue) {
+      for (WorkOrder item : queue) {
+        totalTime = totalTime + dateService.getSecondsOnQueueUntilSpecifiedTime(item.getCreatedTS(), currentTs);
+        if (count != 0 && totalTime != 0) {
+          meanTime = totalTime / count;
+        }
+        if (meanTime < 0) {
+          throw new NegativeDurationWaitTimeException();
+        }
       }
     }
 

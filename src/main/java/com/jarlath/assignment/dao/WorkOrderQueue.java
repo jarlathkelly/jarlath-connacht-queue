@@ -4,6 +4,7 @@ import com.jarlath.assignment.dto.WorkOrder;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -21,7 +22,7 @@ import java.util.List;
 @Repository
 public class WorkOrderQueue {
 
-  private static final List<WorkOrder> instance = new ArrayList<>();
+  private static final List<WorkOrder> instance = Collections.synchronizedList(new ArrayList<WorkOrder>());
 
   protected WorkOrderQueue() {
   }

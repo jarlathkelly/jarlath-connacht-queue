@@ -78,44 +78,45 @@
 <i>4</i>&nbsp;import org.springframework.stereotype.Repository;
 <i>5</i>&nbsp;
 <i>6</i>&nbsp;import java.util.ArrayList;
-<i>7</i>&nbsp;import java.util.List;
-<i>8</i>&nbsp;
-<i>9</i>&nbsp;/**
-<i>10</i>&nbsp; * The {@link WorkOrderQueue} represents a Singleton Queue Object to queue
-<i>11</i>&nbsp; * {@link WorkOrder} objects.
-<i>12</i>&nbsp; * &lt;p&gt;
-<i>13</i>&nbsp; * This class repository was created in the absence of a &#39;real&#39; back end
-<i>14</i>&nbsp; * for this application. Of course it is possible to plug in any number
-<i>15</i>&nbsp; * of backend technologies here be it memcache,redis,Sprin data etc etc
-<i>16</i>&nbsp; * This implementation is a template queue and not a Production grade solution.
-<i>17</i>&nbsp; *
-<i>18</i>&nbsp; * @author Jarlath Kelly
-<i>19</i>&nbsp; * @see WorkOrder
-<i>20</i>&nbsp; */
-<i>21</i>&nbsp;@Repository
-<i>22</i>&nbsp;public class WorkOrderQueue {
-<i>23</i>&nbsp;
-<b class="fc"><i>24</i>&nbsp;  private static final List&lt;WorkOrder&gt; instance = new ArrayList&lt;&gt;();</b>
-<i>25</i>&nbsp;
-<b class="nc"><i>26</i>&nbsp;  protected WorkOrderQueue() {</b>
-<b class="nc"><i>27</i>&nbsp;  }</b>
-<i>28</i>&nbsp;
-<i>29</i>&nbsp;  /**
-<i>30</i>&nbsp;   * Provide runtime initilisation of the singleton Queue.
-<i>31</i>&nbsp;   * This type of instantiation is threadsafe by default.
-<i>32</i>&nbsp;   *
-<i>33</i>&nbsp;   * @return List of WorkOrders
-<i>34</i>&nbsp;   */
-<i>35</i>&nbsp;  public static List&lt;WorkOrder&gt; getInstance() {
-<b class="fc"><i>36</i>&nbsp;    return instance;</b>
-<i>37</i>&nbsp;  }
-<i>38</i>&nbsp;}
+<i>7</i>&nbsp;import java.util.Collections;
+<i>8</i>&nbsp;import java.util.List;
+<i>9</i>&nbsp;
+<i>10</i>&nbsp;/**
+<i>11</i>&nbsp; * The {@link WorkOrderQueue} represents a Singleton Queue Object to queue
+<i>12</i>&nbsp; * {@link WorkOrder} objects.
+<i>13</i>&nbsp; * &lt;p&gt;
+<i>14</i>&nbsp; * This class repository was created in the absence of a &#39;real&#39; back end
+<i>15</i>&nbsp; * for this application. Of course it is possible to plug in any number
+<i>16</i>&nbsp; * of backend technologies here be it memcache,redis,Spring data etc
+<i>17</i>&nbsp; * This implementation is a template queue and not a Production grade solution.
+<i>18</i>&nbsp; *
+<i>19</i>&nbsp; * @author Jarlath Kelly
+<i>20</i>&nbsp; * @see WorkOrder
+<i>21</i>&nbsp; */
+<i>22</i>&nbsp;@Repository
+<i>23</i>&nbsp;public class WorkOrderQueue {
+<i>24</i>&nbsp;
+<b class="fc"><i>25</i>&nbsp;  private static final List&lt;WorkOrder&gt; instance = Collections.synchronizedList(new ArrayList&lt;WorkOrder&gt;());</b>
+<i>26</i>&nbsp;
+<b class="nc"><i>27</i>&nbsp;  protected WorkOrderQueue() {</b>
+<b class="nc"><i>28</i>&nbsp;  }</b>
+<i>29</i>&nbsp;
+<i>30</i>&nbsp;  /**
+<i>31</i>&nbsp;   * Provide runtime initilisation of the singleton Queue.
+<i>32</i>&nbsp;   * This type of instantiation is threadsafe by default.
+<i>33</i>&nbsp;   *
+<i>34</i>&nbsp;   * @return List of WorkOrders
+<i>35</i>&nbsp;   */
+<i>36</i>&nbsp;  public static List&lt;WorkOrder&gt; getInstance() {
+<b class="fc"><i>37</i>&nbsp;    return instance;</b>
+<i>38</i>&nbsp;  }
+<i>39</i>&nbsp;}
 </div>
 </div>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2016-03-31 13:37</div>
+    <div style="float:right;">generated on 2016-04-01 00:53</div>
 </div>
 </body>
 </html>
