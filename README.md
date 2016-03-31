@@ -264,6 +264,8 @@ PUT http://localhost:8080/workorders/waittimes?createdTs=300320161612
 ## Tests
 Unit tests have been provided with the codebase and will run during the install as detailed above. Test cover all controller,service, dao & dto classes.
 
+Test Coverage reports are located in the src/test/resources directory. Open the index.html file in a browser to navigate the reports.
+
 To run these tests on their own run the following command:
 From project root directory run:
 ```sh
