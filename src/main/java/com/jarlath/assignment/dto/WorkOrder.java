@@ -8,8 +8,8 @@ import com.jarlath.assignment.util.Statics;
 import org.springframework.hateoas.ResourceSupport;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.validation.constraints.NotNull;
-import java.text.ParseException;
 import java.util.Comparator;
 
 /**
@@ -125,32 +125,27 @@ public class WorkOrder extends ResourceSupport implements Comparator<WorkOrder>,
    */
   public int compare(WorkOrder workOrder1, WorkOrder workOrder2) {
     WorkOrderServiceImpl workOrderService = new WorkOrderServiceImpl();
-    try {
-      if (workOrder1 == null || workOrder2 == null) {
-        throw new ClassCastException("WorkOrder objects are expected.");
-      }
 
-      String workOrderType1 = workOrderService.getWorkOrderType(workOrder1.getWorkOrderId());
-      String workOrderType2 = workOrderService.getWorkOrderType(workOrder2.getWorkOrderId());
-
-      if (workOrderType1.equals(Statics.MGMT_OVERRIDE) && !workOrderType2.equals(Statics.MGMT_OVERRIDE)) {
-        return -1;
-      } else if (workOrderType2.equals(Statics.MGMT_OVERRIDE) && !workOrderType1.equals(Statics.MGMT_OVERRIDE)) {
-        return 1;
-      } else if (workOrderType1.equals(Statics.MGMT_OVERRIDE) && workOrderType2.equals(Statics.MGMT_OVERRIDE)) {
-        Long comparison = workOrderService.getMgmtOverrideRank((workOrder1).getCreatedTS()) - workOrderService.getMgmtOverrideRank((workOrder2).getCreatedTS());
-        return workOrderService.getComparisonReturnValue(comparison);
-      }
-
-      Long rank1 = workOrderService.getWorkOrderRank(workOrderType1, workOrder1);
-      Long rank2 = workOrderService.getWorkOrderRank(workOrderType2, workOrder2);
-      Long compare = rank1 - rank2;
-      return workOrderService.getComparisonReturnValue(compare);
-    } catch (ParseException pe) {
-      pe.printStackTrace();
+    if (workOrder1 == null || workOrder2 == null) {
+      throw new ClassCastException("WorkOrder objects are expected.");
     }
-    return 0;
 
+    String workOrderType1 = workOrderService.getWorkOrderType(workOrder1.getWorkOrderId());
+    String workOrderType2 = workOrderService.getWorkOrderType(workOrder2.getWorkOrderId());
+
+    if (workOrderType1.equals(Statics.MGMT_OVERRIDE) && !workOrderType2.equals(Statics.MGMT_OVERRIDE)) {
+      return -1;
+    } else if (workOrderType2.equals(Statics.MGMT_OVERRIDE) && !workOrderType1.equals(Statics.MGMT_OVERRIDE)) {
+      return 1;
+    } else if (workOrderType1.equals(Statics.MGMT_OVERRIDE) && workOrderType2.equals(Statics.MGMT_OVERRIDE)) {
+      Long comparison = workOrderService.getMgmtOverrideRank((workOrder1).getCreatedTS()) - workOrderService.getMgmtOverrideRank((workOrder2).getCreatedTS());
+      return workOrderService.getComparisonReturnValue(comparison);
+    }
+
+    Long rank1 = workOrderService.getWorkOrderRank(workOrderType1, workOrder1);
+    Long rank2 = workOrderService.getWorkOrderRank(workOrderType2, workOrder2);
+    Long compare = rank1 - rank2;
+    return workOrderService.getComparisonReturnValue(compare);
   }
 
   /**

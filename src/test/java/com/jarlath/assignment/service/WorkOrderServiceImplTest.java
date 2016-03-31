@@ -2,10 +2,9 @@ package com.jarlath.assignment.service;
 
 import com.jarlath.assignment.TestUtilities;
 import com.jarlath.assignment.dto.WorkOrder;
+import com.jarlath.assignment.exception.InvalidTimestampParameterException;
 import com.jarlath.assignment.util.Statics;
 import org.junit.Test;
-
-import java.text.ParseException;
 
 import static org.junit.Assert.assertTrue;
 
@@ -22,40 +21,40 @@ public class WorkOrderServiceImplTest {
   TestUtilities testUtil = new TestUtilities();
 
   @Test
-  public void test_getNormalRank() throws ParseException {
+  public void test_getNormalRank() {
     String testDate = testUtil.getADateString(1);
     Long seconds = WorkOrderService.getNormalRank(testDate);
     assertTrue(seconds > ONE_HOUR);
   }
 
-  @Test(expected = ParseException.class)
-  public void test_getNormalRank_ParseException() throws ParseException {
+  @Test(expected = InvalidTimestampParameterException.class)
+  public void test_getNormalRank_InvalidTimestampParameterException() {
     String testDate = BAD_DATE;
     WorkOrderService.getNormalRank(testDate);
   }
 
   @Test
-  public void test_getMgmtOverrideRank() throws ParseException {
+  public void test_getMgmtOverrideRank() {
     String testDate = testUtil.getADateString(1);
     Long seconds = WorkOrderService.getMgmtOverrideRank(testDate);
     assertTrue(seconds > ONE_HOUR);
   }
 
-  @Test(expected = ParseException.class)
-  public void test_getMgmtOverrideRank_ParseException() throws ParseException {
+  @Test(expected = InvalidTimestampParameterException.class)
+  public void test_getMgmtOverrideRank_InvalidTimestampParameterException() {
     String testDate = BAD_DATE;
     WorkOrderService.getMgmtOverrideRank(testDate);
   }
 
   @Test
-  public void test_getVipRank() throws ParseException {
+  public void test_getVipRank() {
     String testDate = testUtil.getADateString(1);
     Long rank = WorkOrderService.getVipRank(testDate);
     assertTrue(rank == 42529L);
   }
 
   @Test
-  public void test_getPriorityRank() throws ParseException {
+  public void test_getPriorityRank() {
     String testDate = testUtil.getADateString(1);
     Long rank = WorkOrderService.getPriorityRank(testDate);
     assertTrue(rank == 39600L);
@@ -86,35 +85,35 @@ public class WorkOrderServiceImplTest {
   }
 
   @Test
-  public void test_getWorkOrderRank_MgmtOverride() throws ParseException {
+  public void test_getWorkOrderRank_MgmtOverride() {
     WorkOrder workOrder = new WorkOrder("11111", testUtil.getADateString(1));
     Long rank = WorkOrderService.getWorkOrderRank(Statics.MGMT_OVERRIDE, workOrder);
     assertTrue(rank > ONE_HOUR);
   }
 
   @Test
-  public void test_getWorkOrderRank_Vip() throws ParseException {
+  public void test_getWorkOrderRank_Vip() {
     WorkOrder workOrder = new WorkOrder("11111", testUtil.getADateString(1));
     Long rank = WorkOrderService.getWorkOrderRank(Statics.VIP, workOrder);
     assertTrue(rank > 42528);
   }
 
   @Test
-  public void test_getWorkOrderRank_Priority() throws ParseException {
+  public void test_getWorkOrderRank_Priority() {
     WorkOrder workOrder = new WorkOrder("11111", testUtil.getADateString(1));
     Long rank = WorkOrderService.getWorkOrderRank(Statics.PRIORITY, workOrder);
     assertTrue(rank > 39599);
   }
 
   @Test
-  public void test_getWorkOrderRank_Normal() throws ParseException {
+  public void test_getWorkOrderRank_Normal() {
     WorkOrder workOrder = new WorkOrder("11111", testUtil.getADateString(1));
     Long rank = WorkOrderService.getWorkOrderRank(Statics.NORMAL, workOrder);
     assertTrue(rank > ONE_HOUR);
   }
 
-  @Test(expected = ParseException.class)
-  public void test_getWorkOrderRank_Normal_ParseException() throws ParseException {
+  @Test(expected = InvalidTimestampParameterException.class)
+  public void test_getWorkOrderRank_Normal_InvalidTimestampParameterException() {
     WorkOrder workOrder = new WorkOrder("11111", BAD_DATE);
     WorkOrderService.getWorkOrderRank(Statics.NORMAL, workOrder);
   }

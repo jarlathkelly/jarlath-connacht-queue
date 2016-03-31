@@ -4,6 +4,7 @@ import com.jarlath.assignment.TestUtilities;
 import com.jarlath.assignment.dto.WorkOrder;
 import com.jarlath.assignment.exception.*;
 import org.junit.Test;
+
 import java.util.List;
 
 import static org.junit.Assert.assertTrue;
@@ -181,7 +182,7 @@ public class WorkOrderQueueServiceImplTest {
     clearQueue();
   }
 
-  @Test(expected = TimeStampParsingException.class)
+  @Test(expected = InvalidTimestampParameterException.class)
   public void test_retrieveAverageWaitTime_TimeStampParsingException() {
     clearQueue();
     workOrderQueueService.enqueueWorkOrder(new WorkOrder("333", testUtil.getADateString(2)));

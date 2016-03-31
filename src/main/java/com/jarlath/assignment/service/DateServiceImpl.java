@@ -2,11 +2,11 @@ package com.jarlath.assignment.service;
 
 import com.jarlath.assignment.exception.InvalidTimestampParameterException;
 import com.jarlath.assignment.util.Statics;
+import org.joda.time.DateTime;
+import org.joda.time.Seconds;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.springframework.stereotype.Service;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  * The {@link DateServiceImpl} is the concrete implementation for the DateService
@@ -23,54 +23,56 @@ public class DateServiceImpl implements DateService {
   }
 
   /**
-   * Converts a String of the format ddMMyyyyHHmmss into a
-   * Date object
-   *
-   * @param dateIn String representation of a date
-   * @return Date
-   * @throws ParseException when supplied Timestamp has issues parsing
-   */
-  protected Date convertStringToDate(final String dateIn) throws ParseException, InvalidTimestampParameterException {
-    if (null == dateIn) {
-      throw new InvalidTimestampParameterException();
-    }
-    SimpleDateFormat format = new SimpleDateFormat(Statics.TIMESTAMP_FORMAT);
-    return format.parse(dateIn);
-  }
-
-  /**
    * Calculates the length of time in seconds between a supplied date String
    * and the current time. Used to calculate the number of seconds a Work
-   * Order has spent on the queue
+   * Order has spent on the queue leverages Joda Time.
    *
    * @param date String representation of a date
    * @return Long no of Seconds on the queue
-   * @throws ParseException when supplied Timestamp has issues parsing
+   * @throws InvalidTimestampParameterException when supplied Timestamp has issues parsing
    */
-  public Long getSecondsOnQueue(final String date) throws ParseException, InvalidTimestampParameterException {
+  public Long getSecondsOnQueue(final String date) throws InvalidTimestampParameterException {
     if (null == date) {
       throw new InvalidTimestampParameterException();
     }
-    Date incoming = convertStringToDate(date);
-    Date current = new Date();
-    return (current.getTime() - incoming.getTime()) / 1000;
+    Long result = 0L;
+    try {
+      DateTimeFormatter formatter = DateTimeFormat.forPattern(Statics.TIMESTAMP_FORMAT);
+      DateTime incoming = formatter.parseDateTime(date);
+      DateTime now = DateTime.now();
+      Seconds seconds = Seconds.secondsBetween(incoming, now);
+      result = new Long(seconds.getSeconds());
+    } catch(IllegalArgumentException e){
+      throw new InvalidTimestampParameterException();
+    }
+    return result;
   }
 
   /**
    * Calculates the length of time in seconds between 2 supplied date Strings
-   * Used to calculate the number of seconds a Work Order has spent on the queue
+   * Used to calculate the number of seconds a Work Order has spent on the queue.
+   * leverages Joda Time
    *
    * @param date String representation of a date
    * @return Long no of Seconds on the queue
-   * @throws ParseException when supplied Timestamp has issues parsing
+   * @throws InvalidTimestampParameterException when supplied Timestamp has issues parsing
    */
-  public Long getSecondsOnQueueUntilSpecifiedTime(final String date, final String currentTime) throws ParseException, InvalidTimestampParameterException {
+  public Long getSecondsOnQueueUntilSpecifiedTime(final String date, final String currentTime) throws InvalidTimestampParameterException {
     if (null == date || null == currentTime) {
       throw new InvalidTimestampParameterException();
     }
-    Date incoming = convertStringToDate(date);
-    Date current = convertStringToDate(currentTime);
-    return (current.getTime() - incoming.getTime()) / 1000;
+
+    Long result = 0L;
+    try {
+      DateTimeFormatter formatter = DateTimeFormat.forPattern(Statics.TIMESTAMP_FORMAT);
+      DateTime incoming = formatter.parseDateTime(date);
+      DateTime curr = formatter.parseDateTime(currentTime);
+      Seconds seconds = Seconds.secondsBetween(incoming, curr);
+      result = new Long(seconds.getSeconds());
+    } catch(IllegalArgumentException e){
+      throw new InvalidTimestampParameterException();
+    }
+    return result;
 
   }
 }

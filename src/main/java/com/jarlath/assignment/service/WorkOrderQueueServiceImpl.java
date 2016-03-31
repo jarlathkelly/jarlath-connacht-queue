@@ -4,8 +4,6 @@ import com.jarlath.assignment.dao.WorkOrderQueue;
 import com.jarlath.assignment.dto.WorkOrder;
 import com.jarlath.assignment.exception.*;
 import org.springframework.stereotype.Service;
-
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -184,16 +182,12 @@ public class WorkOrderQueueServiceImpl implements WorkOrderQueueService {
     List<WorkOrder> queue = retrieveWorkOrderQueue();
     int count = queue.size();
     for (WorkOrder item : queue) {
-      try {
-        totalTime = totalTime + dateService.getSecondsOnQueueUntilSpecifiedTime(item.getCreatedTS(), currentTs);
-        if (count != 0 && totalTime != 0) {
-          meanTime = totalTime / count;
-        }
-        if (meanTime < 0) {
-          throw new NegativeDurationWaitTimeException();
-        }
-      } catch (ParseException pe) {
-        throw new TimeStampParsingException(currentTs);
+      totalTime = totalTime + dateService.getSecondsOnQueueUntilSpecifiedTime(item.getCreatedTS(), currentTs);
+      if (count != 0 && totalTime != 0) {
+        meanTime = totalTime / count;
+      }
+      if (meanTime < 0) {
+        throw new NegativeDurationWaitTimeException();
       }
     }
 

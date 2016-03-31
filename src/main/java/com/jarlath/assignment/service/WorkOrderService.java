@@ -15,16 +15,16 @@ public interface WorkOrderService {
 
   int getComparisonReturnValue(final Long value);
 
-  Long getWorkOrderRank(final String workOrderType, final WorkOrder workOrder) throws ParseException;
+  Long getWorkOrderRank(final String workOrderType, final WorkOrder workOrder);
 
   String getWorkOrderType(final String id);
 
-  Long getMgmtOverrideRank(final String date) throws ParseException;
+  Long getMgmtOverrideRank(final String date);
 
-  Long getVipRank(final String date) throws ParseException;
+  Long getVipRank(final String date);
 
-  long getPriorityRank(final String date) throws ParseException;
+  long getPriorityRank(final String date);
 
-  Long getNormalRank(final String date) throws ParseException;
+  Long getNormalRank(final String date);
 
 }

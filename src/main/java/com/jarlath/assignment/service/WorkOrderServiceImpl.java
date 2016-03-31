@@ -4,8 +4,6 @@ import com.jarlath.assignment.dto.WorkOrder;
 import com.jarlath.assignment.util.Statics;
 import org.springframework.stereotype.Service;
 
-import java.text.ParseException;
-
 /**
  * The {@link WorkOrderServiceImpl} is the concrete implementation for the WorkOrderService
  * Interface. Provides Work Order related services for use within the Work Order application.
@@ -48,7 +46,7 @@ public class WorkOrderServiceImpl implements WorkOrderService {
    * @param workOrder     instance of WorkOrder
    * @return Long rank of Work Order
    */
-  public Long getWorkOrderRank(final String workOrderType, final WorkOrder workOrder) throws ParseException {
+  public Long getWorkOrderRank(final String workOrderType, final WorkOrder workOrder) {
 
     switch (workOrderType) {
       case Statics.VIP:
@@ -92,7 +90,7 @@ public class WorkOrderServiceImpl implements WorkOrderService {
    * @param date date Work Order was queued
    * @return Long Rank of Work Order
    */
-  public Long getMgmtOverrideRank(final String date) throws ParseException {
+  public Long getMgmtOverrideRank(final String date) {
     DateServiceImpl dateService = new DateServiceImpl();
     return dateService.getSecondsOnQueue(date);
   }
@@ -104,7 +102,7 @@ public class WorkOrderServiceImpl implements WorkOrderService {
    * @param date date Work Order was queued
    * @return Long Rank of Work Order
    */
-  public Long getVipRank(final String date) throws ParseException {
+  public Long getVipRank(final String date) {
     DateServiceImpl dateService = new DateServiceImpl();
     Long secondsOnQueue = dateService.getSecondsOnQueue(date);
     double rank = Math.max(4, (Math.log(secondsOnQueue) / Math.log(2)) * secondsOnQueue);
@@ -118,7 +116,7 @@ public class WorkOrderServiceImpl implements WorkOrderService {
    * @param date date Work Order was queued
    * @return Long Rank of Work Order
    */
-  public long getPriorityRank(final String date) throws ParseException {
+  public long getPriorityRank(final String date) {
     DateServiceImpl dateService = new DateServiceImpl();
     Long secondsOnQueue = dateService.getSecondsOnQueue(date);
     double rank = Math.max(3, (int) (Math.log(secondsOnQueue) / Math.log(2)) * secondsOnQueue);
@@ -132,7 +130,7 @@ public class WorkOrderServiceImpl implements WorkOrderService {
    * @param date date Work Order was queued
    * @return Long Rank of Work Order
    */
-  public Long getNormalRank(final String date) throws ParseException {
+  public Long getNormalRank(final String date) {
     DateServiceImpl dateService = new DateServiceImpl();
     return dateService.getSecondsOnQueue(date);
   }
