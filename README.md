@@ -58,6 +58,7 @@ Use a rest Client to Test the endpoints. I use Postman. See https://www.getpostm
 
 - Some management services have also been provided with the Spring Boot actuator module. The following are vailable on http://localhost:8080/:
  - /actuator  -- will give available actuator endpoints
+ - /info
  - /health
  - /mappings
  - /autoconfig
@@ -190,6 +191,20 @@ http://localhost:8080/workorders/waittimes?createdTs=30032016165012
 }
 ```
 
+#### Management Services example: GET
+```
+http://localhost:8080/info
+{
+  "app": {
+    "description": "A simple queueing system to allow Tim the IT guy do his job!!",
+    "name": "Jarlaths Rest Based Queue Service",
+    "audience": "Aaron and Andreas",
+    "developedBy": "Jarlath Kelly",
+    "version": "0.1.0"
+  }
+}
+```
+
 ## Security
 The rest endpoints are protected by Basic Authentication. You will need to supply gthe following credentials to access the Rest Service:
 - Username: aspect
@@ -284,6 +299,8 @@ PUT http://localhost:8080/workorders/waittimes?createdTs=300320161612
 Unit tests have been provided with the codebase and will run during the install as detailed above. Tests cover all controller,service, dao & dto classes with 90% + coverage.
 
 Test Coverage reports are located in the target/site/jacoco-ut/ directory. Open the index.html file in a browser to navigate the reports. I have configured jacocco to generate these reports during the maven install.
+
+The Surefire reports can be found under the /target/surefire-reports directory.
 
 To run these tests on their own run the following command:
 From project root directory run:
