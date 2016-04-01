@@ -43,7 +43,7 @@ public class DateServiceImpl implements DateService {
       Seconds seconds = Seconds.secondsBetween(incoming, now);
       result = new Long(seconds.getSeconds());
     } catch(IllegalArgumentException e){
-      throw new InvalidTimestampParameterException();
+      throw new InvalidTimestampParameterException(date);
     }
     return result;
   }

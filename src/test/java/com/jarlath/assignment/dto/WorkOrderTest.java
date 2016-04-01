@@ -93,6 +93,18 @@ public class WorkOrderTest {
   @Test
   public void test_isValid() {
     WorkOrder order1 = new WorkOrder("5", testUtil.getADateString(1));
+    assertTrue(order1.isValid(order1));
+  }
+
+  @Test(expected = InvalidTimestampParameterException.class)
+  public void test_isValid_InvalidTs() {
+    WorkOrder order1 = new WorkOrder("5", "xxxx");
+    order1.isValid(order1);
+  }
+
+  @Test(expected = InvalidIdParameterException.class)
+  public void test_isValid_InvalidId() {
+    WorkOrder order1 = new WorkOrder("0", testUtil.getADateString(1));
     order1.isValid(order1);
   }
 
