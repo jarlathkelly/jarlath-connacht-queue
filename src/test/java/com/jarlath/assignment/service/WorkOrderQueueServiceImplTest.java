@@ -149,6 +149,13 @@ public class WorkOrderQueueServiceImplTest {
     clearQueue();
   }
 
+  @Test(expected = InvalidIdParameterException.class)
+  public void test_retrieveIndexOfWorkOrderId_InvalidIdParameterException2() {
+    clearQueue();
+    workOrderQueueService.retrieveIndexOfWorkOrderId(null);
+    clearQueue();
+  }
+
   @Test
   public void test_retrieveAverageWaitTime() {
     clearQueue();

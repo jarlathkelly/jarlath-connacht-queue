@@ -36,6 +36,16 @@ public class ValidationServiceImplTest {
     validationService.isIdValid("0");
   }
 
+  @Test(expected = InvalidIdParameterException.class)
+  public void test_isIdValid_InvalidIdParameterException3() {
+    validationService.isIdValid("");
+  }
+
+  @Test(expected = InvalidIdParameterException.class)
+  public void test_isIdValid_InvalidIdParameterException4() {
+    validationService.isIdValid("9223372cccc036854775807");
+  }
+
   @Test
   public void test_isCreatedTsValid() {
     String createdTs = "16032016093023";

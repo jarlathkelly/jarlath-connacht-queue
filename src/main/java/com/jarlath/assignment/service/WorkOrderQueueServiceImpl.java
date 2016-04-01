@@ -118,8 +118,8 @@ public class WorkOrderQueueServiceImpl implements WorkOrderQueueService {
       for (WorkOrder item : queue) {
         result.add(Long.parseLong(item.getWorkOrderId()));
       }
-      return result;
     }
+    return result;
   }
 
   /**
@@ -146,8 +146,9 @@ public class WorkOrderQueueServiceImpl implements WorkOrderQueueService {
         workOrder = queue.get(index);
         workOrder.setPosition(index);
       }
-      return workOrder;
     }
+    return workOrder;
+
   }
 
   /**
