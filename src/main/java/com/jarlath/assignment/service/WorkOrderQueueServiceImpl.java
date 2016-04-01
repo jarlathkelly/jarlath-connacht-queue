@@ -169,9 +169,7 @@ public class WorkOrderQueueServiceImpl implements WorkOrderQueueService {
     synchronized (queue) {
       for (WorkOrder item : queue) {
         totalTime = totalTime + dateService.getSecondsOnQueueUntilSpecifiedTime(item.getCreatedTS(), currentTs);
-        if (count != 0 && totalTime != 0) {
           meanTime = totalTime / count;
-        }
         if (meanTime < 0) {
           throw new NegativeDurationWaitTimeException();
         }

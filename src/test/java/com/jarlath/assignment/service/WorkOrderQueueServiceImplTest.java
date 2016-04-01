@@ -110,6 +110,16 @@ public class WorkOrderQueueServiceImplTest {
   }
 
   @Test
+  public void test_removeTopFromWorkOrderQueue2() {
+    clearQueue();
+    List<WorkOrder> queue = workOrderQueueService.retrieveWorkOrderQueue();
+    assertTrue(queue.size() == 0);
+    workOrderQueueService.removeTopFromWorkOrderQueue();
+    assertTrue(queue.size() == 0);
+    clearQueue();
+  }
+
+  @Test
   public void test_retrieveWorkOrderedIdList() {
     clearQueue();
     workOrderQueueService.enqueueWorkOrder(new WorkOrder("15000", "27032016183015"));
@@ -178,6 +188,14 @@ public class WorkOrderQueueServiceImplTest {
   public void test_retrieveAverageWaitTime_InvalidTimestampParameterException() {
     clearQueue();
     workOrderQueueService.retrieveAverageWaitTime(null);
+    clearQueue();
+  }
+
+  @Test
+  public void test_retrieveAverageWaitTime_zeroWaittime() {
+    clearQueue();
+    workOrderQueueService.enqueueWorkOrder(new WorkOrder("3334", "27032016183015"));
+    assertTrue(workOrderQueueService.retrieveAverageWaitTime("27032016183015") == 0);
     clearQueue();
   }
 
