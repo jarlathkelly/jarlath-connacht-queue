@@ -131,7 +131,7 @@ public class WorkOrderQueueServiceImpl implements WorkOrderQueueService {
    * @return int index of supplied Work Order Id on the Queue.
    */
   public WorkOrder retrieveIndexOfWorkOrderId(final String id) throws WorkOrderIdNotOnQueueException, InvalidIdParameterException {
-    if (null == id || id == "") {
+    if (null == id || id.equals("")) {
       throw new InvalidIdParameterException();
     }
     List<WorkOrder> queue = retrieveWorkOrderQueue();

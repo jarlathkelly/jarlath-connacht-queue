@@ -22,7 +22,7 @@ import java.util.List;
 @Repository
 public class WorkOrderQueue {
 
-  private static final List<WorkOrder> instance = Collections.synchronizedList(new ArrayList<WorkOrder>());
+  private static final List<WorkOrder> instance = Collections.synchronizedList(new ArrayList<>());
 
   protected WorkOrderQueue() {
   }

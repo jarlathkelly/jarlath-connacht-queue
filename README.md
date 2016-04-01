@@ -87,6 +87,8 @@ when making a call to return the position for a specific ID on the queue.
 
 A Rudimentary HATEOAS design has been incorporated into the returned Json.
 
+Basic Auth has been set up on the Rest Endpoints. See Security section below for credentials.
+
 #### Enqueue Work Order: POST
 ```
 http://localhost:8080/workorders?id=1&createdTs=30032016093023
@@ -188,6 +190,10 @@ http://localhost:8080/workorders/waittimes?createdTs=30032016165012
 }
 ```
 
+## Security
+The rest endpoints are protected by Basic Authentication. You will need to supply gthe following credentials to access the Rest Service:
+- Username: aspect
+- Password: secret
 
 ## ErrorHandling
 

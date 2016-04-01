@@ -4,7 +4,6 @@ import com.jarlath.assignment.exception.IdOutOfRangeException;
 import com.jarlath.assignment.exception.InvalidIdParameterException;
 import com.jarlath.assignment.exception.InvalidTimestampParameterException;
 import com.jarlath.assignment.util.Statics;
-import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.springframework.stereotype.Service;
@@ -57,22 +56,17 @@ public class ValidationServiceImpl implements ValidationService {
     }
     try {
       DateTimeFormatter dtf = DateTimeFormat.forPattern(Statics.TIMESTAMP_FORMAT);
-      DateTime jodatime = dtf.parseDateTime(createdTs);
+      dtf.parseDateTime(createdTs);
     } catch (java.lang.IllegalArgumentException e) {
       throw new InvalidTimestampParameterException();
     }
 
-//    Pattern regexTs = Pattern.compile(Statics.VALIDATE_TS);
-//    Matcher tSmatcher = regexTs.matcher(createdTs);
-//    if (!tSmatcher.find()) {
-//      throw new InvalidTimestampParameterException(createdTs);
-//    }
     return true;
   }
 
   public boolean isIdWithinRange(final String id) throws IdOutOfRangeException {
     try {
-      Long l = Long.parseLong(id);
+      Long.parseLong(id);
     } catch (NumberFormatException nfe) {
       throw new IdOutOfRangeException(id);
     }

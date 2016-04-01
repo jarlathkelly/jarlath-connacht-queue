@@ -22,6 +22,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
  * The {@link WorkOrderController} handles the HTTP requests for the WorkOrder Restful Interface.
  * The class performs basic validation on all incoming requests via the {@link ValidationServiceImpl}.
  * All actions to be performed on the WorkOrderQueue are done so via the {@link WorkOrderQueueServiceImpl}.
+ * A rudimentary HatEoAS pattern has been implemented in the returned Json objects.
  *
  * @author Jarlath Kelly
  * @see RestController
@@ -57,7 +58,7 @@ public class WorkOrderController {
     workOrder.add(linkTo(methodOn(WorkOrderController.class).enqueueWorkOrder(id, createdTs)).withSelfRel());
     workOrder.isValid(workOrder);
     workOrderQueueService.enqueueWorkOrder(workOrder);
-    return new ResponseEntity<WorkOrder>(workOrder, HttpStatus.OK);
+    return new ResponseEntity<>(workOrder, HttpStatus.OK);
   }
 
   /**
@@ -71,7 +72,7 @@ public class WorkOrderController {
   public HttpEntity dequeueWorkOrder() {
     WorkOrder workOrder = workOrderQueueService.removeTopFromWorkOrderQueue();
     workOrder.add(linkTo(methodOn(WorkOrderController.class).dequeueWorkOrder()).withSelfRel());
-    return new ResponseEntity<WorkOrder>(workOrder, HttpStatus.OK);
+    return new ResponseEntity<>(workOrder, HttpStatus.OK);
   }
 
   /**
@@ -86,7 +87,7 @@ public class WorkOrderController {
   public HttpEntity retrieveAllWorkOrderIds() {
     WorkOrderIdList workOrderIdList = new WorkOrderIdList(workOrderQueueService.retrieveWorkOrderedIdList());
     workOrderIdList.add(linkTo(methodOn(WorkOrderController.class).retrieveAllWorkOrderIds()).withSelfRel());
-    return new ResponseEntity<WorkOrderIdList>(workOrderIdList, HttpStatus.OK);
+    return new ResponseEntity<>(workOrderIdList, HttpStatus.OK);
   }
 
 
@@ -104,7 +105,7 @@ public class WorkOrderController {
     validationService.isIdValid(id);
     WorkOrder workOrder = workOrderQueueService.removeIdFromWorkOrderQueue(id);
     workOrder.add(linkTo(methodOn(WorkOrderController.class).dequeueWorkOrderId(id)).withSelfRel());
-    return new ResponseEntity<WorkOrder>(workOrder, HttpStatus.OK);
+    return new ResponseEntity<>(workOrder, HttpStatus.OK);
   }
 
   /**
@@ -122,7 +123,7 @@ public class WorkOrderController {
     validationService.isIdValid(id);
     WorkOrder workOrder = workOrderQueueService.retrieveIndexOfWorkOrderId(id);
     workOrder.add(linkTo(methodOn(WorkOrderController.class).getWorkOrderQueuePosition(id)).withSelfRel());
-    return new ResponseEntity<WorkOrder>(workOrder, HttpStatus.OK);
+    return new ResponseEntity<>(workOrder, HttpStatus.OK);
 
   }
 
@@ -142,7 +143,7 @@ public class WorkOrderController {
 
     WorkOrderQueueParam workOrderQueueParam = new WorkOrderQueueParam(workOrderQueueService.retrieveAverageWaitTime(createdTs));
     workOrderQueueParam.add(linkTo(methodOn(WorkOrderController.class).retrieveMeanWaitTime(createdTs)).withSelfRel());
-    return new ResponseEntity<WorkOrderQueueParam>(workOrderQueueParam, HttpStatus.OK);
+    return new ResponseEntity<>(workOrderQueueParam, HttpStatus.OK);
 
   }
 }
