@@ -262,9 +262,9 @@ PUT http://localhost:8080/workorders/waittimes?createdTs=300320161612
 ```
 
 ## Tests
-Unit tests have been provided with the codebase and will run during the install as detailed above. Test cover all controller,service, dao & dto classes.
+Unit tests have been provided with the codebase and will run during the install as detailed above. Tests cover all controller,service, dao & dto classes with 90% + coverage.
 
-Test Coverage reports are located in the src/test/resources directory. Open the index.html file in a browser to navigate the reports.
+Test Coverage reports are located in the target/site/jacoco-ut/ directory. Open the index.html file in a browser to navigate the reports. I have configured jacocco to generate these reports during the maven install.
 
 To run these tests on their own run the following command:
 From project root directory run:

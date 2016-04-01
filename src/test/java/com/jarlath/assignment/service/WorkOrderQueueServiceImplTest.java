@@ -150,7 +150,7 @@ public class WorkOrderQueueServiceImplTest {
   }
 
   @Test
-  public void test_retrieveAverageWaitTime() throws TimeStampParsingException {
+  public void test_retrieveAverageWaitTime() {
     clearQueue();
     workOrderQueueService.enqueueWorkOrder(new WorkOrder("77", testUtil.getADateString(2)));
     workOrderQueueService.enqueueWorkOrder(new WorkOrder("88", testUtil.getADateString(2)));
@@ -160,7 +160,7 @@ public class WorkOrderQueueServiceImplTest {
   }
 
   @Test(expected = InvalidTimestampParameterException.class)
-  public void test_retrieveAverageWaitTime_TimeStampParsingException() {
+  public void test_retrieveAverageWaitTime_InvalidTimestampParameterException2() {
     clearQueue();
     workOrderQueueService.enqueueWorkOrder(new WorkOrder("333", testUtil.getADateString(2)));
     workOrderQueueService.retrieveAverageWaitTime(BAD_DATE);

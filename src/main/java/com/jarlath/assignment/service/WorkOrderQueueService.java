@@ -26,5 +26,5 @@ public interface WorkOrderQueueService {
 
   WorkOrder retrieveIndexOfWorkOrderId(final String id) throws WorkOrderIdNotOnQueueException, InvalidIdParameterException;
 
-  Long retrieveAverageWaitTime(final String currentTs) throws TimeStampParsingException, InvalidTimestampParameterException;
+  Long retrieveAverageWaitTime(final String currentTs) throws InvalidTimestampParameterException;
 }

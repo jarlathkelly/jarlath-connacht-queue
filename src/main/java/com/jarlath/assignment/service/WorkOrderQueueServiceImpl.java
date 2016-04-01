@@ -156,7 +156,7 @@ public class WorkOrderQueueServiceImpl implements WorkOrderQueueService {
    * @param currentTs String Date time representation of format DDMMYYYYHHMMSS
    * @return Long average waittime in seconds of all Work Orders on queue.
    */
-  public Long retrieveAverageWaitTime(final String currentTs) throws TimeStampParsingException, InvalidTimestampParameterException, NegativeDurationWaitTimeException {
+  public Long retrieveAverageWaitTime(final String currentTs) throws InvalidTimestampParameterException, NegativeDurationWaitTimeException {
     if (null == currentTs) {
       throw new InvalidTimestampParameterException();
     }
