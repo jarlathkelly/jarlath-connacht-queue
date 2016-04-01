@@ -210,6 +210,18 @@ The rest endpoints are protected by Basic Authentication. You will need to suppl
 - Username: aspect
 - Password: secret
 
+Not using the correct credentials will reult in the following response:
+
+```
+{
+  "status": 401,
+  "error": "Unauthorized",
+  "message": "Bad credentials",
+  "timeStamp": "Fri Apr 01 13:12:37 IST 2016",
+  "trace": null
+}
+```
+
 ## ErrorHandling
 
 #### InvalidIdParameterException
